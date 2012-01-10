@@ -1,0 +1,258 @@
+3	4		
+600	800	standard	0,8
+750	1000	büyük	1
+225	300	orta	0,3
+112,5	150	küçük	0,15
+37,5	50	thumb	0,05
+
+
+PROCEDURE
+BEGIN
+#declare v_max int unsigned default 113;
+#declare v_counter int unsigned default 1;
+
+#declare y_max int unsigned default 11;
+#declare y_counter int unsigned default 1;
+
+  #start transaction;
+  #while v_counter <= v_max do
+   #while y_counter <= y_max do
+    INSERT INTO productattribute_pricetype (productattributeId, pricetypeId, productattributePM) VALUES (productattributeId, 2, productattributePrice)
+		ON DUPLICATE KEY UPDATE productattributePM = productattributePrice+1;
+    #set y_counter=y_counter+1;
+   #end while;
+    #set v_counter=v_counter+1;
+  #end while;
+  #commit;
+END
+
+
+#CREATE VIEW view_productattributeprice AS
+SELECT
+productattribute.productattributeId,
+productimpact.roleId,
+#productattribute.productattributePrice,
+productimpact.productPrice,
+#productimpact.productimpactWeightRate,
+#productimpact.productimpactWeightPrice,
+#productimpact.productimpactDiscountRate,
+#productimpact.productimpactDiscountPrice,
+#ROUND(((productattribute.productattributePrice * (1 + IFNULL(productimpact.productimpactWeightRate,0))) + IFNULL(productimpact.productimpactWeightPrice,0)), 2) as productattributepriceM,
+#ROUND(((productimpact.productPrice * (1 + IFNULL(productimpact.productimpactWeightRate,0))) + IFNULL(productimpact.productimpactWeightPrice,0)), 2) as productattributepriceM,
+productimpact.productPrice as productattributepriceM,
+#ROUND(((productattribute.productattributePrice * (1 + IFNULL(productimpact.productimpactWeightRate,0) - IFNULL(productimpact.productimpactDiscountRate,0))) + IFNULL(productimpact.productimpactWeightPrice,0) - IFNULL(productimpact.productimpactDiscountPrice,0)) , 2) as productattributepriceMD,
+#ROUND(((productimpact.productPrice * (1 + IFNULL(productimpact.productimpactWeightRate,0) - IFNULL(productimpact.productimpactDiscountRate,0))) + IFNULL(productimpact.productimpactWeightPrice,0) - IFNULL(productimpact.productimpactDiscountPrice,0)) , 2) as productattributepriceMD,
+ROUND((productimpact.productPrice * (1 - IFNULL(productimpact.productimpactDiscountRate,0))- IFNULL(productimpact.productimpactDiscountPrice,0)), 2) as productattributepriceMD,
+#ROUND(((productattribute.productattributePrice * (1 + IFNULL(productimpact.productimpactWeightRate,0))) + IFNULL(productimpact.productimpactWeightPrice,0)), 2) * (1 + taxonomy.taxonomyRate) as productattributepriceMV,
+#ROUND(((productimpact.productPrice * (1 + IFNULL(productimpact.productimpactWeightRate,0))) + IFNULL(productimpact.productimpactWeightPrice,0)), 2) * (1 + taxonomy.taxonomyRate) as productattributepriceMV,
+productimpact.productPrice as productattributepriceMV,
+#ROUND(((productattribute.productattributePrice * (1 + IFNULL(productimpact.productimpactWeightRate,0) - IFNULL(productimpact.productimpactDiscountRate,0))) + IFNULL(productimpact.productimpactWeightPrice,0) - IFNULL(productimpact.productimpactDiscountPrice,0)) , 2) * (1 + taxonomy.taxonomyRate) as productattributepriceMDV
+#ROUND(((productimpact.productPrice * (1 + IFNULL(productimpact.productimpactWeightRate,0) - IFNULL(productimpact.productimpactDiscountRate,0))) + IFNULL(productimpact.productimpactWeightPrice,0) - IFNULL(productimpact.productimpactDiscountPrice,0)) , 2) * (1 + taxonomy.taxonomyRate) as productattributepriceMDV
+#ROUND((((productimpact.productPrice * (1 + IFNULL(productimpact.productimpactWeightRate,0))) + IFNULL(productimpact.productimpactWeightPrice,0)) * (1 + taxonomy.taxonomyRate) * (1 - IFNULL(productimpact.productimpactDiscountRate,0)) - IFNULL(productimpact.productimpactDiscountPrice,0)), 2) as productattributepriceMDV
+ROUND((productimpact.productPrice * (1 - IFNULL(productimpact.productimpactDiscountRate,0))- IFNULL(productimpact.productimpactDiscountPrice,0)), 2) as productattributepriceMDV
+FROM productattribute
+LEFT JOIN productimpact ON  productimpact.productId = productattribute.productId
+LEFT JOIN product on product.productId = productattribute.productId
+LEFT JOIN taxonomy on taxonomy.taxonomyId = product.taxonomyId
+
+#attributeimpact
+update productattribute set productattributePrice = productattributePrice where productId = NEW.productId
+
+#productattribute
+set 
+NEW.productattributePrice = NEW.productattributeCost * (1 + (select IFNULL(SUM(attributeimpact.attributeimpactWeight),0) from attributeimpact where attributeimpact.productId = NEW.productId))+(select IFNULL(SUM(attributeimpact.attributeimpactPrice),0) from attributeimpact where attributeimpact.productId = NEW.productId)
+
+#productattribute
+update productattribute 
+set 
+productattribute.productattributeCost = (
+select 
+ROUND(SUM(productattributemovement.productattributemovementQuantity*productattributemovement.productattributemovementPriceOC*currency.currencyConversionRate)/SUM(productattributemovement.productattributemovementQuantity),2)
+from productattributemovement 
+left JOIN currency on currency.currencyId = productattributemovement.currencyId
+where productattributemovement.productattributeId = NEW.productattributeId
+),
+productattribute .productattributeQuantityStock = (
+select 
+SUM(productattributemovement.productattributemovementQuantity)-
+(
+select
+IFNULL(SUM(productsalesmovement.productsalesmovementQuantity),0)
+from productsalesmovement
+where productsalesmovement.productattributeId = NEW.productattributeId
+)
+from productattributemovement 
+where productattributemovement.productattributeId = NEW.productattributeId
+)
+where productattribute.productattributeId = NEW.productattributeId
+
+
+*********************
+----- TODO LIST -----
+*********************
+----- Importance: High -----
+sepetten attribute değişikliği
+front controller entegrasyonu
+promoted entegrasyonu
+ana sayfadaki ürünleri 5-10 sn de paging yaparak değiştirsin
+paging yerine aşağı indikçe ajax ile yüklesin
+Teslimat ve fatura adresi aynı seçimi yapılabilsin
+resim upload edildiğinde hiç resim yoksa ilk resmi profil resmi yapsın.
+profil resmi silindiğinde diğer resimlerden ikincisini profil resmi yapsın.
+profil resmini sildiğinde ürünün gösterilmeyeceği uyarısını düş.
+Havale Transfer numarasını girsin takip için
+Şu kadar fiyatın üstü ücretsiz taşıma???
+style.css.php - dynamic css
+
+istek listesi
+en çok gezilen ürünler
+ürün rating
+Ürün çeşidi eklemeyi kolaylaştıran 'clone' özelliği
+Müşteri, site yöneticileri ve kargo şirketi için e-mail ile bilgilendirme sistemi
+Duyuru servisi modülü
+Bütünleşik kargo ücreti (ürün ağırlığı veya satış fiyatına göre) hesaplama  modülü
+SMS Modülü
+
+
+----- Importance: Medium -----
+dao, dto implementation
+model sınıflarını ilgili modülün içinden çağır
+sepet kur ve eur/usd gösterimi
+eklenen reklam ve resimlere tiklandiginda url ye gitsin ve bunlarin kaydi tutulsun
+
+
+----- Importance: Low -----
+http://www.etid.org.tr/
+nebim: ODBC localhost veritabani sa
+
+----- template dosyalarına erişim engeli -----
+.tpl dosyalarına erişimi engelle
+<Files ~ "\.inc$">
+	Order allow,deny
+	Deny from all
+</Files>
+
+
+----- portapp dizinine yönlendirme - SEO -----
+Options +FollowSymlinks
+RewriteEngine on
+rewritecond %{http_host} ^domain.com [nc]
+rewriterule ^(.*)$ http://www.domain.com/$1 [r=301,nc]
+
+
+
+<!-- CDN -->
+<!--
+<script type="text/javascript">
+var apiJsHost = (("https:" == document.location.protocol) ? "https" : "http");
+document.write(unescape("%3Cscript src='" + apiJsHost + "://www.google.com/jsapi?key={$_API_MAPS_GOOGLE}' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script>
+	google.load("jquery", "1.6.2");
+	//google.load("jqueryui", "1.8.16");
+	google.load("swfobject", "2.2");
+	google.load("maps", "2.x", { "language" : "en", "other_params": "sensor=true" });
+</script>
+<link rel="stylesheet" type="text/css" media="screen" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/cupertino/jquery-ui.css" />
+-->
+
+
+
+
+	/*
+	$("div").attr("cas-class", function(i,e) {
+		if (typeof(e) === "string") {
+			var funcCall = e + '=new '+e+'();'; 
+			funcCall += e + '.' + $(this).attr("cas-method") + ';';
+			//eval(funcCall);
+			$(this).html(eval(funcCall));
+		}
+	});
+	
+	// eval için alternatif
+	var tmpFunc = new Function(codeToRun);
+	tmpFunc();
+	http://javascript.about.com/library/bleval.htm
+	*/
+	
+
+	var ___eval___getDeliveryaddressesTable = function ()
+	{
+		var a = null;
+		$.ajax({
+			url: "modules/b2c/address.php",
+			data: "action=jsonDeliveryaddresses",
+			dataType: 'json',
+			async: false,
+			cache: false,
+			success: function(response) {
+				a = ___eval___generateDeliveryaddressesTable(response);
+			}
+		});
+		return a;
+	};
+	
+	var ___eval___generateDeliveryaddressesTable = function (response)
+	{
+		var output = '';
+		output += '<h2 name="nameDeliveryaddresses">Teslimat Adresi</h2>';
+		var items = [];
+		items.push('<table>');
+		items.push('<thead>');
+		items.push('<tr>');
+		items.push('<td>Adres</td>');
+		items.push('<td style="width: 100px;"><button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'deliveryaddress\', 0);">Yeni Giriş</button></td>');
+		items.push('</tr>');
+		items.push('</thead>');
+		if (response.iTotalRecords == 0) {
+			output += '<span class="ui-icon ui-icon-alert fl mr5"></span>';
+			output += '<b>Kayıtlı bir adresiniz yok. Lütfen yeni bir tane oluşturun</b>';
+		}
+		else {
+			items.push('<tbody>');
+			$.each(response.aaData, function(key, val) {
+				items.push('<tr>');
+				items.push('<td>'+val.postaladdressContent + ', ' + val.postaladdressCity + ', ' + val.postaladdressCounty + ', ' + val.postaladdressPostalcode + ', ' + val.postaladdressCountry+'</td>');
+				items.push('<td><button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'deliveryaddress\', ' + val.postaladdressId + ');">Düzenle</button></td>');
+				items.push('</tr>');
+			});
+			items.push('</tbody>');
+			items.push('</table>');
+			output += items.join('');
+		}
+		return output;
+	};
+	
+	var ___eval___generateDeliveryaddressesTable = function (response)
+	{
+		var output = '';
+		output += '<h2 name="nameInvoiceaddresses">Fatura Adresi</h2>';
+		var items = [];
+		items.push('<table>');
+		items.push('<thead>');
+		items.push('<tr>');
+		items.push('<td style="width: 50px;">&nbsp;</td>');
+		items.push('<td>Adres</td>');
+		items.push('<td style="width: 100px;"><button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'invoiceaddress\', 0);">Yeni Giriş</button></td>');
+		items.push('</tr>');
+		items.push('</thead>');
+		if (response.iTotalRecords == 0) {
+			output += '<span class="ui-icon ui-icon-alert fl mr5"></span>';
+			output += '<b>Kayıtlı bir adresiniz yok. Lütfen yeni bir tane oluşturun</b>';
+		}
+		else {
+			items.push('<tbody>');
+			$.each(response.aaData, function(key, val) {
+				items.push('<tr>');
+				items.push('<td><input type="radio" name="invoiceaddressId" value="' + val.postaladdressId + '" onclick="Transportation.getContinueForCheckout();" /></td>');
+				items.push('<td>'+val.postaladdressContent + ', ' + val.postaladdressCity + ', ' + val.postaladdressCounty + ', ' + val.postaladdressPostalcode + ', ' + val.postaladdressCountry+'</td>');
+				items.push('<td><button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'invoiceaddress\', ' + val.postaladdressId + ');">Düzenle</button></td>');
+				items.push('</tr>');
+			});
+			items.push('</tbody>');
+			items.push('</table>');
+			output += items.join('');
+		}
+		return output;
+	};
+	

@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='iso-8859-9'?>
+<posnetResponse>
+	<approved>1</approved>
+	<hostlogkey>0000262272P1201081</hostlogkey>
+	<authCode>022215</authCode>
+	<tranDate>120108130102</tranDate>
+	<instInfo>
+		<inst1>03</inst1>
+		<amnt1>000000000200</amnt1>
+	</instInfo>
+	<pointInfo>
+		<point>00000012</point>
+		<pointAmount>000000000006</pointAmount>
+		<totalPoint>00000743</totalPoint>
+		<totalPointAmount>000000000371</totalPointAmount>
+	</pointInfo>
+	<campMsgInfo>
+		<campMsg1>WORLDCEP FIRSATI ILE 400 WORLDPUAN'INIZLA 2.00 TL VEYA 2.5
+			DK ALABILIRSINIZ</campMsg1>
+		<campMsg2>SIRASIYLA: KAMPANYA KODU, ANNE KIZLIK SOYADI VE
+			KULLANACAGINIZ PUANI 4433'E SMS'LE GONDERIN.KAMPANYA KODU: WGF7UYIOB
+		</campMsg2>
+	</campMsgInfo>
+</posnetResponse>

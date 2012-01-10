@@ -1,0 +1,35 @@
+<posnetRequest>
+	<mid>6700000067</mid>
+	<tid>67000067</tid>
+	<!--Asagidaki parametre, posnet sisteminde, yapilan islemin
+	hangi tarih ve saat bilgisiyle kaydedildiginin yanit paketinde
+	donulmesi istendiginde belirtilmelidir:
+	<tranDateRequired>1</tranDateRequired>
+	-->
+	<sale>
+		<amount>2451</amount>
+		<ccno>4506349116608409</ccno>
+		<currencyCode>YT</currencyCode>
+		<cvc>XXX</cvc>
+		<expDate>0703</expDate>
+		<orderID>1s3456z89012345678901234</orderID>
+		
+		<!-- Asagidaki parametreler kat puan veya ekstra puan
+		verilecekse gonderilmelidirler:
+		<multiplePoint>2</multiplePoint>
+		<extraPoint>150</extraPoint>
+		-->
+		
+		<!-- Asagidaki parametre taksitli islemlerde
+		gonderilmelidir:
+		<installment>2</installment>
+		-->
+		
+		<!-- Asagidaki parametre kisiye ozel islem (joker vadaa)
+		yapilacaksa girilmelidir. KOI kodu olarak gonderilecek
+		deger KOI Sorgulama islemi ile onceden sorgulanmis
+		olmalidir.
+		<koiCode>1</koiCode>
+		-->
+	</sale>
+</posnetRequest>

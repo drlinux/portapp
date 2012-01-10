@@ -1,0 +1,138 @@
+/* Reset styles */
+html, body, h1, h2, h3, h4, h5, h6, div, span, img, ul, ol, li, th, td, tr {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	vertical-align: baseline;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-size:100%;
+	font-weight:normal;
+}
+
+ul {
+	list-style: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* Main */
+
+html {
+	height: 100%;
+	font-family: Geneva, Arial, Helvetica, sans-serif;				
+}
+
+body {
+	/*
+	background-color: #ddf1ff;;
+	*/
+	background-color: #ffffff;
+}
+
+h1, h2 {
+	font-size: 1.5em;
+	font-weight: normal;
+}
+
+h2 {
+	font-size: 1.3em;
+}
+
+
+a:hover, a.hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+a:active, a.active {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+legend {
+	font-weight: bold;
+	color: #333;
+}
+
+#wrapper {
+	/*background-color: #ffffff;
+	-webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 12px;
+	width: 490px;*/
+}
+
+#fileupload {
+	/*margin: 12px;
+	padding: 12px;
+	width: 480px;*/
+}
+
+#fileupload form h1 {
+	padding: 0 0 10px 0;
+}
+
+#filedrag {
+	display: none;
+	font-weight: bold;
+	text-align: center;
+	padding: 4px 0;
+	margin: 6px 0;
+	margin-left:3px;
+	color: #555;
+	border: 2px dashed #555;
+	border-radius: 4px;
+	cursor: default;
+	width: 540px;
+}
+
+#filedrag:hover {
+	color: #009933;
+	border-color: #009933;
+	border-style: solid;
+}
+
+img {
+	max-width: 100%;
+}
+
+pre {
+	width: 95%;
+	height: 8em;
+	font-family: monospace;
+	font-size: 0.9em;
+	padding: 1px 2px;
+	margin: 0 0 1em auto;
+	border: 1px inset #666;
+	background-color: #eee;
+	overflow: auto;
+}
+
+#progress {
+	display: block;
+	padding: 2px;
+	border: 1px solid #999;height: 20px;
+}
+
+#progress #bar {
+	height: 100%;
+	width: 0%;
+	background-color: #0095FF;
+}
+
+#result {
+	padding: 10px 0 0 0;
+}
+#state{
+	margin-right: 10px;
+}
+#result-link-openbutton
+{
+  cursor: pointer;
+  cursor: hand;
+}

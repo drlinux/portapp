@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='iso-8859-9'?>
+<posnetResponse>
+	<approved>1</approved>
+	<respCode></respCode>
+	<respText></respText>
+	<oosResolveMerchantDataResponse>
+		<amount>100</amount>
+		<currency>TL</currency>
+		<installment>00</installment>
+		<xid>YKB_0000120108191152</xid>
+		<point>0</point>
+		<pointAmount>0</pointAmount>
+		<txStatus>Y</txStatus>
+		<mdStatus>1</mdStatus>
+		<mdErrorMessage>Authenticated</mdErrorMessage>
+	</oosResolveMerchantDataResponse>
+</posnetResponse>

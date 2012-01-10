@@ -1,0 +1,207 @@
+@CHARSET "UTF-8";
+
+@import url("/portapp/assets/css/reset.css");
+@import url("/portapp/assets/css/base.css");
+@import url("/portapp/assets/css/common.css");
+
+body
+{
+	margin:0;
+	background: #fff;
+}
+
+input[type=text], input[type=password], input[type=email]
+{
+	background: #fff;
+	border-color: #ccc;
+}
+
+#glowBg
+{
+	width:100%;
+	height:100%;
+	float:left;
+	background: url(../images/glowBg.png) no-repeat center 108px;
+}
+
+#headerFullWidthOuter
+{
+	background: url(../images/headerBg.png) repeat-x;
+	width:100%;
+	float:left;
+	position:relative;
+	z-index:10;
+}
+
+#headerOuter
+{
+	margin:0 auto;
+	float:none;
+	height: 112px !important;
+}
+
+#menuOuter 
+{
+	float:right;
+	margin: 40px 0 0 0;
+}
+
+#menuOuter a
+{
+	font: 17px Trebuchet MS;
+	color: #ccc;
+	padding:5px 10px;
+	margin:0 5px;
+}
+
+#menuOuter a.selected
+{
+	background: #fff;
+	color: #000;
+}
+
+#wholeContentsFullWidthOuter
+{
+	width:100%;
+	float:left;
+	position:relative;
+	top:-4px;
+	padding-bottom:30px;
+	background: url(../images/repeatBg.png);
+}
+
+#wholeContentsOuter
+{
+	margin: 10px auto;
+	float:none;
+}
+
+#mainBannerOuter
+{
+	width:732px;
+	height:312px;
+	padding:0 !important;
+	border-radius:0;
+}
+
+#mainBanner
+{
+	width:732px;
+	height:312px;
+}
+
+#footerFullWidthOuter
+{
+	width:100%;
+	background: url(../images/footerBg.png) repeat-x;
+	position:relative;
+	top:-10px;
+	z-index:10;
+	float:left;
+}
+
+#footerOuter
+{
+	margin:0 auto;
+	float:none;
+	color: #444;
+}
+
+#footerMenuOuter
+{
+	margin-top:40px;
+}
+
+#footerOuter a, #copyrightText
+{
+	color: #222;
+}
+
+#footerLogo
+{
+	float:left;
+	margin:20px 0 0 409px;
+}
+
+#loginFormOuter label
+{
+	height: 26px;
+	line-height: 26px;
+}
+
+.subMenuOuter
+{
+	border:none;
+}
+
+.subMenuOuter .top
+{
+	background: #000;
+	font-size: 15px;
+}
+
+.subMenuOuter .center
+{
+	font-weight: bold;
+}
+
+.casContent{
+	border:none;
+	padding:0;
+	text-align: justify;
+}
+
+.sidebarProductList .productItem
+{
+	width:120px;
+	height:195px;
+	float:left;
+}
+
+.productItem .currentCost
+{
+	color: #fff !important;
+	font-size: 13px;
+}
+
+.bigProductList .productItem
+{
+	width: 112px;
+	height:198px;
+	float:left;
+	margin-right:19px;
+	background: #000;
+}
+
+.bigProductList .productLogo
+{
+	width:112px;
+	height:151px;
+	margin:0;
+}
+
+.bigProductList .labelDiscount, .bigProductList .oldCost
+{
+	display:none;	
+}
+
+.bigProductList .productName
+{
+	color:#fff;
+	font-size: 14px;
+	margin-top:5px;
+	text-decoration: none;
+}
+
+.casContent
+{
+	float:left;
+	font-size: 14px;
+}
+
+.subHeader
+{
+	color: #000;
+	border-bottom: solid 1px #000;
+	padding-bottom: 5px;
+}

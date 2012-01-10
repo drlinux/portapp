@@ -1,0 +1,9 @@
+@CHARSET "UTF-8";
+
+#productBigBasketOuter .ui-spinner
+{
+	position:relative !important;
+	float:none !important;
+	top:5px !important;
+	background: #000;
+}

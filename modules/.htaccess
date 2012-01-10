@@ -1,0 +1,8 @@
+<Files ~ "\.(tpl)$">
+Deny from all
+</Files>
+
+<Files ~ "\.(php)$">
+Satisfy any
+Allow from all
+</Files>

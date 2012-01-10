@@ -1,0 +1,148 @@
+@import url("/portapp/assets/css/common.css");
+
+html,
+body
+{
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	margin-top: 20px;
+	font-size: 11px;
+	font-family: "Lucida Grande", Tahoma, Arial, Helvetica, sans-serif;
+}
+
+div#content a,
+div#extra a,
+div#sidebar a
+{
+	color: #FFBA27;
+	font-weight: bold;
+	text-decoration: none;
+	padding: 1px;
+}
+
+div#content a:hover,
+div#extra a:hover,
+div#sidebar a:hover
+{
+	color: #FFBA27;
+	font-weight: bold;
+	text-decoration: none;
+	padding: 1px;
+}
+
+div#header {
+	padding-bottom: 5px;
+	border-bottom: 1px solid #EEE;
+}
+
+div#header h1 {
+	font-size: 2em;
+	font-weight: normal;
+	color: #FFBA27;
+	letter-spacing: -1px;
+}
+
+div#header h2 {
+	margin: 0;
+	padding: 0;
+	font-weight: normal;
+	color: #999;
+	padding-left: 20px;
+	margin-top: -15px;
+}
+
+#navigation {
+	float: right;
+}
+
+#navigation li {
+	display: inline;
+	padding-right: 20px;
+}
+
+#navigation li a {
+	color: #666;
+	font-weight: normal;
+	padding: 4px;
+	text-decoration: none;
+}
+
+#navigation li a:hover {
+	text-decoration: underline;
+}
+
+div#container {
+	text-align: left
+}
+
+div#content p,
+div#extra p,
+div#sidebar p
+{
+	color: #444;
+	line-height: 1.8em;
+}
+
+div#content h1,
+div#extra h1,
+div#sidebar h1
+{
+	font-size: 1.3em;
+	font-weight: normal;
+	color: #FFBA27;
+	text-decoration: none;
+	padding: 3px 6px;
+}
+
+div#content h2 {
+	font-weight: bold;
+	color: #444;
+	margin: 0;
+	padding: 0;
+}
+
+div#footer p {
+	margin: 0;
+	padding: 5px 10px;
+}
+
+div#container {
+	width: 900px;
+	margin: 0 auto;
+}
+
+div#sidebar {
+	float: right;
+	width: 730px;
+	padding-bottom: 10px;
+}
+
+div#sidebarleft,
+div#sidebarright
+{
+	width: 49%;
+	padding-bottom: 10px;
+}
+
+div#sidebarleft {
+	float: left;
+}
+
+div#sidebarright {
+	float: right;
+}
+
+div#extra {
+	float: left;
+	width: 130px;
+}
+
+div#footer {
+	clear: both;
+	padding-top: 5px;
+	border-top: 1px solid #EEE;
+	width: 100%;
+}

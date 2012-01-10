@@ -1,0 +1,439 @@
+@CHARSET "UTF-8";
+
+/*body { font-size: 62.5%; }*/
+
+/* FIX: JQuery datepicker on layout */
+#ui-datepicker-div { z-index: 5; }
+
+/* css for timepicker */
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { height: 25px; }
+.ui-timepicker-div dl dd { margin: -25px 0 10px 65px; }
+.ui-timepicker-div td { font-size: 90%; }
+
+/* FIX: jQuery UI font size adjustment */
+.ui-widget { font-size: 11px !important; }
+
+/* jQuery UI autocomplete loading animation */
+.ui-autocomplete-loading { background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat; }
+
+/*
+ * sprite-creditcard.png
+ * interval 163x20
+ */
+.creditcard {background-image: url('images/sprite-creditcard.png');background-repeat: no-repeat;width: 163px;height: 20px;}
+.creditcard.bonus {background-position: 0 0px;}
+.creditcard.world {background-position: 0 -20px;}
+.creditcard.axess {background-position: 0 -80px;}
+
+/*
+ * sprite-flag_16x11.png
+ * interval 28x28
+ */
+.flag
+{
+	display: block;
+	width: 16px;
+	height: 11px;
+	background-image: url(images/flags_16x11.png);
+	background-repeat: no-repeat;
+}
+.flag.tr {background-position: -116px -537px;}
+.flag.us {background-position: -4px -565px;}
+.flag.de {background-position: -284px -117px;}
+
+
+.tac {text-align: center;}
+.tdn {text-decoration: none;}
+.dn {display: none;}
+.db {display: block;}
+.vat {vertical-align: top;}
+.fwn {font-weight: normal;}
+.fwb {font-weight: bold;}
+
+.fl {float: left;}
+.fr {float: right !important; }
+.fn {float: none;}
+.fi {float: inherit;}
+
+.cn {clear: none;}
+.cl {clear: left;}
+.cr {clear: right;}
+.cb {clear: both;}
+.ci {clear: inherit;}
+
+.h100px {height:100px}
+.h200px {height:200px}
+.h300px {height:300px}
+.h400px {height:400px}
+.h500px {height:500px}
+.w100px {width:100px}
+.w200px {width:200px}
+.w300px {width:300px}
+.w400px {width:400px}
+.w500px {width:500px}
+
+.bs-s {border-style: solid;}
+.bc-000000 {border-color: #000000;}
+.bw-1px {border-width: 1px;}
+.bw-2px {border-width: 2px;}
+
+.w100p {width:100%;}
+.w90p  {width: 90%;}
+.w80p  {width: 80%;}
+.w70p  {width: 70%;}
+.w60p  {width: 60%;}
+.w50p  {width: 50%;}
+.w40p  {width: 40%;}
+.w30p  {width: 30%;}
+.w20p  {width: 20%;}
+.w10p  {width: 10%;}
+
+.mt5 {margin-top: 5px;}
+.mt10 {margin-top: 10px;}
+.mt20 {margin-top: 20px;}
+.mt30 {margin-top: 30px;}
+.mt40 {margin-top: 40px;}
+.mt50 {margin-top: 50px;}
+.mta {margin-top: auto;}
+.mr5 {margin-right: 5px;}
+.mr10 {margin-right: 10px;}
+.mr20 {margin-right: 20px;}
+.mr30 {margin-right: 30px;}
+.mr40 {margin-right: 40px;}
+.mr50 {margin-right: 50px;}
+.mra {margin-right: auto;}
+.mb5 {margin-bottom: 5px;}
+.mb10 {margin-bottom: 10px;}
+.mb20 {margin-bottom: 20px;}
+.mb30 {margin-bottom: 30px;}
+.mb40 {margin-bottom: 40px;}
+.mb50 {margin-bottom: 50px;}
+.mba {margin-bottom: auto;}
+.ml5 {margin-left: 5px;}
+.ml10 {margin-left: 10px;}
+.ml20 {margin-left: 20px;}
+.ml30 {margin-left: 30px;}
+.ml40 {margin-left: 40px;}
+.ml50 {margin-left: 50px;}
+.ml400 {margin-left: 400px;}
+.mla {margin-left: auto;}
+
+.pt10 {padding-top: 10px;}
+.pt20 {padding-top: 20px;}
+.pr10 {padding-right: 10px;}
+.pr20 {padding-right: 20px;}
+.pb10 {padding-bottom: 10px;}
+.pb20 {padding-bottom: 20px;}
+.pl10 {padding-left: 10px;}
+.pl20 {padding-left: 20px;}
+
+/*
+ * color
+ */
+.c-ffffff {color: #ffffff;}
+.c-000000 {color: #000000;}
+.c-ff0000 {color: #ff0000;}
+.c-cccccc {color: #cccccc;}
+
+/*
+ * background-color
+ */
+.bgc-000000 {background-color: #000000;}
+.bgc-150517 {background-color: #150517;}
+.bgc-250517 {background-color: #250517;}
+.bgc-2b1b17 {background-color: #2b1b17;}
+.bgc-302217 {background-color: #302217;}
+.bgc-302226 {background-color: #302226;}
+.bgc-342826 {background-color: #342826;}
+.bgc-34282c {background-color: #34282c;}
+.bgc-382d2c {background-color: #382d2c;}
+.bgc-3b3131 {background-color: #3b3131;}
+.bgc-3e3535 {background-color: #3e3535;}
+.bgc-413839 {background-color: #413839;}
+.bgc-41383c {background-color: #41383c;}
+.bgc-463e3f {background-color: #463e3f;}
+.bgc-4a4344 {background-color: #4a4344;}
+.bgc-4c4646 {background-color: #4c4646;}
+.bgc-4e4848 {background-color: #4e4848;}
+.bgc-504a4b {background-color: #504a4b;}
+.bgc-544e4f {background-color: #544e4f;}
+.bgc-565051 {background-color: #565051;}
+.bgc-595454 {background-color: #595454;}
+.bgc-5c5858 {background-color: #5c5858;}
+.bgc-5f5a59 {background-color: #5f5a59;}
+.bgc-625d5d {background-color: #625d5d;}
+.bgc-646060 {background-color: #646060;}
+.bgc-666362 {background-color: #666362;}
+.bgc-696565 {background-color: #696565;}
+.bgc-6d6968 {background-color: #6d6968;}
+.bgc-6e6a6b {background-color: #6e6a6b;}
+.bgc-726e6d {background-color: #726e6d;}
+.bgc-747170 {background-color: #747170;}
+.bgc-736f6e {background-color: #736f6e;}
+.bgc-616d7e {background-color: #616d7e;}
+.bgc-657383 {background-color: #657383;}
+.bgc-646d7e {background-color: #646d7e;}
+.bgc-6d7b8d {background-color: #6d7b8d;}
+.bgc-4c787e {background-color: #4c787e;}
+.bgc-4c7d7e {background-color: #4c7d7e;}
+.bgc-806d7e {background-color: #806d7e;}
+.bgc-5e5a80 {background-color: #5e5a80;}
+.bgc-4e387e {background-color: #4e387e;}
+.bgc-151b54 {background-color: #151b54;}
+.bgc-2b3856 {background-color: #2b3856;}
+.bgc-25383c {background-color: #25383c;}
+.bgc-463e41 {background-color: #463e41;}
+.bgc-151b8d {background-color: #151b8d;}
+.bgc-15317e {background-color: #15317e;}
+.bgc-342d7e {background-color: #342d7e;}
+.bgc-2b60de {background-color: #2b60de;}
+.bgc-306eff {background-color: #306eff;}
+.bgc-2b65ec {background-color: #2b65ec;}
+.bgc-2554c7 {background-color: #2554c7;}
+.bgc-3bb9ff {background-color: #3bb9ff;}
+.bgc-38acec {background-color: #38acec;}
+.bgc-357ec7 {background-color: #357ec7;}
+.bgc-3090c7 {background-color: #3090c7;}
+.bgc-25587e {background-color: #25587e;}
+.bgc-1589ff {background-color: #1589ff;}
+.bgc-157dec {background-color: #157dec;}
+.bgc-1569c7 {background-color: #1569c7;}
+.bgc-153e7e {background-color: #153e7e;}
+.bgc-2b547e {background-color: #2b547e;}
+.bgc-4863a0 {background-color: #4863a0;}
+.bgc-6960ec {background-color: #6960ec;}
+.bgc-8d38c9 {background-color: #8d38c9;}
+.bgc-7a5dc7 {background-color: #7a5dc7;}
+.bgc-8467d7 {background-color: #8467d7;}
+.bgc-9172ec {background-color: #9172ec;}
+.bgc-9e7bff {background-color: #9e7bff;}
+.bgc-728fce {background-color: #728fce;}
+.bgc-488ac7 {background-color: #488ac7;}
+.bgc-56a5ec {background-color: #56a5ec;}
+.bgc-5cb3ff {background-color: #5cb3ff;}
+.bgc-659ec7 {background-color: #659ec7;}
+.bgc-41627e {background-color: #41627e;}
+.bgc-737ca1 {background-color: #737ca1;}
+.bgc-737ca1 {background-color: #737ca1;}
+.bgc-98afc7 {background-color: #98afc7;}
+.bgc-f6358a {background-color: #f6358a;}
+.bgc-f6358a {background-color: #f6358a;}
+.bgc-e4317f {background-color: #e4317f;}
+.bgc-f52887 {background-color: #f52887;}
+.bgc-e4287c {background-color: #e4287c;}
+.bgc-c12267 {background-color: #c12267;}
+.bgc-7d053f {background-color: #7d053f;}
+.bgc-ca226b {background-color: #ca226b;}
+.bgc-c12869 {background-color: #c12869;}
+.bgc-800517 {background-color: #800517;}
+.bgc-7d0541 {background-color: #7d0541;}
+.bgc-7d0552 {background-color: #7d0552;}
+.bgc-810541 {background-color: #810541;}
+.bgc-c12283 {background-color: #c12283;}
+.bgc-e3319d {background-color: #e3319d;}
+.bgc-f535aa {background-color: #f535aa;}
+.bgc-ff00ff {background-color: #ff00ff;}
+.bgc-f433ff {background-color: #f433ff;}
+.bgc-e238ec {background-color: #e238ec;}
+.bgc-c031c7 {background-color: #c031c7;}
+.bgc-b048b5 {background-color: #b048b5;}
+.bgc-d462ff {background-color: #d462ff;}
+.bgc-c45aec {background-color: #c45aec;}
+.bgc-a74ac7 {background-color: #a74ac7;}
+.bgc-6a287e {background-color: #6a287e;}
+.bgc-8e35ef {background-color: #8e35ef;}
+.bgc-893bff {background-color: #893bff;}
+.bgc-7f38ec {background-color: #7f38ec;}
+.bgc-6c2dc7 {background-color: #6c2dc7;}
+.bgc-461b7e {background-color: #461b7e;}
+.bgc-571b7e {background-color: #571b7e;}
+.bgc-7d1b7e {background-color: #7d1b7e;}
+.bgc-842dce {background-color: #842dce;}
+.bgc-8b31c7 {background-color: #8b31c7;}
+.bgc-a23bec {background-color: #a23bec;}
+.bgc-b041ff {background-color: #b041ff;}
+.bgc-7e587e {background-color: #7e587e;}
+.bgc-d16587 {background-color: #d16587;}
+.bgc-f778a1 {background-color: #f778a1;}
+.bgc-e56e94 {background-color: #e56e94;}
+.bgc-c25a7c {background-color: #c25a7c;}
+.bgc-7e354d {background-color: #7e354d;}
+.bgc-b93b8f {background-color: #b93b8f;}
+.bgc-f9b7ff {background-color: #f9b7ff;}
+.bgc-e6a9ec {background-color: #e6a9ec;}
+.bgc-c38ec7 {background-color: #c38ec7;}
+.bgc-d2b9d3 {background-color: #d2b9d3;}
+.bgc-c6aec7 {background-color: #c6aec7;}
+.bgc-ebdde2 {background-color: #ebdde2;}
+.bgc-c8bbbe {background-color: #c8bbbe;}
+.bgc-e9cfec {background-color: #e9cfec;}
+.bgc-fcdfff {background-color: #fcdfff;}
+.bgc-e3e4fa {background-color: #e3e4fa;}
+.bgc-fdeef4 {background-color: #fdeef4;}
+.bgc-c6deff {background-color: #c6deff;}
+.bgc-addfff {background-color: #addfff;}
+.bgc-bdedff {background-color: #bdedff;}
+.bgc-e0ffff {background-color: #e0ffff;}
+.bgc-c2dfff {background-color: #c2dfff;}
+.bgc-b4cfec {background-color: #b4cfec;}
+.bgc-b7ceec {background-color: #b7ceec;}
+.bgc-52f3ff {background-color: #52f3ff;}
+.bgc-00ffff {background-color: #00ffff;}
+.bgc-57feff {background-color: #57feff;}
+.bgc-50ebec {background-color: #50ebec;}
+.bgc-4ee2ec {background-color: #4ee2ec;}
+.bgc-48cccd {background-color: #48cccd;}
+.bgc-43c6db {background-color: #43c6db;}
+.bgc-9afeff {background-color: #9afeff;}
+.bgc-8eebec {background-color: #8eebec;}
+.bgc-78c7c7 {background-color: #78c7c7;}
+.bgc-46c7c7 {background-color: #46c7c7;}
+.bgc-43bfc7 {background-color: #43bfc7;}
+.bgc-77bfc7 {background-color: #77bfc7;}
+.bgc-92c7c7 {background-color: #92c7c7;}
+.bgc-afdcec {background-color: #afdcec;}
+.bgc-3b9c9c {background-color: #3b9c9c;}
+.bgc-307d7e {background-color: #307d7e;}
+.bgc-3ea99f {background-color: #3ea99f;}
+.bgc-82cafa {background-color: #82cafa;}
+.bgc-a0cfec {background-color: #a0cfec;}
+.bgc-87afc7 {background-color: #87afc7;}
+.bgc-82caff {background-color: #82caff;}
+.bgc-79baec {background-color: #79baec;}
+.bgc-566d7e {background-color: #566d7e;}
+.bgc-6698ff {background-color: #6698ff;}
+.bgc-736aff {background-color: #736aff;}
+.bgc-cfecec {background-color: #cfecec;}
+.bgc-afc7c7 {background-color: #afc7c7;}
+.bgc-717d7d {background-color: #717d7d;}
+.bgc-95b9c7 {background-color: #95b9c7;}
+.bgc-5e767e {background-color: #5e767e;}
+.bgc-5e7d7e {background-color: #5e7d7e;}
+.bgc-617c58 {background-color: #617c58;}
+.bgc-348781 {background-color: #348781;}
+.bgc-306754 {background-color: #306754;}
+.bgc-4e8975 {background-color: #4e8975;}
+.bgc-254117 {background-color: #254117;}
+.bgc-387c44 {background-color: #387c44;}
+.bgc-4e9258 {background-color: #4e9258;}
+.bgc-347235 {background-color: #347235;}
+.bgc-347c2c {background-color: #347c2c;}
+.bgc-667c26 {background-color: #667c26;}
+.bgc-437c17 {background-color: #437c17;}
+.bgc-347c17 {background-color: #347c17;}
+.bgc-348017 {background-color: #348017;}
+.bgc-4aa02c {background-color: #4aa02c;}
+.bgc-41a317 {background-color: #41a317;}
+.bgc-4aa02c {background-color: #4aa02c;}
+.bgc-8bb381 {background-color: #8bb381;}
+.bgc-99c68e {background-color: #99c68e;}
+.bgc-4cc417 {background-color: #4cc417;}
+.bgc-6cc417 {background-color: #6cc417;}
+.bgc-52d017 {background-color: #52d017;}
+.bgc-4cc552 {background-color: #4cc552;}
+.bgc-54c571 {background-color: #54c571;}
+.bgc-57e964 {background-color: #57e964;}
+.bgc-5efb6e {background-color: #5efb6e;}
+.bgc-64e986 {background-color: #64e986;}
+.bgc-6afb92 {background-color: #6afb92;}
+.bgc-b5eaaa {background-color: #b5eaaa;}
+.bgc-c3fdb8 {background-color: #c3fdb8;}
+.bgc-00ff00 {background-color: #00ff00;}
+.bgc-87f717 {background-color: #87f717;}
+.bgc-5ffb17 {background-color: #5ffb17;}
+.bgc-59e817 {background-color: #59e817;}
+.bgc-7fe817 {background-color: #7fe817;}
+.bgc-8afb17 {background-color: #8afb17;}
+.bgc-b1fb17 {background-color: #b1fb17;}
+.bgc-ccfb5d {background-color: #ccfb5d;}
+.bgc-bce954 {background-color: #bce954;}
+.bgc-a0c544 {background-color: #a0c544;}
+.bgc-ffff00 {background-color: #ffff00;}
+.bgc-fffc17 {background-color: #fffc17;}
+.bgc-fff380 {background-color: #fff380;}
+.bgc-ede275 {background-color: #ede275;}
+.bgc-edda74 {background-color: #edda74;}
+.bgc-eac117 {background-color: #eac117;}
+.bgc-fdd017 {background-color: #fdd017;}
+.bgc-fbb917 {background-color: #fbb917;}
+.bgc-e9ab17 {background-color: #e9ab17;}
+.bgc-d4a017 {background-color: #d4a017;}
+.bgc-c7a317 {background-color: #c7a317;}
+.bgc-c68e17 {background-color: #c68e17;}
+.bgc-af7817 {background-color: #af7817;}
+.bgc-ada96e {background-color: #ada96e;}
+.bgc-c9be62 {background-color: #c9be62;}
+.bgc-827839 {background-color: #827839;}
+.bgc-fbb117 {background-color: #fbb117;}
+.bgc-e8a317 {background-color: #e8a317;}
+.bgc-c58917 {background-color: #c58917;}
+.bgc-f87431 {background-color: #f87431;}
+.bgc-e66c2c {background-color: #e66c2c;}
+.bgc-f88017 {background-color: #f88017;}
+.bgc-f87217 {background-color: #f87217;}
+.bgc-e56717 {background-color: #e56717;}
+.bgc-c35617 {background-color: #c35617;}
+.bgc-c35817 {background-color: #c35817;}
+.bgc-8a4117 {background-color: #8a4117;}
+.bgc-7e3517 {background-color: #7e3517;}
+.bgc-7e2217 {background-color: #7e2217;}
+.bgc-7e3117 {background-color: #7e3117;}
+.bgc-7e3817 {background-color: #7e3817;}
+.bgc-7f5217 {background-color: #7f5217;}
+.bgc-806517 {background-color: #806517;}
+.bgc-805817 {background-color: #805817;}
+.bgc-7f462c {background-color: #7f462c;}
+.bgc-c85a17 {background-color: #c85a17;}
+.bgc-c34a2c {background-color: #c34a2c;}
+.bgc-e55b3c {background-color: #e55b3c;}
+.bgc-f76541 {background-color: #f76541;}
+.bgc-e18b6b {background-color: #e18b6b;}
+.bgc-f88158 {background-color: #f88158;}
+.bgc-e67451 {background-color: #e67451;}
+.bgc-c36241 {background-color: #c36241;}
+.bgc-c47451 {background-color: #c47451;}
+.bgc-e78a61 {background-color: #e78a61;}
+.bgc-f9966b {background-color: #f9966b;}
+.bgc-ee9a4d {background-color: #ee9a4d;}
+.bgc-f660ab {background-color: #f660ab;}
+.bgc-f665ab {background-color: #f665ab;}
+.bgc-e45e9d {background-color: #e45e9d;}
+.bgc-c25283 {background-color: #c25283;}
+.bgc-7d2252 {background-color: #7d2252;}
+.bgc-e77471 {background-color: #e77471;}
+.bgc-f75d59 {background-color: #f75d59;}
+.bgc-e55451 {background-color: #e55451;}
+.bgc-c24641 {background-color: #c24641;}
+.bgc-ff0000 {background-color: #ff0000;}
+.bgc-f62217 {background-color: #f62217;}
+.bgc-e41b17 {background-color: #e41b17;}
+.bgc-f62817 {background-color: #f62817;}
+.bgc-e42217 {background-color: #e42217;}
+.bgc-c11b17 {background-color: #c11b17;}
+.bgc-faafbe {background-color: #faafbe;}
+.bgc-fbbbb9 {background-color: #fbbbb9;}
+.bgc-e8adaa {background-color: #e8adaa;}
+.bgc-e7a1b0 {background-color: #e7a1b0;}
+.bgc-faafba {background-color: #faafba;}
+.bgc-f9a7b0 {background-color: #f9a7b0;}
+.bgc-e799a3 {background-color: #e799a3;}
+.bgc-c48793 {background-color: #c48793;}
+.bgc-c5908e {background-color: #c5908e;}
+.bgc-b38481 {background-color: #b38481;}
+.bgc-c48189 {background-color: #c48189;}
+.bgc-7f5a58 {background-color: #7f5a58;}
+.bgc-7f4e52 {background-color: #7f4e52;}
+.bgc-7f525d {background-color: #7f525d;}
+.bgc-817679 {background-color: #817679;}
+.bgc-817339 {background-color: #817339;}
+.bgc-827b60 {background-color: #827b60;}
+.bgc-c9c299 {background-color: #c9c299;}
+.bgc-c8b560 {background-color: #c8b560;}
+.bgc-ecd672 {background-color: #ecd672;}
+.bgc-ecd872 {background-color: #ecd872;}
+.bgc-ffe87c {background-color: #ffe87c;}
+.bgc-ece5b6 {background-color: #ece5b6;}
+.bgc-fff8c6 {background-color: #fff8c6;}
+.bgc-faf8cc {background-color: #faf8cc;}

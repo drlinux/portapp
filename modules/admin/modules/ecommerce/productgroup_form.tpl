@@ -1,0 +1,54 @@
+<form action="{$SCRIPT_NAME}" method="post" enctype="multipart/form-data">
+<table>
+{if $msg ne ""}
+<caption class="ui-state-error ui-corner-all">
+	{if $msg eq "productgroupTitle_empty"}You must supply a title
+	{/if}
+</caption>
+{/if}
+<tbody>
+	<tr class="dn">
+		<td>{#LABEL_Id#}</td>
+		<td>
+			<input type="text" name="productgroupId" value="{$data.model.productgroupId}" readonly="readonly" />
+		</td>
+	</tr>
+	<tr>
+		<td>{#LABEL_Sorting#}</td>
+		<td>
+			<input type="text" name="productgroupSorting" value="{$data.model.productgroupSorting}" />
+		</td>
+	</tr>
+	<tr>
+		<td class="vat">{#LABEL_Title#}</td>
+		<td>
+			{foreach from=$data.i18n item="entry"}
+			<div>{$entry.iso639.iso639Title}</div>
+			<input type="text" name="productgroupTitle[{$entry.iso639.iso639Id}]" value="{$entry.model.productgroupTitle}"/>
+			{/foreach}
+		</td>
+	</tr>
+	<tr>
+		<td>Ürünler</td>
+		<td>
+			<select class="multiselect" name="productId[]" multiple="multiple" size="5">
+			{html_options options=$data.product.options selected=$data.model.product.selected}
+			</select>
+		</td>
+	</tr>
+</tbody>
+<tfoot>
+	<tr>
+		<td></td>
+		<td>
+			<span class="buttonset">
+			<button name="action" value="save">{#BUTTON_Save#}</button>
+			{if $data.model.productgroupId neq null}
+			<button name="action" value="delete">{#BUTTON_Delete#}</button>
+			{/if}
+			</span>
+		</td>
+	</tr>
+</tfoot>
+</table>
+</form>

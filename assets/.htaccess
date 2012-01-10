@@ -1,0 +1,8 @@
+<Files "*">
+Deny from all
+</Files>
+
+<Files ~ "\.(php|js|css|properties|swf|png|gif)$">
+Satisfy any
+Allow from all
+</Files>

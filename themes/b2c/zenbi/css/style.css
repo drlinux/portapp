@@ -1,0 +1,436 @@
+@CHARSET "UTF-8";
+
+@import url("/portapp/assets/css/reset.css");
+@import url("/portapp/assets/css/base.css");
+@import url("/portapp/assets/css/common.css");
+
+body
+{
+	background: #ffdbdb url(../images/bg.jpg) no-repeat center top;
+}
+
+input[type=text], input[type=email], input[type=password], select, textarea
+{
+	background: #f8f8f7 !important;
+	border-color: #d9d8d6 !important;
+	border-radius: 4px !important;
+	color: #000 !important;
+}
+
+h1, h2, h3, h4, h5, h6 { color:#b9246a; }
+
+.subHeader
+{
+	font-size:18px;
+	margin-bottom: 30px;
+	padding-bottom: 5px !important;
+	border-bottom: solid 1px #ebe3cf !important;
+}
+
+.productTitle
+{
+	font-size: 15px !important;
+}
+
+.border_solid
+{
+	border-color: #ebe3cf;
+}
+
+.bigProductList, .border_color_ebe3cf
+{
+	border-color: #ebe3cf;
+}
+
+#siteContentsOuter
+{
+	background: none;
+}
+
+#wholeContentsOuter
+{
+	padding: 10px 10px 120px 10px;
+	border-bottom: solid 8px #f2dc8b;
+	background: #fff url(../images/securityInfoBg.jpg) no-repeat center bottom;
+}
+
+#headerOuter
+{
+	height:107px;
+}
+
+#btnRegister
+{
+	float:right;
+	height:19px;
+	margin:5px 10px 0 0;
+	padding:3px 10px;
+	background: url(../images/blackButtonBg_center.png) repeat-x;
+	border-radius: 5px;
+	color: #fff;
+	text-decoration: none;
+}
+
+#searchFormOuter
+{
+	width:264px;
+	height:36px;
+	position:relative;
+	right:-10px;
+	background: url(../images/searchInputBg.png) no-repeat left top;
+	float:right;
+}
+
+#searchFormOuter input[type=text]
+{
+	width:205px !important;
+}
+
+#buttonSearch
+{
+	width:38px;
+	height:36px;
+	float:right;
+	border:none;
+	cursor: pointer;
+	background: url(../images/btnSearch.png);
+}
+
+#searchFormOuter input[type=text]
+{
+	background: transparent;
+	border: none;
+	height:25px;
+	float:left;
+	margin:4px 0 0 5px;
+	font-size:16px;
+}
+
+.bigProductList
+{
+	width:650px;
+	float:left;
+}
+
+.productItem
+{
+	border-right: solid 1px #e6d9bb;
+}
+
+.sidebarProductList
+{
+	padding:0 !important;
+}
+
+.bigProductList .productItem
+{
+	width:209px;
+	height: 290px;
+	display:block;
+	margin: 0 10px 10px 0;
+}
+
+.bigProductList .productLogo
+{
+	width:190px;
+	height:190px;
+}
+
+.subMenuOuter .productItem
+{
+	width:49.5% !important;
+	height:195px;
+	float:left;
+	margin:0;
+}
+
+.sidebarProductList
+{
+	padding:10px 0px;
+}
+
+.subMenuOuter
+{
+	width:264px;
+	border:none;
+}
+
+.subMenuOuter .top
+{
+	font-size: 15px;
+	color: #050505;
+	width:244px;
+	height:21px;
+	background: url(../images/menuTopBg.png) no-repeat left top;
+}
+
+
+.subMenuOuter .center
+{
+	width:244px;
+	background: url(../images/menuCenterBg.png) repeat-y;
+}
+
+.subMenuOuter .bottom
+{
+	height:7px;
+	background: url(../images/menuBottomBg.png) no-repeat;
+}
+
+#miniBasketList .totalCost
+{
+	float:right;
+	margin:10px 0 20px 0;
+}
+
+#miniBasketList .moveToBasket
+{
+	float:right;
+	clear:both;
+}
+
+#miniBasketList .moveToBasket:hover
+{
+	color: #fff;
+}
+
+#miniBasketList li
+{
+	width:100%;
+	margin:2px 0 3px 0;
+	float:left;
+	clear:left;
+}
+
+#miniBasketList .remove
+{
+	width:24px !important;
+	height:18px !important;
+	padding: 0;
+	float:right !important;
+}
+
+#miniBasketList .cost
+{
+	float:right !important;
+	margin:0 10px !important;
+}
+
+#miniBasketList .remove span
+{
+	margin:-4px 0 0 0 !important;
+}
+
+
+#miniBasketList .remove:hover
+{
+	background-position: left bottom !important;
+}
+
+.productItem
+{
+	background: none !important;
+}
+
+#menuOuter
+{
+	float:none;
+	position:absolute;
+	right:0;
+	bottom:-10px;
+	width:690px;
+}
+
+#menuOuter a
+{
+	height:25px;
+	padding: 10px 20px;
+	font-size: 18px;
+	color: #cb0202;
+	line-height: 45px;
+	float:right;
+}
+
+#menuOuter a cufon
+{
+	margin-top:15px;
+}
+
+#menuOuter a.selected
+{
+	background: url(../images/navButtonsBg_center.png);
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+}
+
+.labelDiscount
+{
+	color:#f00;
+	height:25px;
+}
+
+.productName
+{
+	color: #3b3b3b;
+	font-size:13px !important;
+	margin-top:5px;
+}
+
+.costsOuter
+{
+	margin:15px 0;
+}
+
+.oldCost
+{
+	font-size:11px !important;
+}
+
+.currentCost
+{
+	font-weight: bold;
+	font-size:14px !important;
+}
+
+.btnAddToBasket
+{
+	width:38px;
+	height:27px;
+	display:block;
+	clear:both;
+	margin:0 auto;
+	position:relative;
+	top:10px;
+	text-indent: -99999px !important;
+	background: url(../images/btnAddToBasket.png) no-repeat left top;
+}
+
+
+#productInfoOuter
+{
+	width:300px !important;	
+	float:right !important;
+}
+
+
+#loginFormOuter label
+{
+	font-size: 14px !important;
+	line-height: 25px !important;
+}
+
+#loginFormOuter 
+{
+	position:relative;
+	padding-bottom:25px;
+}
+
+#loginFormOuter label.error
+{
+	position: absolute;
+	left:0;
+	bottom:0;
+	width:200px;
+	height:20px;
+	background: #fff !important;
+	font-size: 12px !important;
+	letter-spacing: -0.5px;
+}
+
+#contactRight .title
+{
+	font-weight: bold;
+	width:100%;
+	float:left;
+}
+
+#contactRight .content
+{
+	width:100%;
+	float:left;
+	margin-bottom:10px;	
+}
+
+.ui-tabs-panel
+{
+	min-height: 150px;
+}
+
+#footerOuter
+{
+	text-align: center;
+}
+
+#footerLogo
+{
+	width:96px;
+	height:48px;
+}
+
+
+/* SLIDER */
+#mainBannerOuter {
+	width: 670px !important;
+	height: 321px !important;
+	float: left;
+	border:none;
+	padding:10px;
+	margin-bottom:10px;
+	background: url(../images/sliderBg.png) no-repeat left top;
+}
+
+#mainBanner
+{
+	width:644px !important;
+	height:294px;
+	float:left;
+	margin:13px;
+}
+
+.nivo-caption
+{
+	bottom:-2px;
+}
+
+.nivo-controlNav
+{
+	display:none;
+}
+
+.nivo-directionNav
+{
+	display:block !important;
+}
+
+
+.nivo-nextNav {
+	width: 21px;
+	height: 21px;
+	display: block;
+	position: absolute;
+	right: 20px;
+	top: 144px;
+	cursor: pointer;
+	text-indent: -9999px;
+	background: url(../images/sliderButtonsBg.png) no-repeat right top;
+}
+
+.nivo-nextNav:hover {
+	background-position: right bottom;
+}
+
+.nivo-prevNav {
+	width: 21px;
+	height: 21px;
+	display: block;
+	position: absolute;
+	left: 20px;
+	top: 144px;
+	cursor: pointer;
+	text-indent: -9999px;
+	background: url(../images/sliderButtonsBg.png) no-repeat left top;
+}
+
+.nivo-prevNav:hover {
+	background-position: left bottom;
+}

@@ -1,0 +1,33 @@
+@CHARSET "UTF-8";
+
+#productBigBasketOuter thead td, #productBigBasketOuter tfoot td
+{
+	background-color:#222;
+}
+
+
+#productBigBasketOuter .btnContinueShopping
+{
+	position:relative; 
+	top:-5px; 
+	left:-4px;
+}
+
+#productBigBasketOuter input.spinnerhide
+{
+	margin:0;
+	position:relative;
+	top:-10px;
+}
+
+#productBigBasketOuter tbody span.price
+{
+	position:relative;
+	top:-18px;
+}
+
+#productBigBasketOuter tbody button
+{
+	position:relative;
+	top:-15px;
+}

@@ -1,0 +1,14 @@
+@CHARSET "UTF-8";
+
+@import url("/portapp/assets/css/common.css");
+
+html {
+	
+}
+
+body {
+	font-size: 75%;
+	color: #222;
+	background: #fff;
+	font-family: Arial;
+}
