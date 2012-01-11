@@ -42,16 +42,15 @@ switch($_action)
 		}
 		elseif ($aPayment["paymentgroup"]["paymentgroupType"] == "cc")
 		{
-			$XML_SERVICE_URL		= $aPayment["paymentgroup"]["paymentgroupGate1"]; // XML Web Servisi (XML_SERVICE_URL) PROD
-			$OOS_TDS_SERVICE_URL	= $aPayment["paymentgroup"]["paymentgroupGate2"]; // OOS/TDS Web Servisi (OOS_TDS_SERVICE_URL) PROD
+			$XML_SERVICE_URL		= $aPayment["paymentgroup"]["paymentgroupGate1"];
+			$OOS_TDS_SERVICE_URL	= $aPayment["paymentgroup"]["paymentgroupGate2"];
 			
-			$mid			= $aPayment["paymentgroup"]["paymentgroupMid"];//"6783406546";
-			$tid			= $aPayment["paymentgroup"]["paymentgroupTid"];//"67599225";
+			$mid			= $aPayment["paymentgroup"]["paymentgroupMid"];
+			$tid			= $aPayment["paymentgroup"]["paymentgroupTid"];
 			$amount			= $_POST["amount"] * 100;//tutar*100 - Alışveriş tutarı (14,8 TL için 1480 giriniz.)
 			$ccno			= $_POST["ccno"];
 			$cvc			= $_POST["cvc"];
 			$expDate		= $_POST["expDate"];
-			$orderID		= 'CC_'.$aPayment["paymentgroup"]["bankCode"].'_0000'.date("ymdHis");//'CC_0067_0000'.date("ymdHis");//1s3456z8901234567890QWER
 			$installment	= ($_POST["installment"]==1)?"00":$_POST["installment"];//Taksit sayisi (taksitsiz işlemlerde taksit sayısı "00" gönderilmelidir)
 		
 			$posnetid		= $aPayment["paymentgroup"]["paymentgroupPosnetid"];
@@ -131,63 +130,6 @@ switch($_action)
 				echo "Kart bilgileri hatalı";exit;
 			}
 		}
-		
-		
-		// TODO: işlem onaylanırsa sipariş veritabanına girilecek
-		if (false) {
-			$model->insert(
-				$model->sTable,
-				array(
-					"productorderstatusId"=>1,
-					"userId"=>$_SESSION["userId"],
-					"XID"=>$XID,
-					"productorderDatetime"=>date("Y-m-d H:i:s"),
-					"paymentId"=>$_SESSION["paymentId"],
-					"transportationId"=>$_SESSION["transportationId"],
-					"deliveryaddressId"=>$_SESSION["deliveryaddressId"],
-					"invoiceaddressId"=>$_SESSION["invoiceaddressId"]
-				)
-			);
-			unset($_SESSION["paymentId"]);
-			unset($_SESSION["transportationId"]);
-			unset($_SESSION["deliveryaddressId"]);
-			unset($_SESSION["invoiceaddressId"]);
-			
-			$rows = $model->select($model->sTable, "XID = :XID", array("XID"=>$XID));
-			$productorderId = $rows[0]["productorderId"];
-			
-			$productsalesmovement = new Productsalesmovement();
-			foreach ($pb["aaData"] as $productattribute) {
-				$productsalesmovement->insert(
-					$productsalesmovement->sTable,
-					array(
-						"productorderId"=>$productorderId,
-						"productattributeId"=>$productattribute["productattribute"]["productattributeId"],
-						"productsalesmovementQuantity"=>$productattribute["productattributebasketQuantity"],
-						"productsalesmovementPrice"=>$productattribute["productattribute"]["productattributepriceMDV"]
-					)
-				);
-				setcookie("productattributebasket[".$productattribute["productattribute"]["productattributeId"]."]", "", time()-60*60);
-			}
-			
-			$mailer = new CasMailer();
-			$mailer->Subject = "Sipariş";
-			$mailer->MsgHTML(sprintf("Sayın %s;<br/>Siparişiniz işleme alınmıştır.<br/>Sipariş Kodunuz: %s<br/>Toplam Miktar: %s<br/>Ödeme Tipi: %s", $u["userLastname"], $XID, $pb["productattributebasketTotalCur"], $p["paymentgroup"]["paymentgroupTitle"]));
-			$mailer->AddAddress($u["userEmail"]);
-			$mailer->AddCC(_EMAIL_USERNAME_);
-			if(!$mailer->Send()) {
-				//$this->msg = $smarty->getConfigVariable("ALERT_MailerSendError");//$mailer->ErrorInfo
-				//return false;
-			}
-			else {
-				//$this->msg = $smarty->getConfigVariable("ALERT_MailerSendSuccessfully");
-				//return true;
-			}
-			
-			echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));
-		}
-		
-		
 		
 		$model->displayTemplate("b2c", $model->sTable."_provision", $data);
 		break;

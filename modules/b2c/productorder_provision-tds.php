@@ -1,24 +1,35 @@
 <?php
-/*
-Array (
-[MerchantPacket] => 127D1CFD216ADB714A10D5F42F24B1992407F6E53854C0722386EE27C1D947C6C4451A032E7CF43969B4D27FD793F45A3F6664C4B84EFB38D767A4F310514D654A6F1414637A7FD8208F7C742B40E9AF0965B8566DA2DFCD412555C697A265BADF342C675F308307617679163A17AAFA91877D5F80A853607961AFA0766C65417C115815EF098AFF2F406D23C30C08828688522FA51DA40D55719D3DF5CE8211A678731490E85B3005C94F9D3254D9AAA94011A0CF31ECB5471B8478 
-[BankPacket] => 5C1799273A72552012D18A483FF9B35AB09B6BDE3DC3D1E8116A9DE66A0EAF3C917131A4FE642B7EDDD98748EFA0D33ED5FDA2A32BB7D35E0995B2AA25D2A846FFF10C18E0936A97AC8904FFB3F453A4A7760A3DAC3E38A961BC765FD1F59584EF0AE4D228979A3E0C0C2B719B7391AE231BAC3717C97551F9C96D55 
-[Sign] => 2382EC8EA4FDF75F19473310FCA7A844 
-[CCPrefix] => 450634 
-[TranType] => Sale 
-[Amount] => 100 
-[Xid] => YKB_0000120108191152 
-[MerchantId] => 6783406546
-)
-*/
+require_once dirname(__FILE__) . '/../../config/config.inc.php';
 
-//$XML_SERVICE_URL = "http://setmpos.ykb.com/PosnetWebService/XML"; // XML Web Servisi (XML_SERVICE_URL) TEST
-//$OOS_TDS_SERVICE_URL = "http://setmpos.ykb.com/3DSWebService/YKBPaymentService"; // OOS/TDS Web Servisi (OOS_TDS_SERVICE_URL) TEST
-$XML_SERVICE_URL = "https://www.posnet.ykb.com/PosnetWebService/XML"; // XML Web Servisi (XML_SERVICE_URL) PROD
-$OOS_TDS_SERVICE_URL = "https://www.posnet.ykb.com/3DSWebService/YKBPaymentService"; // OOS/TDS Web Servisi (OOS_TDS_SERVICE_URL) PROD
+// TODO: Bankadan data geldiği için burada sorun çıkarıyor
+//Permission::checkPermissionRedirect("b2c");
 
-$mid			= "6783406546";
-$tid			= "67599225";
+
+$productattribute = new Productattribute;
+$aProductattribute = $productattribute->getProductattributesFromBasket();
+if (!$aProductattribute) {
+	$data["process"] = array(
+		"success"=>false,
+		"msg"=>"Sepetiniz boş olduğundan işleme devam edilemiyor"
+	);
+	break;
+}
+
+$user = new User();
+$aUser = $user->getEntry($_SESSION["userId"]);
+//print_r($aUser);exit;
+
+$payment = new Payment();
+$aPayment = $payment->getPayment($_SESSION["paymentId"]);
+//print_r($aPayment);exit;
+
+
+$XML_SERVICE_URL		= $aPayment["paymentgroup"]["paymentgroupGate1"];
+$OOS_TDS_SERVICE_URL	= $aPayment["paymentgroup"]["paymentgroupGate2"];
+
+$mid			= $aPayment["paymentgroup"]["paymentgroupMid"];
+$tid			= $aPayment["paymentgroup"]["paymentgroupTid"];
+
 $merchantData	= $_POST["MerchantPacket"];
 $bankData		= $_POST["BankPacket"];
 $sign			= $_POST["Sign"];
@@ -70,10 +81,10 @@ echo $result;exit;
 
 
 // XML Parse
-$Root = new SimpleXMLElement($result);
+$oosResolveMerchantDataResponse = new SimpleXMLElement($result);
 
 //header ('Content-type: text/html; charset=utf-8');
-if ( $Root->approved == 1 ) {
+if ( $oosResolveMerchantDataResponse->approved == 1 ) {
 	//echo "merchantPacket verisi çözümlendi";
 
 
@@ -114,8 +125,68 @@ if ( $Root->approved == 1 ) {
 
 	// XML Parse
 	$Root = new SimpleXMLElement($result);
+	
+	header ('Content-type: text/html; charset=utf-8');
 	if ( $Root->approved == 1 ) {
 		echo "Ödeme tamamlandı";
+		
+		$XID = $oosResolveMerchantDataResponse->oosResolveMerchantDataResponse->xid;
+		
+		$productorder = new Productorder();
+		$productorder->insert(
+			$productorder->sTable,
+			array(
+				"productorderstatusId"=>1,
+				"userId"=>$_SESSION["userId"],
+				"XID"=>$XID,
+				"productorderDatetime"=>date("Y-m-d H:i:s"),
+				"paymentId"=>$_SESSION["paymentId"],
+				"transportationId"=>$_SESSION["transportationId"],
+				"deliveryaddressId"=>$_SESSION["deliveryaddressId"],
+				"invoiceaddressId"=>$_SESSION["invoiceaddressId"]
+			)
+		);
+		unset($_SESSION["paymentId"]);
+		unset($_SESSION["transportationId"]);
+		unset($_SESSION["deliveryaddressId"]);
+		unset($_SESSION["invoiceaddressId"]);
+		
+		$rows = $productorder->select($productorder->sTable, "XID = :XID", array("XID"=>$XID));
+		$productorderId = $rows[0]["productorderId"];
+		
+		$productsalesmovement = new Productsalesmovement();
+		foreach ($aProductattribute["aaData"] as $productattribute) {
+			$productsalesmovement->insert(
+				$productsalesmovement->sTable,
+				array(
+					"productorderId"=>$productorderId,
+					"productattributeId"=>$productattribute["productattribute"]["productattributeId"],
+					"productsalesmovementQuantity"=>$productattribute["productattributebasketQuantity"],
+					"productsalesmovementPrice"=>$productattribute["productattribute"]["productattributepriceMDV"]
+				)
+			);
+			setcookie("productattributebasket[".$productattribute["productattribute"]["productattributeId"]."]", "", time()-60*60);
+		}
+		
+		$mailer = new CasMailer();
+		$mailer->Subject = "Sipariş";
+		$mailer->MsgHTML(sprintf("Sayın %s;<br/>Siparişiniz işleme alınmıştır.<br/>Sipariş Kodunuz: %s<br/>Toplam Miktar: %s<br/>Ödeme Tipi: %s", $aUser["userLastname"], $XID, $aProductattribute["productattributebasketTotalCur"], $aPayment["paymentgroup"]["paymentgroupTitle"]));
+		$mailer->AddAddress($aUser["userEmail"]);
+		// TODO: CC ye firm temsilcisinin e-posta adresini koy
+		//$mailer->AddCC(_EMAIL_USERNAME_);
+		if(!$mailer->Send()) {
+			//$this->msg = $smarty->getConfigVariable("ALERT_MailerSendError");//$mailer->ErrorInfo
+			//return false;
+		}
+		else {
+			//$this->msg = $smarty->getConfigVariable("ALERT_MailerSendSuccessfully");
+			//return true;
+		}
+		
+		//echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));
+		header("Location: " . PROJECT_URL . "modules/b2c/productorder.php?action=showProductorder&productorderId=" . $productorderId);
+		exit;
+		
 	}
 	else {
 		echo "Ödeme tamamlanamadı";
@@ -123,9 +194,9 @@ if ( $Root->approved == 1 ) {
 
 }
 else {
+	header ('Content-type: text/html; charset=utf-8');
 	echo "merchantPacket verisi çözümlenemedi";
-	//echo $Root->respCode . PHP_EOL;
-	//echo $Root->respText . PHP_EOL;
-	//echo $Root->yourIP . PHP_EOL;
+	//echo $oosResolveMerchantDataResponse->respCode . PHP_EOL;
+	//echo $oosResolveMerchantDataResponse->respText . PHP_EOL;
 }
 exit;
