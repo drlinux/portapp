@@ -15,6 +15,7 @@ require(dirname(__FILE__) . '/../classes/model/Advertisementgroup.php');
 require(dirname(__FILE__) . '/../classes/model/Attribute.php');
 require(dirname(__FILE__) . '/../classes/model/Attributegroup.php');
 require(dirname(__FILE__) . '/../classes/model/Attributeimpact.php');
+require(dirname(__FILE__) . '/../classes/model/Bank.php');
 require(dirname(__FILE__) . '/../classes/model/Bankbin.php');
 require(dirname(__FILE__) . '/../classes/model/Banner.php');
 require(dirname(__FILE__) . '/../classes/model/Brand.php');

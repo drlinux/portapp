@@ -9,7 +9,7 @@ class Paymentgroup extends CasBase
 		$this->sTable		= strtolower(__CLASS__);
 		$this->sTableI18n	= $this->sTable."_i18n";
 
-		$this->aAllField		= array("paymentgroupId", "paymentgroupType", "paymentgroupSorting", "paymentgroupClass", "paymentgroupGate1", "paymentgroupGate2", "paymentgroupStatus", "paymentgroupPosnetid");
+		$this->aAllField		= array("paymentgroupId", "paymentgroupType", "paymentgroupSorting", "paymentgroupClass", "paymentgroupStatus", "bankCode", "paymentgroupGate1", "paymentgroupGate2", "paymentgroupMid", "paymentgroupTid", "paymentgroupPosnetid");
 		$this->sIndexColumn		= "paymentgroupId";
 		$this->sIndexColumnFull	= $this->sTable.".".$this->sIndexColumn;
 

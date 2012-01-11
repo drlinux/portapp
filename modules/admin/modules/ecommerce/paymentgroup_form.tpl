@@ -17,15 +17,67 @@
 				</td>
 			</tr>
 			<tr>
+				<td>Tip</td>
+				<td>
+					<select name="paymentgroupType">
+					<option value="mt"{if $data.model.paymentgroupType eq 'mt'} selected="selected"{/if}>Para Transferi</option>
+					<option value="pd"{if $data.model.paymentgroupType eq 'pd'} selected="selected"{/if}>Kapıda Ödeme</option>
+					<option value="cc"{if $data.model.paymentgroupType eq 'cc'} selected="selected"{/if}>Kredi Kartı</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
 				<td>{#LABEL_Sorting#}</td>
 				<td>
 					<input type="text" name="paymentgroupSorting" value="{$data.model.paymentgroupSorting}" />
 				</td>
 			</tr>
 			<tr>
+				<td>class</td>
+				<td>
+					<input type="text" name="paymentgroupClass" value="{$data.model.paymentgroupClass}" />
+				</td>
+			</tr>
+			<tr>
 				<td>{#LABEL_Status#}</td>
 				<td>
 					<input type="text" name="paymentgroupStatus" value="{$data.model.paymentgroupStatus}" />
+				</td>
+			</tr>
+			<tr>
+				<td>Banka</td>
+				<td>
+					{html_options name=bankCode options=$data.bank.options selected=$data.model.bankCode}
+				</td>
+			</tr>
+			<tr>
+				<td>{#LABEL_Server#}</td>
+				<td>
+					<input type="text" name="paymentgroupGate1" value="{$data.model.paymentgroupGate1}" />
+				</td>
+			</tr>
+			<tr>
+				<td>{#LABEL_Server#}</td>
+				<td>
+					<input type="text" name="paymentgroupGate2" value="{$data.model.paymentgroupGate2}" />
+				</td>
+			</tr>
+			<tr>
+				<td>MID</td>
+				<td>
+					<input type="text" name="paymentgroupMid" value="{$data.model.paymentgroupMid}" />
+				</td>
+			</tr>
+			<tr>
+				<td>TID</td>
+				<td>
+					<input type="text" name="paymentgroupTid" value="{$data.model.paymentgroupTid}" />
+				</td>
+			</tr>
+			<tr>
+				<td>POSNET ID</td>
+				<td>
+					<input type="text" name="paymentgroupPosnetid" value="{$data.model.paymentgroupPosnetid}" />
 				</td>
 			</tr>
 			<tr>

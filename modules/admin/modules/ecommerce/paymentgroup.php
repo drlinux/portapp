@@ -5,7 +5,7 @@ Permission::checkPermissionRedirect();
 
 $_action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'view';
 
-$model = new Paymentgroup;
+$model = new Paymentgroup();
 
 switch($_action) {
 	case 'dataTables':
@@ -52,6 +52,10 @@ switch($_action) {
 	case 'edit':
 		$data["model"] = $model->getPaymentgroup($_REQUEST[$model->sIndexColumn]);
 		$data["i18n"] = $model->getEntryWithLanguages($_REQUEST[$model->sIndexColumn]);
+		//print_r($data);exit;
+		
+		$bank = new Bank();
+		$data["bank"] = $bank->getEntries();
 		//print_r($data);exit;
 		
 		$transportation = new Transportation;
