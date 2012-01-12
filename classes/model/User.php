@@ -363,7 +363,8 @@ class User extends CasBase
 	}
 
 
-	function isValidRegisterForm1($formvars)
+	// TODO: Uzun kayıt formu için
+	function ___isValidRegisterForm1($formvars)
 	{
 
 		// reset message
@@ -525,6 +526,8 @@ class User extends CasBase
 
 	function isValidRegisterForm($formvars)
 	{
+		global $smarty;
+		
 		$diff = array("userFirstname", "userLastname", "userEmail", "userAgreement");
 
 		// check if empty

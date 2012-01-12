@@ -7,7 +7,7 @@
 			<div id="searchFormOuter">
 				<form method="get" action="modules/b2c/search.php">
 					<input type="text" name="sSearch" title="Lütfen arama yapmak istediğinizi kelimeyi girin" required="required" value="{#BUTTON_Search#}"  />
-					<button type="submit" id="buttonSearch"></button>
+					<button type="submit" id="buttonSearch" name="action" value="search"></button>
 				</form>
 			</div><!-- #searchFormOuter -->
 			<a id="btnRegister" href="modules/b2c/register.php">Üye Ol</a>

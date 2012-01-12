@@ -1,6 +1,6 @@
 <div class="casContent">
-	<div id="deliveryAddress" cas-js="getDeliveryaddresses" cas:url="modules/b2b/address.php" cas:var1=""></div>
-	<div id="billAddress" cas-js="getInvoiceaddresses" cas:url="modules/b2b/address.php" cas:var1="" class="mt20"></div>
+	<div id="deliveryAddress" cas-js="getDeliveryaddresses" cas:var1=""></div>
+	<div id="billAddress" cas-js="getInvoiceaddresses" cas:var1="" class="mt20"></div>
 	
 	<div class="dn" id="dialog-form" title="Adres girişi">
 		<form id="formPostaladdress" method="post" action="modules/b2b/address.php">

@@ -51,7 +51,7 @@
 					</select>
 				</li>
 				{/foreach}
-				<li id="liProductattributebasketQuantity">
+				<li class="productattributeQuantity">
 					<label>{#LABEL_Quantity#}:</label>
 					<input id="productattributebasketQuantity" type="text" name="productattributebasketQuantity" value="1" onkeyup="Productattribute.checkProductattribute();" />
 				</li>
@@ -80,7 +80,7 @@
 			{/if}
 		</div>
 		<div id="tabs-3">
-			<div id="paymentOptionsOuter"></div>
+			<div id="paymentPeriodTable"></div>
 		</div>
 		<div id="tabs-4">
 			<div id="fb-root"></div>
@@ -99,20 +99,25 @@
 </div>
 <div class="casContent">
 	<h3 class="subHeader">BENZER ÜRÜNLER</h3>
-	<ul class="productsList bigProductList" cas-js="getProductsSimilar" cas:url="modules/b2b/index.php" cas:var="{$data.category.defaultx.categoryId}" cas:loopstyle="loop2" cas:limit="5" cas-break="{$_THEME_NUMBEROFPRODUCTSDISPLAYED}">
+	<ul class="productsList bigProductList" cas-js="getProductsSimilar" cas:url="modules/b2b/index.php" cas:var="{$data.category.defaultx.categoryId}" cas:limit="{$_THEME_B2B_LIMITPRODUCTS1}" cas-break="{$_THEME_NUMBEROFPRODUCTSDISPLAYED}">
 		<li class="productItem">
-			<label class="labelDiscount">%s</label>
-			<a class="productLogoLink" href="modules/b2b/product.php?action=show&productId=%s">
-				<img class="productLogo" src="img/product/2_%s">
+			<label class="labelDiscount">
+				<span class="discountPercent">%%%s</span>
+				<span class="discountCount">%s</span>
+				<span class="discountText">İndirimli Ürün</span>
+			</label>
+			<a href="modules/b2b/product.php?action=show&amp;productId=%s" class="productLogoLink">
+				<img src="img/product/3_%s" class="productLogo">
 			</a>
-			<a class="productName" href="modules/b2b/product.php?action=show&productId=%s">%s</a>
+			<span class="c-ffffff">%s</span>
 			<div class="costsOuter">
 				<span class="oldCost">
-					%s<span class="scratch"></span>
+					%s
+					<span class="cross"></span>
 				</span>
 				<span class="currentCost">%s</span>
-				<span class="btnAddToBasket" onclick="Productattribute.updateProductattributebasket_withoutForm(%s,1);" title="Sepete Ekle">Sepete Ekle</span>										
 			</div>
+			<a class="btnAddToBasket" href="">Sepete Ekle</a>
 		</li>
 	</ul>
 </div>

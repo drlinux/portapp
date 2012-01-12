@@ -224,7 +224,7 @@ switch($_action)
 			$data["amount"] = ($amount<1)?1:$amount;
 			$model->displayTemplate("b2c", "checkout_mt", $data);
 		}
-		elseif ($data["payment"]["paymentgroupId"] == 3)
+		elseif ($data["payment"]["paymentgroupId"] == 2)
 		{
 			/*
 			 * Payment on Delivery
@@ -234,7 +234,17 @@ switch($_action)
 			$data["amount"] = ($amount<1)?1:$amount;
 			$model->displayTemplate("b2c", "checkout_pd", $data);
 		}
-		elseif ($data["payment"]["paymentgroupId"] == 5)
+		elseif ($data["payment"]["paymentgroupId"] == 3)
+		{
+			/*
+			 * Other Credit Cards
+			*/
+			// TODO: Diğer kredi kartı için form oluştur.
+			$data["XID"] = 'CCO_0000'.date("ymdHis");
+			$data["amount"] = ($amount<1)?1:$amount;
+			$model->displayTemplate("b2c", "checkout_cc_others", $data);
+		}
+		elseif ($data["payment"]["paymentgroupId"] == 4)
 		{
 			/*
 			 * world - 0067 - paymentgroupId=5
@@ -248,36 +258,7 @@ switch($_action)
 				
 			$model->displayTemplate("b2c", "checkout_cc_world", $data);
 		}
-		elseif ($data["payment"]["paymentgroupId"] == 2)
-		{
-			/*
-			 * axess - 0046 - paymentypeId=2
-			*/
-				
-			$data["clientid"] = "100626123";//Banka tarafından verilen işyeri numarası
-			$data["oid"] = 'AKB_0000'.date("ymdHis");//Sipariş numarası
-			$data["amount"] = ($amount<1)?1:$amount;//İşlem tutarı (işlem tutarı en az 1.00 ve üzeri olmalıdır.)
-			$data["rnd"] = microtime();//Tarih veya rastgele her seferinde üretilen bir değer
-			$storekey = "Z1q2w3e4r";//Isyeri anahtari
-			///////
-			$data["storetype"] = "3d_pay";//3D işlem tipi
-			$data["islemtipi"] = "Auth";//Islem tipi: Satış için Auth, Önotorizasyon için PreAuth
-			$data["taksit"] = ($period==1)?"":$period;//Taksit sayisi (taksitsiz işlemlerde taksit sayısı boş gönderilmelidir)
-			$path = "https://" . $_SERVER["HTTP_HOST"] . _MODULE_DIR_ . "b2c/";
-			$data["okUrl"] = $path . "3DPayResults.php";
-			$data["failUrl"] = $path . "3DPayResults.php";
-			$hashstr = $data["clientid"] . $data["oid"] . $data["amount"] . $data["okUrl"] . $data["failUrl"] . $data["islemtipi"] . $data["taksit"] . $data["rnd"] . $storekey;
-			$data["hash"] = base64_encode(pack('H*',sha1($hashstr)));
-				
-			$data["lang"] = "tr";
-			$data["currency"] = "949";
-				
-				
-			//print_r($data);exit;
-				
-			$model->displayTemplate("b2c", "checkout_cc_axess", $data);
-		}
-		elseif ($data["payment"]["paymentgroupId"] == 4)
+		elseif ($data["payment"]["paymentgroupId"] == 5)
 		{
 			/*
 			 * bonus - 0062 - paymentypeId=4
@@ -314,12 +295,31 @@ switch($_action)
 		elseif ($data["payment"]["paymentgroupId"] == 6)
 		{
 			/*
-			 * Other Credit Cards
+			 * axess - 0046 - paymentypeId=2
 			*/
-			// TODO: Diğer kredi kartı için form oluştur.
-			$data["XID"] = 'CCO_0000'.date("ymdHis");
-			$data["amount"] = ($amount<1)?1:$amount;
-			$model->displayTemplate("b2c", "checkout_cc_others", $data);
+				
+			$data["clientid"] = "100626123";//Banka tarafından verilen işyeri numarası
+			$data["oid"] = 'AKB_0000'.date("ymdHis");//Sipariş numarası
+			$data["amount"] = ($amount<1)?1:$amount;//İşlem tutarı (işlem tutarı en az 1.00 ve üzeri olmalıdır.)
+			$data["rnd"] = microtime();//Tarih veya rastgele her seferinde üretilen bir değer
+			$storekey = "Z1q2w3e4r";//Isyeri anahtari
+			///////
+			$data["storetype"] = "3d_pay";//3D işlem tipi
+			$data["islemtipi"] = "Auth";//Islem tipi: Satış için Auth, Önotorizasyon için PreAuth
+			$data["taksit"] = ($period==1)?"":$period;//Taksit sayisi (taksitsiz işlemlerde taksit sayısı boş gönderilmelidir)
+			$path = "https://" . $_SERVER["HTTP_HOST"] . _MODULE_DIR_ . "b2c/";
+			$data["okUrl"] = $path . "3DPayResults.php";
+			$data["failUrl"] = $path . "3DPayResults.php";
+			$hashstr = $data["clientid"] . $data["oid"] . $data["amount"] . $data["okUrl"] . $data["failUrl"] . $data["islemtipi"] . $data["taksit"] . $data["rnd"] . $storekey;
+			$data["hash"] = base64_encode(pack('H*',sha1($hashstr)));
+				
+			$data["lang"] = "tr";
+			$data["currency"] = "949";
+				
+				
+			//print_r($data);exit;
+				
+			$model->displayTemplate("b2c", "checkout_cc_axess", $data);
 		}
 
 		break;

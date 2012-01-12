@@ -18,43 +18,18 @@ switch($_action)
 		echo(json_encode($user->getInvoiceaddresses()));
 		break;
 	case 'jsonPostaladdress':
-		$postaladdress = new Postaladdress;
-		$postaladdressId = $_REQUEST["postaladdressId"];
-		$data = $postaladdress->getEntryOwned($postaladdressId);
+		$data = $model->getEntryOwned($_REQUEST[$model->sIndexColumn]);
 		echo(json_encode($data));
 		break;
 	case 'savePostaladdress':
-		$postaladdressType = $_POST["postaladdressType"];
-		$postaladdressId = $_POST["postaladdressId"];
-		$postaladdressContent = $_POST["postaladdressContent"];
-		$postaladdressCity = $_POST["postaladdressCity"];
-		$postaladdressCounty = $_POST["postaladdressCounty"];
-		$postaladdressPostalcode = $_POST["postaladdressPostalcode"];
-		$postaladdressCountry = $_POST["postaladdressCountry"];
-		
-		$postaladdress = new Postaladdress;
-		$postaladdressId = $postaladdress->saveEntry(
-			array(
-				"postaladdressId"=>$postaladdressId,
-				"userId"=>$_SESSION["userId"],
-				"postaladdressContent"=>$postaladdressContent,
-				"postaladdressCity"=>$postaladdressCity,
-				"postaladdressCounty"=>$postaladdressCounty,
-				"postaladdressPostalcode"=>$postaladdressPostalcode,
-				"postaladdressCountry"=>$postaladdressCountry
-			)
-		);
-		
-		$postaladdress->insert("user_".$postaladdressType, array("userId"=>$_SESSION["userId"], "postaladdressId"=>$postaladdressId));
-		
-		echo json_encode($_POST);
+		$_POST["userId"] = $_SESSION["userId"];
+		$postaladdressId = $model->saveEntry($_POST);
+		$model->insert("user_".$_POST["postaladdressType"], array("userId"=>$_SESSION["userId"], "postaladdressId"=>$postaladdressId));
+		echo json_encode(array("success"=>true));
 		break;
 	case 'deletePostaladdress':
-		$postaladdressId = $_POST["postaladdressId"];
-		$postaladdress = new Postaladdress;
-		$data = $postaladdress->getEntryOwned($postaladdressId);
-		$postaladdress->removeEntryOwned($postaladdressId);
-		echo(json_encode($data));
+		$model->removeEntryOwned($_REQUEST[$model->sIndexColumn]);
+		echo(json_encode(array("success"=>true)));
 		break;
 	case 'view':
 	default:

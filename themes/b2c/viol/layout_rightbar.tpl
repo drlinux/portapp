@@ -23,7 +23,7 @@
 	<div class="subMenuOuter">
 		<h2 class="top">SEPETİM</h2>
 		<div class="center">
-			<form cas-form="shoppingbasket" cas-js="getShoppingbasket" method="post" action="modules/b2c/sales.php"></form>
+			<form cas-form="shoppingbasket" cas-js="getShoppingbasket" cas:link="modules/b2c/product.php" method="post" action="modules/b2c/sales.php"></form>
 		</div>
 		<div class="bottom"></div>
 	</div>

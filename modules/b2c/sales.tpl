@@ -1,7 +1,7 @@
 <div class="casContent">
 	<h1 class="subHeader">Sepetim</h1>
 
-	<form class="fl w100p" cas-form="shoppingbasket" cas-js="getShoppingbasket2" method="post" action="modules/b2c/sales.php"></form>
+	<form class="fl w100p" cas-form="shoppingbasket" cas-js="getShoppingbasket2" cas:link="modules/b2c/product.php" method="post" action="modules/b2c/sales.php"></form>
 	
 	<div class="dn" id="dialog-form" title="Adres girişi">
 		<form id="formPostaladdress" method="post" action="modules/b2c/address.php">
@@ -33,6 +33,10 @@
 				<li class="dn">
 					<label>postaladdresstype</label>
 					<input type="text" name="postaladdressType" required="required" />
+				</li>
+				<li class="buttonset">
+					<button type="submit" onclick="Postaladdress.savePostaladdress(this.form);">{#BUTTON_Save#}</button>
+					<button type="submit" onclick="Postaladdress.deletePostaladdress(this.form);">{#BUTTON_Delete#}</button>
 				</li>
 			</ul>
 		</form>

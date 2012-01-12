@@ -68,7 +68,7 @@
 			{$data.productContent}
 		</div>
 		<div id="tabs-2">
-			<div id="paymentOptionsOuter"></div>
+			<div id="paymentPeriodTable"></div>
 		</div>
 		<div id="tabs-3">
 		</div>

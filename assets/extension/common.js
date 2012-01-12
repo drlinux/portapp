@@ -39,7 +39,7 @@ function startDefault()
 	Productattribute.getSearchResultsSalescampaign();
 	
 	Productattribute.getProductsByProductgroupId();
-	Productattribute.getProductsSimilar(0, 3);
+	Productattribute.getProductsSimilar();
 	Productattribute.getProductsByCategoryId();
 	Productattribute.getProductsByBrandId();
 	Productattribute.getProductgroups();
@@ -564,7 +564,7 @@ function Payment()
 		{
 			var bin = $(pan).val().substring(0,6);
 			$.ajax({
-				url: 'modules/b2c/productorder.php',
+				url: CommonItems.getLocation() + 'productorder.php',
 				type: 'get',
 				data: ({ action: 'jsonBincodes', bankCode: bankCode }),
 				dataType: 'json',
@@ -829,8 +829,8 @@ function Postaladdress()
 						};
 				}
 				// TODO: jQuery dialog butonları çalışmıyor
-				//$("#dialog-form").dialog(opts);
-				$("#dialog-form").dialog();
+				$("#dialog-form").dialog(opts);
+				//$("#dialog-form").dialog();
 			}
 		});
 		
@@ -842,7 +842,7 @@ function Postaladdress()
 	{
 		var $target = $('[cas-js=getDeliveryaddresses]');
 		if ($target.length) {
-			var url = $target.attr("cas:url");
+			var url = CommonItems.getLocation() + "address.php";
 			var var1 = $target.attr("cas:var1");
 		
 			$.ajax({
@@ -870,13 +870,13 @@ function Postaladdress()
 					items.push('<tr>');
 					if (var1 == "eligable") items.push('<td style="width: 50px;">&nbsp;</td>');
 					items.push('<td>Adres</td>');
-					items.push('<td style="width: 100px;"><button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'deliveryaddress\', 0);">Yeni Giriş</button></td>');
+					items.push('<td style="width: 100px;"><button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'deliveryaddress\', 0); return false;">Yeni Giriş</button></td>');
 					items.push('</tr>');
 					items.push('</thead>');
 					if (response.iTotalRecords == 0) {
 						$target.append('<span class="ui-icon ui-icon-alert fl mr5"></span>');
 						$target.append('<b>Kayıtlı bir adresiniz yok. Lütfen yeni bir tane oluşturun</b>');
-						$target.append('<button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'deliveryaddress\', 0);">Yeni Giriş</button>');
+						$target.append('<button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'deliveryaddress\', 0); return false;">Yeni Giriş</button>');
 					}
 					else {
 						items.push('<tbody>');
@@ -884,14 +884,14 @@ function Postaladdress()
 							items.push('<tr>');
 							if (var1 == "eligable") items.push('<td><input type="radio" name="deliveryaddressId" value="' + val.postaladdressId + '" onclick="Postaladdress.getInvoiceaddresses();" /></td>');
 							items.push('<td>'+val.postaladdressContent + ', ' + val.postaladdressCity + ', ' + val.postaladdressCounty + ', ' + val.postaladdressPostalcode + ', ' + val.postaladdressCountry+'</td>');
-							items.push('<td><button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'deliveryaddress\', ' + val.postaladdressId + ');">Düzenle</button></td>');
+							items.push('<td><button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'deliveryaddress\', ' + val.postaladdressId + '); return false;">Düzenle</button></td>');
 							items.push('</tr>');
 						});
 						items.push('</tbody>');
 						$('<table/>', {
 							'html': items.join('')
 						}).juitable().appendTo($target);
-						if (var1 == "eligable") $target.append('<div cas-js="getInvoiceaddresses" cas:url="'+url+'" cas:var1="eligable"></div>');
+						if (var1 == "eligable") $target.append('<div cas-js="getInvoiceaddresses" cas:var1="eligable"></div>');
 					}
 				}
 			});
@@ -902,7 +902,7 @@ function Postaladdress()
 	{
 		var $target = $('[cas-js=getInvoiceaddresses]');
 		if ($target.length) {
-			var url = $target.attr("cas:url");
+			var url = CommonItems.getLocation() + "address.php";
 			var var1 = $target.attr("cas:var1");
 		
 			$.ajax({
@@ -930,13 +930,13 @@ function Postaladdress()
 					items.push('<tr>');
 					if (var1 == "eligable") items.push('<td style="width: 50px;">&nbsp;</td>');
 					items.push('<td>Adres</td>');
-					items.push('<td style="width: 100px;"><button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'invoiceaddress\', 0);">Yeni Giriş</button></td>');
+					items.push('<td style="width: 100px;"><button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'invoiceaddress\', 0); return false;">Yeni Giriş</button></td>');
 					items.push('</tr>');
 					items.push('</thead>');
 					if (response.iTotalRecords == 0) {
 						$target.append('<span class="ui-icon ui-icon-alert fl mr5"></span>');
 						$target.append('<b>Kayıtlı bir adresiniz yok. Lütfen yeni bir tane oluşturun</b>');
-						$target.append('<button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'invoiceaddress\', 0);">Yeni Giriş</button>');
+						$target.append('<button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'invoiceaddress\', 0); return false;">Yeni Giriş</button>');
 					}
 					else {
 						items.push('<tbody>');
@@ -944,7 +944,7 @@ function Postaladdress()
 							items.push('<tr>');
 							if (var1 == "eligable") items.push('<td><input type="radio" name="invoiceaddressId" value="' + val.postaladdressId + '" onclick="Transportation.getContinueForCheckout();" /></td>');
 							items.push('<td>'+val.postaladdressContent + ', ' + val.postaladdressCity + ', ' + val.postaladdressCounty + ', ' + val.postaladdressPostalcode + ', ' + val.postaladdressCountry+'</td>');
-							items.push('<td><button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'invoiceaddress\', ' + val.postaladdressId + ');">Düzenle</button></td>');
+							items.push('<td><button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'invoiceaddress\', ' + val.postaladdressId + '); return false;">Düzenle</button></td>');
 							items.push('</tr>');
 						});
 						items.push('</tbody>');
@@ -976,8 +976,8 @@ function Transportation()
 		$('#divTotalCostInfo').hide();
 		var $target = $('#divAlertTransportation');
 		$.ajax({
-			type: "GET",
-			url: "modules/b2c/sales.php",
+			type: "get",
+			url: CommonItems.getLocation() + "sales.php",
 			data: 'action=jsonPaymentgroup&paymentgroupId=' + paymentgroupId,
 			dataType: 'json',
 			beforeSend: function() {
@@ -1029,7 +1029,7 @@ function Transportation()
 						items.push('Taşıma firması tanımlı değil');
 						$target.append(items.join(''));
 					}
-					$target.append('<div cas-js="getDeliveryaddresses" cas:url="modules/b2c/address.php" cas:var1="eligable"></div>');
+					$target.append('<div cas-js="getDeliveryaddresses" cas:var1="eligable"></div>');
 				}
 			}
 		});
@@ -1047,7 +1047,7 @@ function Transportation()
 		items.push('<tr><td></td><td></td><td>Genel Toplam</td><td>'+total+'</td></tr>');
 		$target.html(items.join(''));
 		
-		$.getJSON("modules/b2c/index.php", {
+		$.getJSON( CommonItems.getLocation() + "index.php", {
 			"action" : "checkAuthenticated"
 		}, function (response) {
 			if (response.authenticated == true) {
@@ -1077,7 +1077,6 @@ function Transportation()
 			var formData = $("[cas-js=getShoppingbasket2]").serializeArray();
 			formData.push({ name: "action", value: "setParameters" });
 			//alert("POSTing this:\n" + jQuery.param(formData));
-			//window.location = "modules/b2c/productorder.php?" + jQuery.param(formData);
 			window.location.replace( CommonItems.getLocation() + 'productorder.php?' + jQuery.param(formData) );
 			return false;
 		})
@@ -1289,7 +1288,7 @@ function Productattribute()
 	
 	var whichShoppingbasket = function ()
 	{
-		var strt = 'form[cas-form=shoppingbasket]';
+		var strt = '[cas-form=shoppingbasket]';
 		$.each($(strt), function(index, element) {
 			var strFunc = $(element).attr("cas-js");
 			//var funcCall = strFunc + "('" + strFunc + "');";
@@ -1302,7 +1301,7 @@ function Productattribute()
 	
 	var getShoppingbasket = function ()
 	{
-		var $target = $("form[cas-js=getShoppingbasket]");
+		var $target = $("[cas-js=getShoppingbasket]");
 		if ($target.length > 0) {
 			var url = $target.attr("action");
 			$.ajax({
@@ -1329,7 +1328,7 @@ function Productattribute()
 						var items = [];
 						$.each(response.aaData, function(key1, val1) {
 							items.push('<li>');
-							items.push('<label class="name"><span style="color:#f00;">' + val1.productattributebasketQuantity + '&nbsp;x&nbsp;</span><a href="modules/b2c/product.php?action=show&productId=' + val1.productattribute.productId + '">' + val1.productattribute.productTitle + '</a>');
+							items.push('<label class="name"><span style="color:#f00;">' + val1.productattributebasketQuantity + '&nbsp;x&nbsp;</span><a href="'+CommonItems.getLocation()+'product.php?action=show&productId=' + val1.productattribute.productId + '">' + val1.productattribute.productTitle + '</a>');
 							/*$.each(val1.productattribute.attribute, function(key2, val2) {
 								items.push('<div style="font-size:smaller;">' + val2.attributegroupTitle + ': ' + val2.attributeTitle + '</div>');
 							});*/
@@ -1363,7 +1362,7 @@ function Productattribute()
 
 	var getShoppingbasket2 = function ()
 	{
-		var $target = $("form[cas-js=getShoppingbasket2]");
+		var $target = $("[cas-js=getShoppingbasket2]");
 		if ($target.length > 0) {
 			var url = $target.attr("action");
 			$.ajax({
@@ -1465,7 +1464,7 @@ function Productattribute()
 						$.each(response.aaData, function(key1, val1) {
 							items.push('<tr>');
 							items.push('<td  style="width:95px;">');
-							items.push('<a href="modules/b2c/product.php?action=show&productId='+val1.productattribute.productId+'">');
+							items.push('<a href="'+CommonItems.getLocation()+'product.php?action=show&productId='+val1.productattribute.productId+'">');
 							items.push('<img src="img/product/'+val1.productattribute.pictureFile+'" width="50" />');
 							items.push('</a>');
 							items.push('</td>');
@@ -1532,7 +1531,7 @@ function Productattribute()
 	
 	var getShoppingbasketMini = function ()
 	{
-		var $target = $("form[cas-js=getShoppingbasketMini]");
+		var $target = $("[cas-js=getShoppingbasketMini]");
 		if ($target.length > 0) {
 			var url = $target.attr("action");
 			$.ajax({
@@ -1608,8 +1607,8 @@ function Productattribute()
 		$('#divTotalCostInfo').hide();
 		var $target = $('#divAlertPaymentgroup');
 		$.ajax({
-			type: "GET",
-			url: "modules/b2c/sales.php",
+			type: "get",
+			url: CommonItems.getLocation() + "sales.php",
 			data: 'action=jsonPaymentgroups',
 			dataType: 'json',
 			beforeSend: function() {
@@ -1806,12 +1805,12 @@ function Productattribute()
 	
 	var checkProductattribute = function ()
 	{
-		var $target = $('form[cas-js=formBasket]');
+		var $target = $('[cas-js=formBasket]');
 		if ($target.length) {
 			var formData = $target.serializeArray();
 			formData.push({ name: "action", value: "jsonProduct" });
 			$.ajax({
-				url: 'modules/b2c/product.php',
+				url: CommonItems.getLocation() + 'product.php',
 				type: 'post',
 				data: formData,
 				dataType: 'json',
@@ -1822,13 +1821,13 @@ function Productattribute()
 					if (response == null || response.productattributeQuantity <= 0) {
 						$('#productattributeId').val('');
 						$('#productDetailInfoOuterQuantity').html('Stokta yok');
-						$('.ulFormBasket .productattributePrice, .ulFormBasket .productattributeQuantity, .ulFormBasket button, #paymentOptionsOuter').hide();
+						$('.productattributePrice, .ulFormBasket .productattributeQuantity, .ulFormBasket button, #paymentPeriodTable').hide();
 						return false;
 					}
 					else {
 						$('#productattributeId').val(response.productattributeId);
 						$('#productDetailInfoOuterQuantity').html('Stokta Var');//response.productattributeQuantity
-						$('.ulFormBasket .productattributePrice, .ulFormBasket .productattributeQuantity, .ulFormBasket button, #paymentOptionsOuter').show();
+						$('.productattributePrice, .ulFormBasket .productattributeQuantity, .ulFormBasket button, #paymentPeriodTable').show();
 						
 						if (
 								(response.productimpactDiscountRate != null && response.productimpactDiscountRate > 0) ||
@@ -1850,12 +1849,12 @@ function Productattribute()
 	
 	var updatePayments = function (price) {
 		if (price != null) {
-			var $target = $('#paymentOptionsOuter');
+			var $target = $('#paymentPeriodTable');
 			if ($target.length) {
 				var formData = [];
 				formData.push({ name: "action", value: "jsonPayment" });
 				$.ajax({
-					url: 'modules/b2c/product.php',
+					url: CommonItems.getLocation() + 'product.php',
 					type: 'post',
 					data: formData,
 					dataType: 'json',
@@ -1929,6 +1928,7 @@ function Productattribute()
 		if ($target.length) {
 			var url = $target.attr("cas:url");
 			var sSearch = $target.attr("cas:var");
+			var limit = $target.attr("cas:limit");
 			
 			if (sSearch == "" || sSearch == null) {
 				$target.html('');
@@ -1941,13 +1941,10 @@ function Productattribute()
 			$.ajax({
 				url: url,
 				type: 'get',
-				data: ({ action: 'jsonProductattributes', iDisplayStart: 0, iDisplayLength: 7, sSearch: sSearch}),
+				data: ({ action: 'jsonProductattributes', iDisplayStart: 0, iDisplayLength: limit, sSearch: sSearch}),
 				dataType: 'json',
 				beforeSend: function() {
 					$target.html('<img src="assets/css/images/loading.gif"/>');
-				},
-				complete: function(){
-					//window.setInterval('getSearchResults('+iDisplayStart+', '+iDisplayLength+', '+sSearch+')', 5 * 1000 /*five seconds*/);
 				},
 				statusCode: {
 					404: function() {
@@ -1959,67 +1956,16 @@ function Productattribute()
 					var items = [];
 					if (response.iTotalRecords > 0) {
 						$.each(response.aaData, function(key, val) {
-							var oldCost = val.productattributepriceMVCur;
-							var currentCost = val.productattributepriceMDVCur;
-							var isDiscounted = oldCost != currentCost ? (currentCost > oldCost ? true : false) : false;
-							
-							var discountedText = isDiscounted ? "İndirimli Ürün" : "";
-							var oldCostText =  isDiscounted ? oldCost : "";
-							
-							items.push($.sprintf(tpl, discountedText, val.productId, val.pictureFile, val.productId, val.productTitle, oldCostText, val.productattributepriceMDVCur));
+							items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, val.productattributepriceMVCur, val.productattributepriceMDVCur));
 						});
 					}
 					else {
 						items.push(jQuery.i18n.prop('ALERT_NoRecords'));
 					}
 					$target.html(items.join(''));
-					
-					/*
-					if (response.iTotalRecords > 0) {
-						var pageLast = Math.ceil(response.iTotalRecords/iDisplayLength);
-						var pageCurrent = iDisplayStart/iDisplayLength;
-						
-						$target.append('<form>');
-						
-						$target.append('Sayfa: ');
-						//$target.append((pageCurrent+1) + '/' + pageLast);
-						var itemsPages = [];
-						for (var i=0;i<pageLast;i++) {
-							//$target.append('<a href="javascript:getSearchResults('+(i*iDisplayLength)+', '+iDisplayLength+', '+sSearch+');">'+(i+1)+'</a>&nbsp;&nbsp;');
-							itemsPages.push('<option value="'+i+'"');
-							if (pageCurrent == i) itemsPages.push(' selected="selected"');
-							itemsPages.push('>'+(i+1)+'</option>');
-						}
-						$('<select/>', {
-							'id': '',
-							'onchange': 'Productattribute.getSearchResults((this.options[selectedIndex].value*'+iDisplayLength+'), '+iDisplayLength+', "'+sSearch+'");',
-							'class': '',
-							'html': itemsPages.join('')
-						}).appendTo($target);
-						
-						$target.append('Her sayfada gösterilecek öğe: ');
-						var items = [];
-						$.each([3,6,9,12], function(index, value) { 
-							items.push('<option value="'+value+'"');
-							if (iDisplayLength == value) items.push(' selected="selected"');
-							items.push('>'+value+'</option>');
-						});
-						$('<select/>', {
-							'id': '',
-							'name': 'iDisplayLength',
-							'onchange': 'Productattribute.getSearchResults(0, this.options[selectedIndex].value, "'+sSearch+'");',
-							'class': '',
-							'html': items.join('')
-						}).appendTo($target);
-						
-						$target.append('</form>');
-					}
-					else {
-						$target.append('Arama sonucu bulunamadı');
-					}
-					*/
 				},
 				complete: function(){
+					//window.setInterval('getSearchResults('+iDisplayStart+', '+iDisplayLength+', '+sSearch+')', 5 * 1000); // five seconds
 					if($target.has("[cas-break]"))
 					{
 						var limitCount = $target.attr("cas-break");
@@ -2078,7 +2024,6 @@ function Productattribute()
 			$.each($target, function(index, element) {
 				var limit = $(this).attr("cas:limit");
 				var url = $(this).attr("cas:url");
-				var loopstyle = $(this).attr("cas:loopstyle");
 				var productgroupId = $(this).attr("cas:var");
 				var tpl = $(element).html();
 				$(element).html('');
@@ -2091,16 +2036,9 @@ function Productattribute()
 					success: function(response) {
 						$(element).html('');
 						var items = [];
-						if (loopstyle == "loop1") {
-							$.each(response.aaData, function(key, val) {
-								items.push($.sprintf(tpl, val.productId, val.pictureFile, val.productTitle, val.productattributepriceMDVCur));
-							});
-						}
-						else if (loopstyle == "loop2") {
-							$.each(response.aaData, function(key, val) {
-								items.push($.sprintf(tpl, productimpactDiscountRate, val.productId, val.pictureFile, val.productId, val.productTitle, oldCostText, val.productattributepriceMDVCur));
-							});
-						}
+						$.each(response.aaData, function(key, val) {
+							items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, val.productattributepriceMVCur, val.productattributepriceMDVCur));
+						});
 						$(element).html(items.join(''));
 					},
 					complete: function(){
@@ -2127,69 +2065,50 @@ function Productattribute()
 		}
 	};
 	
-	var getProductsSimilar = function (iDisplayStart, iDisplayLength)
+	var getProductsSimilar = function ()
 	{
 		var $target = $('[cas-js=getProductsSimilar]');
 		if ($target.length) {
-			var url = $target.attr("cas:url");
-			var categoryId = $target.attr("cas:var");
-			var tpl = $target.html();
-			$target.html('');
-			
-			$.ajax({
-				url: url,
-				type: 'get',
-				data: ({ action: 'jsonProductattributes', iDisplayStart: iDisplayStart, iDisplayLength: iDisplayLength, sType: 'similar', categoryId: categoryId }),
-				dataType: 'json',
-				beforeSend: function() {
-					$target.html('<img src="assets/css/images/loading.gif"/>');
-				},
-				complete: function(){
-				},
-				statusCode: {
-					404: function() {
-						CommonItems.casDialog(jQuery.i18n.prop('ALERT_PageNotFound'));
-					}
-				},
-				success: function(response) {
-					$target.html('');
-					var items = [];
-					$.each(response.aaData, function(key, val) {
-						//items.push('<a href="modules/b2c/product.php?action=show&productId=' + val.productId + '" class="product">');
-						//items.push('<img src="img/product/'+val.pictureFile+'" />');
-						//items.push('<span class="name">'+val.productTitle+'</span>');
-						//items.push('<span class="cost">'+val.productattributepriceMDVCur+'</span>');
-						//items.push('</a>');
-						var oldCost = val.productattributepriceMVCur;
-						var currentCost = val.productattributepriceMDVCur;
-						var isDiscounted = oldCost != currentCost ? (currentCost > oldCost ? true : false) : false;
-						
-						var discountedText = isDiscounted ? "İndirimli Ürün" : "";
-						var oldCostText =  isDiscounted ? oldCost : "";
-						
-						items.push($.sprintf(tpl, discountedText, val.productId, val.pictureFile, val.productId, val.productTitle, oldCostText, val.productattributepriceMDVCur)); 
-					});
-					$target.html(items.join(''));
-				},
-				complete: function(){
-					if($target.has("[cas-break]"))
-					{
-						var limitCount = $target.attr("cas-break");
-	
-						$target.find("li").each(function (index, element) {
-								var floatSide = $(this).css("float");
-								index++;
-								if((index % limitCount) === 0)
-								{
-									$(this).addClass("last");
-								}
-								else if((index != 1) &&  ((index % limitCount) == 1))
-								{
-									$(this).css({"clear":floatSide});
-								}
+			$.each($target, function(index, element) {
+				var limit = $(this).attr("cas:limit");
+				var url = $(this).attr("cas:url");
+				var categoryId = $(this).attr("cas:var");
+				var tpl = $(element).html();
+				$(element).html('');
+				
+				$.ajax({
+					url: url,
+					type: 'get',
+					data: ({ action: 'jsonProductattributes', iDisplayStart: 0, iDisplayLength: limit, sType: 'similar', categoryId: categoryId }),
+					dataType: 'json',
+					success: function(response) {
+						$(element).html('');
+						var items = [];
+						$.each(response.aaData, function(key, val) {
+							items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, val.productattributepriceMVCur, val.productattributepriceMDVCur));
 						});
+						$(element).html(items.join(''));
+					},
+					complete: function(){
+						if($(element).has("[cas-break]"))
+						{
+							var limitCount = $(element).attr("cas-break");
+							
+							$(element).find("li").each(function (index, element) {
+									var floatSide = $(this).css("float");
+									index++;
+									if((index % limitCount) === 0)
+									{
+										$(this).addClass("last");
+									}
+									else if((index != 1) &&  ((index % limitCount) == 1))
+									{
+										$(this).css({"clear":floatSide});
+									}
+							});
+						}
 					}
-				}
+				});
 			});
 		}
 	};
@@ -2211,6 +2130,19 @@ function Productattribute()
 				beforeSend: function() {
 					$target.html('<img src="assets/css/images/loading.gif"/>');
 				},
+				statusCode: {
+					404: function() {
+						CommonItems.casDialog(jQuery.i18n.prop('ALERT_PageNotFound'));
+					}
+				},
+				success: function(response) {
+					$target.html('');
+					var items = [];
+					$.each(response.aaData, function(key, val) {
+						items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, val.productattributepriceMVCur, val.productattributepriceMDVCur));
+					});
+					$target.html(items.join(''));
+				},
 				complete: function(){
 					if($target.has("[cas-break]"))
 					{
@@ -2229,69 +2161,6 @@ function Productattribute()
 								}
 						});
 					}
-				},
-				statusCode: {
-					404: function() {
-						CommonItems.casDialog(jQuery.i18n.prop('ALERT_PageNotFound'));
-					}
-				},
-				success: function(response) {
-					$target.html('');
-					var items = [];
-					$.each(response.aaData, function(key, val) {
-						/* ZENBI CHANGE */
-						var oldCost = val.productattributepriceMVCur;
-						var currentCost = val.productattributepriceMDVCur;
-						var isDiscounted = oldCost != currentCost ? (currentCost > oldCost ? true : false) : false;
-						
-						var discountedText = isDiscounted ? "İndirimli Ürün" : "";
-						var oldCostText =  isDiscounted ? oldCost : "";
-						
-						items.push($.sprintf(tpl, discountedText, val.productId, val.pictureFile, val.productId, val.productTitle, oldCostText, val.productattributepriceMDVCur)); 
-					});
-					$target.html(items.join(''));
-					
-					
-					/*
-					var pageLast = Math.ceil(response.iTotalDisplayRecords/iDisplayLength);
-					var pageCurrent = iDisplayStart/iDisplayLength;
-					
-					$target.append('<form>');
-					
-					$target.append('Sayfa: ');
-					//$target.append((pageCurrent+1) + '/' + pageLast);
-					var itemsPages = [];
-					for (var i=0;i<pageLast;i++) {
-						//$target.append('<a href="javascript:getSearchResults('+(i*iDisplayLength)+', '+iDisplayLength+', '+categoryId+');">'+(i+1)+'</a>&nbsp;&nbsp;');
-						itemsPages.push('<option value="'+i+'"');
-						if (pageCurrent == i) itemsPages.push(' selected="selected"');
-						itemsPages.push('>'+(i+1)+'</option>');
-					}
-					$('<select/>', {
-						'id': '',
-						'onchange': 'getSearchResults((this.options[selectedIndex].value*'+iDisplayLength+'), '+iDisplayLength+', '+categoryId+');',
-						'class': '',
-						'html': itemsPages.join('')
-					}).appendTo($target);
-					
-					$target.append('Her sayfada gösterilecek öğe: ');
-					var items = [];
-					$.each([3,6,9,12], function(index, value) { 
-						items.push('<option value="'+value+'"');
-						if (iDisplayLength == value) items.push(' selected="selected"');
-						items.push('>'+value+'</option>');
-					});
-					$('<select/>', {
-						'id': '',
-						'name': 'iDisplayLength',
-						'onchange': 'getSearchResults(0, this.options[selectedIndex].value, '+categoryId+');',
-						'class': '',
-						'html': items.join('')
-					}).appendTo($target);
-					
-					$target.append('</form>');
-					*/
-					
 				}
 			});
 		}
@@ -2315,25 +2184,6 @@ function Productattribute()
 				beforeSend: function() {
 					$target.html('<img src="assets/css/images/loading.gif"/>');
 				},
-				complete: function(){
-					if($target.has("[cas-break]"))
-					{
-						var limitCount = $target.attr("cas-break");
-	
-						$target.find("li").each(function (index, element) {
-								var floatSide = $(this).css("float");
-								index++;
-								if((index % limitCount) === 0)
-								{
-									$(this).addClass("last");
-								}
-								else if((index != 1) &&  ((index % limitCount) == 1))
-								{
-									$(this).css({"clear":floatSide});
-								}
-						});
-					}
-				},
 				statusCode: {
 					404: function() {
 						CommonItems.casDialog(jQuery.i18n.prop('ALERT_PageNotFound'));
@@ -2343,58 +2193,9 @@ function Productattribute()
 					$target.html('');
 					var items = [];
 					$.each(response.aaData, function(key, val) {
-						/* ZENBI CHANGE */
-						var oldCost = val.productattributepriceMVCur;
-						var currentCost = val.productattributepriceMDVCur;
-						var isDiscounted = oldCost != currentCost ? (currentCost > oldCost ? true : false) : false;
-						
-						var discountedText = isDiscounted ? "İndirimli Ürün" : "";
-						var oldCostText =  isDiscounted ? oldCost : "";
-						
-						items.push($.sprintf(tpl, discountedText, val.productId, val.pictureFile, val.productId, val.productTitle, oldCostText, val.productattributepriceMDVCur));
+						items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, val.productattributepriceMVCur, val.productattributepriceMDVCur));
 					});
 					$target.html(items.join(''));
-					
-					
-					/*
-					var pageLast = Math.ceil(response.iTotalDisplayRecords/iDisplayLength);
-					var pageCurrent = iDisplayStart/iDisplayLength;
-					
-					$target.append('<form>');
-					
-					$target.append('Sayfa: ');
-					//$target.append((pageCurrent+1) + '/' + pageLast);
-					var itemsPages = [];
-					for (var i=0;i<pageLast;i++) {
-						//$target.append('<a href="javascript:getSearchResults('+(i*iDisplayLength)+', '+iDisplayLength+', '+brandId+');">'+(i+1)+'</a>&nbsp;&nbsp;');
-						itemsPages.push('<option value="'+i+'"');
-						if (pageCurrent == i) itemsPages.push(' selected="selected"');
-						itemsPages.push('>'+(i+1)+'</option>');
-					}
-					$('<select/>', {
-						'id': '',
-						'onchange': 'getSearchResults((this.options[selectedIndex].value*'+iDisplayLength+'), '+iDisplayLength+', '+brandId+');',
-						'class': '',
-						'html': itemsPages.join('')
-					}).appendTo($target);
-					
-					$target.append('Her sayfada gösterilecek öğe: ');
-					var items = [];
-					$.each([3,6,9,12], function(index, value) { 
-						items.push('<option value="'+value+'"');
-						if (iDisplayLength == value) items.push(' selected="selected"');
-						items.push('>'+value+'</option>');
-					});
-					$('<select/>', {
-						'id': '',
-						'name': 'iDisplayLength',
-						'onchange': 'getSearchResults(0, this.options[selectedIndex].value, '+brandId+');',
-						'class': '',
-						'html': items.join('')
-					}).appendTo($target);
-					
-					$target.append('</form>');
-					*/
 				},
 				complete: function(){
 					if($target.has("[cas-break]"))
@@ -2610,7 +2411,7 @@ function User()
 								$.ajax({
 									type	: "POST",
 									cache	: false,
-									url		: "modules/b2c/index.php",
+									url		: CommonItems.getLocation() + "index.php",
 									data	: formData,
 									dataType: 'json',
 									success: function(response) {

@@ -60,7 +60,6 @@ $(function() {
 <div id="productDetailOuter" class="casContent">
 	<h1 class="subHeader">{$data.productTitle}</h1>
 	<div id="productPictureFilesOuter" class="fl margin_right_10px">
-		
 		<a id="productBigImageOuter" class="jqzoom" href="img/product/{$data.pictureFile}" title="{$data.productTitle}">
 			<img src="img/product/3_{$data.pictureFile}" />
 		</a>
@@ -111,7 +110,7 @@ $(function() {
 					</select>
 				</li>
 				{/foreach}
-				<li id="liProductattributebasketQuantity">
+				<li class="productattributeQuantity">
 					<label>{#LABEL_Quantity#}:</label>
 					<input id="productattributebasketQuantity" type="text" name="productattributebasketQuantity" value="1" onkeyup="Productattribute.checkProductattribute();" />
 				</li>
@@ -140,7 +139,7 @@ $(function() {
 			{/if}
 		</div>
 		<div id="tabs-3">
-			<div id="paymentOptionsOuter"></div>
+			<div id="paymentPeriodTable"></div>
 		</div>
 		<div id="tabs-4">
 			<div id="fb-root"></div>
@@ -159,19 +158,25 @@ $(function() {
 </div>
 <div class="casContent">
 	<h3 class="subHeader">BENZER ÜRÜNLER</h3>
-	<ul class="productsList bigProductList" cas-break="{$_THEME_B2C_NUMBEROFPRODUCTSDISPLAYED}" cas-js="getProductsSimilar" cas:var="{$data.category.defaultx.categoryId}" cas:url="modules/b2c/index.php" >
+	<ul class="productsList bigProductList" cas-js="getProductsSimilar" cas:url="modules/b2c/index.php" cas:var="{$data.category.defaultx.categoryId}" cas:limit="{$_THEME_B2C_LIMITPRODUCTS1}" cas-break="{$_THEME_B2C_NUMBEROFPRODUCTSDISPLAYED}">
 		<li class="productItem">
-			<label class="labelDiscount">%s</label>
-			<a class="productLogoLink" href="modules/b2c/product.php?action=show&productId=%s">
-				<img class="productLogo" src="img/product/2_%s">
+			<label class="labelDiscount">
+				<span class="discountPercent">%%%s</span>
+				<span class="discountCount">%s</span>
+				<span class="discountText">İndirimli Ürün</span>
+			</label>
+			<a href="modules/b2c/product.php?action=show&amp;productId=%s" class="productLogoLink">
+				<img src="img/product/3_%s" class="productLogo">
 			</a>
-			<a class="productName" href="modules/b2c/product.php?action=show&productId=%s">%s</a>
+			<span class="c-ffffff">%s</span>
 			<div class="costsOuter">
 				<span class="oldCost">
-					%s<span class="scratch"></span>
+					%s
+					<span class="cross"></span>
 				</span>
-				<span class="currentCost">%s</span>											
+				<span class="currentCost">%s</span>
 			</div>
+			<a class="btnAddToBasket" href="">Sepete Ekle</a>
 		</li>
 	</ul>
 </div>

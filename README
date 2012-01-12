@@ -256,3 +256,17 @@ document.write(unescape("%3Cscript src='" + apiJsHost + "://www.google.com/jsapi
 		return output;
 	};
 	
+
+	var whichShoppingbasket = function ()
+	{
+		var strt = '[cas-form=shoppingbasket]';
+		$.each($(strt), function(index, element) {
+			var strFunc = $(element).attr("cas-js");
+			//var funcCall = strFunc + "('" + strFunc + "');";
+			var funcCall = strFunc + "();";
+			eval(funcCall);
+			//var tmpFunc = new Function(codeToRun);
+			//tmpFunc();
+		});
+	};
+	

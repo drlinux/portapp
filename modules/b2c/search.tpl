@@ -14,19 +14,25 @@
 		</ul>
 	</form>
 	<br /><br />
-	<ul class="productsList bigProductList " cas-break="{$_THEME_B2C_NUMBEROFPRODUCTSDISPLAYED}" cas-js="getSearchResults" cas:var="{$smarty.get.sSearch}" cas:url="modules/b2c/search.php"  >
+	<ul class="productsList bigProductList" cas-js="getSearchResults" cas:url="{$SCRIPT_NAME}" cas:var="{$smarty.get.sSearch}" cas:limit="{$_THEME_B2C_LIMITPRODUCTS1}" cas-break="{$_THEME_B2C_NUMBEROFPRODUCTSDISPLAYED}">
 		<li class="productItem">
-			<label class="labelDiscount">%s</label>
-			<a class="productLogoLink" href="modules/b2c/product.php?action=show&productId=%s">
-				<img class="productLogo" src="img/product/3_%s">
+			<label class="labelDiscount">
+				<span class="discountPercent">%%%s</span>
+				<span class="discountCount">%s</span>
+				<span class="discountText">İndirimli Ürün</span>
+			</label>
+			<a href="modules/b2c/product.php?action=show&amp;productId=%s" class="productLogoLink">
+				<img src="img/product/3_%s" class="productLogo">
 			</a>
-			<a class="productName" href="modules/b2c/product.php?action=show&productId=%s">%s</a>
+			<span class="c-ffffff">%s</span>
 			<div class="costsOuter">
 				<span class="oldCost">
-					%s<span class="scratch"></span>
+					%s
+					<span class="cross"></span>
 				</span>
 				<span class="currentCost">%s</span>											
 			</div>
+			<a class="btnAddToBasket" href="">Sepete Ekle</a>
 		</li>
 	</ul>
 </div>
