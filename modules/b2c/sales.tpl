@@ -32,11 +32,11 @@
 				</li>
 				<li class="dn">
 					<label>postaladdresstype</label>
-					<input type="text" name="postaladdressType" required="required" />
+					<input type="text" name="postaladdressType" readonly="readonly" required="required" />
 				</li>
 				<li class="buttonset">
 					<button type="submit" onclick="Postaladdress.savePostaladdress(this.form);">{#BUTTON_Save#}</button>
-					<button type="submit" onclick="Postaladdress.deletePostaladdress(this.form);">{#BUTTON_Delete#}</button>
+					<button type="button" onclick="Postaladdress.deletePostaladdress(this.form);">{#BUTTON_Delete#}</button>
 				</li>
 			</ul>
 		</form>

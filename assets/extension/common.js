@@ -660,40 +660,26 @@ function Postaladdress()
 		
 		var postaladdressType = $form.find("[name=postaladdressType]").val();
 		
-		$form.validate({
-			submitHandler: function(f) {
-				$form.ajaxSubmit({
-					data: { action: 'deletePostaladdress' },
-					dataType: 'json',
-					beforeSubmit: function(a,f,o) {
-						//console.log(a);
-					},
-					success: function(response) {
-						//console.log(response);
-						if (response.success == true) {
-							$("#dialog-form").dialog("close");
-							if (postaladdressType == "deliveryaddress") {
-								getDeliveryaddresses();
-							}
-							else if (postaladdressType == "invoiceaddress") {
-								getInvoiceaddresses();
-							}
-							CommonItems.casDialog(jQuery.i18n.prop('ALERT_Completed'));
-						}
-						else {
-							CommonItems.casDialog(response.msg);
-						}
+		$form.ajaxSubmit({
+			data: { action: 'deletePostaladdress' },
+			dataType: 'json',
+			beforeSubmit: function(a,f,o) {
+				//console.log(a);
+			},
+			success: function(response) {
+				//console.log(response);
+				if (response.success == true) {
+					$("#dialog-form").dialog("close");
+					if (postaladdressType == "deliveryaddress") {
+						getDeliveryaddresses();
 					}
-				});
-			},
-			rules: {
-				productattributemovementId: {
-					required: true
+					else if (postaladdressType == "invoiceaddress") {
+						getInvoiceaddresses();
+					}
+					CommonItems.casDialog(jQuery.i18n.prop('ALERT_Completed'));
 				}
-			},
-			messages: {
-				productattributemovementId: {
-					required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
+				else {
+					CommonItems.casDialog(response.msg);
 				}
 			}
 		});
@@ -829,8 +815,8 @@ function Postaladdress()
 						};
 				}
 				// TODO: jQuery dialog butonları çalışmıyor
-				$("#dialog-form").dialog(opts);
-				//$("#dialog-form").dialog();
+				//$("#dialog-form").dialog(opts);
+				$("#dialog-form").dialog();
 			}
 		});
 		

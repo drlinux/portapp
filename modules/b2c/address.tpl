@@ -6,10 +6,6 @@
 		<form id="formPostaladdress" method="post" action="modules/b2c/address.php">
 			<ul class="ulform">
 				<li class="dn">
-					<label>postaladdresstype</label>
-					<input type="text" name="postaladdressType" required="required" />
-				</li>
-				<li class="dn">
 					<label>{#LABEL_Id#}</label>
 					<input type="text" name="postaladdressId" readonly="readonly" />
 				</li>
@@ -33,9 +29,13 @@
 					<label>{#LABEL_Country#}</label>
 					<input type="text" name="postaladdressCountry" required="required" />
 				</li>
+				<li class="dn">
+					<label>postaladdresstype</label>
+					<input type="text" name="postaladdressType" readonly="readonly" required="required" />
+				</li>
 				<li class="buttonset">
 					<button type="submit" onclick="Postaladdress.savePostaladdress(this.form);">{#BUTTON_Save#}</button>
-					<button type="submit" onclick="Postaladdress.deletePostaladdress(this.form);">{#BUTTON_Delete#}</button>
+					<button type="button" onclick="Postaladdress.deletePostaladdress(this.form);">{#BUTTON_Delete#}</button>
 				</li>
 			</ul>
 		</form>
