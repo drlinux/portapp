@@ -9,6 +9,14 @@ $model = new Productattribute;
 
 switch($_action)
 {
+	case 'jsonProductcommentsByProductId':
+		$productId = $_REQUEST["productId"];
+		$productcomment = new Productcomment();
+		$data = $productcomment->getProductcommentsByProductId($productId);
+		//print_r($data);exit;
+
+		echo(json_encode($data));
+		break;
 	case 'jsonPayment':
 		$paymentgroup = new Paymentgroup;
 		echo(json_encode($paymentgroup->getPaymentgroups()));
@@ -19,7 +27,7 @@ switch($_action)
 		$data = $model->getProductattributeByProductId($productId, $attributeIds);
 		//print_r($data);exit;
 
-		echo json_encode($data);
+		echo(json_encode($data));
 		break;
 	case 'show':
 		$productId = $_GET["productId"];
@@ -27,7 +35,10 @@ switch($_action)
 		$data = $model->getProductattributeByProductId($productId);
 		//print_r($data);exit;
 		
-		$model->displayTemplate("b2b", "product_show", $data);
+		$usertrack = new Usertrack();
+		$usertrack->addTrack(3, "productId=" . $productId);
+		
+		$model->displayTemplate("b2b", "product", $data);
 		break;
 	case 'view':
 	default:

@@ -151,8 +151,7 @@ $(function() {
 				  fjs.parentNode.insertBefore(js, fjs);
 				}(document, 'script', 'facebook-jssdk'));
 			</script>
-					
-			<div class="fb-comments" data-href="https://www.bedenozgurlugu.com{$data.request_url}" data-num-posts="10" data-width="630"></div>
+			<div class="fb-comments" data-href="{$project.uri}" data-num-posts="10" data-width="630"></div>
 		</div>
 	</div>
 </div>

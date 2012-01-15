@@ -3,7 +3,7 @@ require_once dirname(__FILE__) . '/../../config/config.inc.php';
 
 $_action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'view';
 
-$model = new Category;
+$model = new Category();
 
 switch($_action)
 {

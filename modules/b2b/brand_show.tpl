@@ -1,6 +1,6 @@
 <div class="casContent">
 	<h1 class="subHeader">MARKALAR > {$data.model.brandTitle}</h1>
-	<ul class="productsList bigProductList" cas-break="{$_THEME_b2b_NUMBEROFPRODUCTSDISPLAYED}" cas-js="getProductsByBrandId" cas:var="{$data.model.brandId}" cas:url="modules/b2b/index.php">
+	<ul class="productsList bigProductList" cas-break="{$_THEME_B2B_NUMBEROFPRODUCTSDISPLAYED}" cas-js="getProductsByBrandId" cas:limit="{$_THEME_B2B_LIMITPRODUCTS2}" cas:var="{$data.model.brandId}" cas:url="modules/b2b/index.php">
 		<li class="productItem">
 			<label class="labelDiscount">
 				<span class="discountPercent">%%%s</span>

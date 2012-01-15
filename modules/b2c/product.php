@@ -31,12 +31,11 @@ switch($_action)
 		$productId = $_GET["productId"];
 		if ($productId == null) header("Location: " . _MODULE_DIR_ . "b2c/");
 		$data = $model->getProductattributeByProductId($productId);
-		$data["request_url"] = $_SERVER["REQUEST_URI"];
 		//print_r($data);exit;
 		
 		$usertrack = new Usertrack();
 		$usertrack->addTrack(3, "productId=" . $productId);
-
+		
 		$model->displayTemplate("b2c", "product", $data);
 		break;
 	case 'view':

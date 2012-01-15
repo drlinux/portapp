@@ -3,7 +3,7 @@ require_once dirname(__FILE__) . '/../../config/config.inc.php';
 
 $_action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'view';
 
-$model = new Brand;
+$model = new Brand();
 
 switch($_action)
 {

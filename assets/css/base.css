@@ -409,8 +409,14 @@ textarea
 .productItem .labelDiscount
 {
 	width:100%;
-	height:20px;
 	float:left;
+}
+
+.productItem .discountPercent, .productItem .discountCount, .productItem .discountText
+{
+	width:100%;
+	float:left;
+	height:20px;
 }
 
 .productItem .productLogoLink
@@ -451,7 +457,7 @@ textarea
 }
 
 
-.productItem .scratch
+.productItem .cross
 {
 	width:100%;
 	height:100%;
@@ -473,7 +479,9 @@ textarea
 
 .productItem .btnAddToBasket
 {
-	
+	display:block;
+	clear:both;
+	margin:0 auto;
 }
 
 .bigProductList .productItem

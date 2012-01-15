@@ -25,6 +25,7 @@ if (!isset($_SESSION["PROJECT_LANGUAGE"])) {
 $smarty->assign("PROJECT_LANGUAGE", $_SESSION["PROJECT_LANGUAGE"]);
 
 $smarty->clearConfig();
+// TODO: Seçilen dile göre ilgili properties dosyası seçilecek
 $smarty->configLoad('Messages_tr.properties');
 
 
@@ -86,7 +87,13 @@ if (isset($_SERVER["HTTP_HOST"]) AND (!empty($_SERVER["HTTP_HOST"])))
 	$op = ($_SERVER['QUERY_STRING']=="") ? $_SERVER['PHP_SELF'] : $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
 	//$op = str_replace("&","&#38;",$op);
 	$uri = $url_scheme . $_SERVER['HTTP_HOST'] . $op;
-	$smarty->assign("PROJECT_ENCODEDURI", urlencode($uri));	
+	$smarty->assign("PROJECT_ENCODEDURI", urlencode($uri));
+	
+	// TODO: Bu şekilde de yapabiliriz
+	$project['url'] = PROJECT_URL;
+	$project['uri'] = $uri;
+	$project['encodedUri'] = urlencode($uri);
+	$smarty->assign('project', $project);
 }
 
 

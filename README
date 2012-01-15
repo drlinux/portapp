@@ -125,39 +125,6 @@ eklenen reklam ve resimlere tiklandiginda url ye gitsin ve bunlarin kaydi tutuls
 http://www.etid.org.tr/
 nebim: ODBC localhost veritabani sa
 
------ template dosyalarına erişim engeli -----
-.tpl dosyalarına erişimi engelle
-<Files ~ "\.inc$">
-	Order allow,deny
-	Deny from all
-</Files>
-
-
------ portapp dizinine yönlendirme - SEO -----
-Options +FollowSymlinks
-RewriteEngine on
-rewritecond %{http_host} ^domain.com [nc]
-rewriterule ^(.*)$ http://www.domain.com/$1 [r=301,nc]
-
-
-
-<!-- CDN -->
-<!--
-<script type="text/javascript">
-var apiJsHost = (("https:" == document.location.protocol) ? "https" : "http");
-document.write(unescape("%3Cscript src='" + apiJsHost + "://www.google.com/jsapi?key={$_API_MAPS_GOOGLE}' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script>
-	google.load("jquery", "1.6.2");
-	//google.load("jqueryui", "1.8.16");
-	google.load("swfobject", "2.2");
-	google.load("maps", "2.x", { "language" : "en", "other_params": "sensor=true" });
-</script>
-<link rel="stylesheet" type="text/css" media="screen" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/cupertino/jquery-ui.css" />
--->
-
-
-
 
 	/*
 	$("div").attr("cas-class", function(i,e) {

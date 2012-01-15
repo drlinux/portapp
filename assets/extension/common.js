@@ -69,6 +69,17 @@ function startDefault()
 	Attributeimpact = new Attributeimpact();
 	Attributeimpact.getAttributeimpactByProductId();
 	
+	$(document).bind("onMenuLoaded",function(){
+		var currentLink = window.location.href;
+		
+		if(currentLink.match(/productgroupId=[0-9]+/))
+		{
+			var match = currentLink.match(/productgroupId=[0-9]+/).toString();
+			var matchedArray = match.split('=');
+			var productgroupId = matchedArray[1];
+			$("#menuOuter a[href*='productgroupId=" + productgroupId + "']").addClass("selected");
+		}
+	});
 }
 
 var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
@@ -1042,7 +1053,7 @@ function Transportation()
 			else {
 				//CommonItems.casDialog("Giriş yapmalısınız");
 				window.location.replace( CommonItems.getLocation() + 'index.php?action=login&uri=' + window.location.href );
-				// TODO login formunu popup şeklinde göster
+				// TODO: login formunu popup şeklinde göster
 			}
 		});
 		
@@ -2239,7 +2250,8 @@ function Productattribute()
 							items.push($.sprintf(template, val.productgroupId, val.productgroupTitle));
 						});
 						$(element).html(items.join(''));
-						fixMenuCufon(); // Temaların içinde default olarak tanımlı olacak bir fonksiyon, cufon ve gerekli diğer işlemleri yapmak için kullanılacak
+						// Ana menü yüklendikten sonra çalıştırmak istediğimiz bir fonksiyon olduğunda kullanacağımız bir event
+						$(document).trigger("onMenuLoaded");
 					}
 				});
 			});
@@ -2752,6 +2764,8 @@ function Banner()
 					$target
 						.append(items.join(''))
 						.nivoSlider();
+						// Slider Yüklendikten sonra çalıştırmak istediğimiz bir fonksiyon olduğunda kullanacağımız bir event
+						$(document).trigger("onSliderLoded"); 
 				}
 			});
 		}

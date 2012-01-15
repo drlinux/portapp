@@ -4,7 +4,7 @@
 
 <div class="casContent">
 	<h1 class="subHeader">{$data.model.productgroupTitle|upper}</h1>
-	<ul class="productsList bigProductList " cas-break="{$_THEME_B2C_NUMBEROFPRODUCTSDISPLAYED}" cas-js="getProductsByProductgroupId" cas:limit="{$_THEME_B2C_LIMITPRODUCTS2}" cas:var="{$data.model.productgroupId}" cas:url="modules/b2c/index.php"  >
+	<ul class="productsList bigProductList" cas-break="{$_THEME_B2C_NUMBEROFPRODUCTSDISPLAYED}" cas-js="getProductsByProductgroupId" cas:limit="{$_THEME_B2C_LIMITPRODUCTS2}" cas:var="{$data.model.productgroupId}" cas:url="modules/b2c/index.php"  >
 		<li class="productItem">
 			<label class="labelDiscount">
 				<span class="discountPercent">%%%s</span>

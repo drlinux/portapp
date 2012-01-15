@@ -45,12 +45,6 @@
 <!-- jqzoom -->
 <link rel="stylesheet" href="assets/plugins/jqzoom/jquery.jqzoom.css" />
 <script type='text/javascript' src='assets/plugins/jqzoom/jquery.jqzoom-core.js'></script>
-<!-- nivo-slider -->
-<link rel="stylesheet" href="assets/plugins/nivo-slider/nivo-slider.css" type="text/css" media="screen" />
-<script type="text/javascript" src="assets/plugins/nivo-slider/jquery.nivo.slider.pack.js"></script>
-<link rel="stylesheet" href="assets/plugins/nivo-slider/themes/default/default.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="assets/plugins/nivo-slider/themes/pascal/pascal.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="assets/plugins/nivo-slider/themes/orman/orman.css" type="text/css" media="screen" />
 <!-- jcarousel -->
 <link rel="stylesheet" href="assets/plugins/jcarousel/skins/black/skin.css" />
 <script type="text/javascript" src="assets/plugins/jcarousel/lib/jquery.jcarousel.min.js"></script>
