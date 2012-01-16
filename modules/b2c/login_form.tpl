@@ -1,7 +1,6 @@
 <div class="casContent">
 	<h1 class="subHeader">Sisteme Giriş</h1>
 
-
 	<form autocomplete="off" action="modules/b2c/index.php" method="post">
 	<ul class="ulform">
 		<li>

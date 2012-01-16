@@ -1088,14 +1088,11 @@ function Transportation()
 
 function Page()
 {
-	var Obj = new Object();
-	
-	var url = 'modules/page/index.php';
-	
 	var getPage = function ()
 	{
 		var $target = $('div[cas-js=getPage]');
 		if ($target.length) {
+			var url = CommonItems.getLocation() + "page.php";
 			$.ajax({
 				url: url,
 				dataType: 'json',
@@ -1105,8 +1102,7 @@ function Page()
 					$target.html('');
 					var items = [];
 					$.each(response.aaData, function(key, val) {
-						//items.push('<a href="modules/page/index.php?pageId=' + val.pageId + '" class="selected">'+val.pageTitle+'</a>');
-						items.push('<a href="modules/page/index.php?pageId=' + val.pageId + '">'+val.pageTitle+'</a>');
+						items.push('<a href="'+url+'?pageId=' + val.pageId + '">'+val.pageTitle+'</a>');
 					});
 					$target.html(items.join(''));
 				}
@@ -1118,6 +1114,7 @@ function Page()
 	{
 		var $target = $('div[cas-js=getPageProducts]');
 		if ($target.length) {
+			var url = CommonItems.getLocation() + "page.php";
 			$.ajax({
 				url: url,
 				dataType: 'json',
@@ -1127,8 +1124,7 @@ function Page()
 					$target.html('');
 					var items = [];
 					$.each(response.aaData, function(key, val) {
-						//items.push('<a href="modules/page/index.php?pageId=' + val.pageId + '" class="selected">'+val.pageTitle+'</a>');
-						items.push('<a href="modules/page/index.php?pageId=' + val.pageId + '">'+val.pageTitle+'</a>');
+						items.push('<a href="'+url+'?pageId=' + val.pageId + '">'+val.pageTitle+'</a>');
 					});
 					$target.html(items.join(''));
 				}
@@ -1136,7 +1132,7 @@ function Page()
 		}
 	};
 
-	//Obj.url = url;
+	var Obj = new Object();
 	Obj.getPage = getPage;
 	Obj.getPageProducts = getPageProducts;
 	return Obj;
