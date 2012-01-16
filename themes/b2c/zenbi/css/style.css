@@ -117,9 +117,22 @@ h1, h2, h3, h4, h5, h6 { color:#b9246a; }
 	border-right: solid 1px #e6d9bb;
 }
 
+.labelDiscount .discountPercent, .labelDiscount .discountCount
+{
+	display:none;
+}
+
 .sidebarProductList
 {
 	padding:0 !important;
+}
+
+.sidebarProductList .productItem
+{
+	float:left;
+	margin:0;
+	width:121px !important;
+	height:250px !important;
 }
 
 .bigProductList .productItem
@@ -136,13 +149,6 @@ h1, h2, h3, h4, h5, h6 { color:#b9246a; }
 	height:190px;
 }
 
-.subMenuOuter .productItem
-{
-	width:49.5% !important;
-	height:195px;
-	float:left;
-	margin:0;
-}
 
 .sidebarProductList
 {
@@ -296,7 +302,7 @@ h1, h2, h3, h4, h5, h6 { color:#b9246a; }
 {
 	width:38px;
 	height:27px;
-	display:block;
+	display:none !important;
 	clear:both;
 	margin:0 auto;
 	position:relative;
@@ -385,4 +391,10 @@ h1, h2, h3, h4, h5, h6 { color:#b9246a; }
 	height:294px;
 	float:left;
 	margin:13px;
+}
+
+#productOrdersList
+{
+	float:left;
+	margin:10px;
 }

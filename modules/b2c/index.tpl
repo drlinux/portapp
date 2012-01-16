@@ -1,5 +1,5 @@
 <div id="mainBannerOuter" class="casContent slider-wrapper {$_THEME_B2C_NIVOSLIDER}">
-	<div id="mainBanner" cas-js="getBanners" cas:url="{$SCRIPT_NAME}" cas:theme="{$_THEME_B2C_NIVOSLIDER}"></div>
+	<div id="mainBanner" cas-js="getBanners" cas:theme="{$_THEME_B2C_NIVOSLIDER}"></div>
 </div>
 <div class="casContent">
 	<h3 class="subHeader">İNDİRİMLİ ÜRÜNLER</h3>
@@ -13,9 +13,9 @@
 			<a href="modules/b2c/product.php?action=show&amp;productId=%s" class="productLogoLink">
 				<img src="img/product/3_%s" class="productLogo">
 			</a>
-			<span class="c-ffffff">%s</span>
+			<span class="productName">%s</span>
 			<div class="costsOuter">
-				<span class="oldCost">
+				<span class="oldCost %s">
 					%s
 					<span class="cross"></span>
 				</span>

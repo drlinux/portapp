@@ -53,7 +53,7 @@
 .fwb {font-weight: bold;}
 
 .fl {float: left;}
-.fr {float: right !important; }
+.fr {float: right; }
 .fn {float: none;}
 .fi {float: inherit;}
 

@@ -48,9 +48,9 @@ input[type=text], input[type=password], input[type=email]
 
 #menuOuter a
 {
-	font: 17px Trebuchet MS;
+	font:bold 19px Trebuchet MS;
 	color: #ccc;
-	padding:5px 10px;
+	padding:10px 15px;
 	margin:0 5px;
 }
 
@@ -67,7 +67,7 @@ input[type=text], input[type=password], input[type=email]
 	position:relative;
 	top:-4px;
 	padding-bottom:30px;
-	background: url(../images/repeatBg.png);
+	background: #fff;
 }
 
 #wholeContentsOuter
@@ -78,7 +78,7 @@ input[type=text], input[type=password], input[type=email]
 
 #mainBannerOuter
 {
-	width:732px;
+	width:650px;
 	height:312px;
 	padding:0 !important;
 	border-radius:0;
@@ -86,8 +86,16 @@ input[type=text], input[type=password], input[type=email]
 
 #mainBanner
 {
-	width:732px;
+	width:650px;
 	height:312px;
+}
+
+.nivo-controlNav
+{
+	position:relative !absolute;
+	padding:0 !important;
+	margin:0 !important;
+	bottom:0;
 }
 
 #footerFullWidthOuter
@@ -136,7 +144,9 @@ input[type=text], input[type=password], input[type=email]
 
 .subMenuOuter .top
 {
-	background: #000;
+	background: #fff;
+	color: #000;
+	border:solid 1px #bbb;
 	font-size: 15px;
 }
 
@@ -160,37 +170,51 @@ input[type=text], input[type=password], input[type=email]
 
 .productItem .currentCost
 {
-	color: #fff !important;
+	color: #f00 !important;
 	font-size: 13px;
+	font-weight: bold;
 }
 
 .bigProductList .productItem
 {
-	width: 112px;
-	height:198px;
+	width: 201px;
+	height:340px;
 	float:left;
-	margin-right:19px;
-	background: #000;
+	margin:0 20px 20px 0;
+	background: #fff;
+	border: solid 1px #bbb !important;
 }
 
-.bigProductList .productLogo
+.productItem .productLogo
 {
-	width:112px;
-	height:151px;
+	width:201px;
+	height:270px;
 	margin:0;
 }
 
-.bigProductList .labelDiscount, .bigProductList .oldCost
+.productItem .labelDiscount, .bigProductList .btnAddToBasket
 {
-	display:none;	
+	display:none;
 }
 
-.bigProductList .productName
+.productItem .oldCost
 {
-	color:#fff;
+	display:block;
+	color:#000 !important;
+	text-decoration: line-through;
+}
+
+.productItem .productName
+{
+	color:#000;
 	font-size: 14px;
 	margin-top:5px;
 	text-decoration: none;
+}
+
+.productItem .cross
+{
+	display:none;
 }
 
 .casContent
@@ -204,4 +228,21 @@ input[type=text], input[type=password], input[type=email]
 	color: #000;
 	border-bottom: solid 1px #000;
 	padding-bottom: 5px;
+}
+
+#productDetailInfoOuterPrice
+{
+	color: #f00;
+	font-weight: bold;
+}
+
+#productDetailInfoOuterPrice span
+{
+	color:#000;
+}
+
+#productOrdersList
+{
+	float:left;
+	margin:10px;
 }

@@ -18,24 +18,15 @@ function MasterStart()
 		if($(this).val() == "")
 			$(this).val(searchDefaultText);
 	});
-}
-
-function fixMenuCufon()
-{
-	Cufon.replace("#menuOuter a",{hover:true});
-	var currentLink = window.location.href;
 	
+	$(document).bind("onMenuLoaded",function(){
+		Cufon.replace("#menuOuter a",{hover:true});
+	});
 	
-	
-	if(currentLink.match(/productgroupId=[0-9]+/))
-	{
-		var match = currentLink.match(/productgroupId=[0-9]+/).toString();
-		var matchedArray = match.split('=');
-		var productgroupId = matchedArray[1];
-		$("#menuOuter a[href*='productgroupId=" + productgroupId + "']").addClass("selected");
-	}
-	else if(currentLink.match(/b2c\/index.php/) || currentLink.match(/b2c\/index.php/))
-	{
-		
-	}
+	$(document).bind("onSliderLoded",function(){
+		var width = parseInt($("#mainBanner").width());
+		var buttonsOuterWidth = parseInt($("#mainBanner .nivo-controlNav").width());
+		var left = (width - buttonsOuterWidth) / 2;
+		$("#mainBanner .nivo-controlNav").css("left",left);
+	});
 }

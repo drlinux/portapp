@@ -18,24 +18,8 @@ function MasterStart()
 		if($(this).val() == "")
 			$(this).val(searchDefaultText);
 	});
-}
-
-function fixMenuCufon()
-{
-	Cufon.replace("#menuOuter a",{hover:true});
-	var currentLink = window.location.href;
 	
-	
-	
-	if(currentLink.match(/productgroupId=[0-9]+/))
-	{
-		var match = currentLink.match(/productgroupId=[0-9]+/).toString();
-		var matchedArray = match.split('=');
-		var productgroupId = matchedArray[1];
-		$("#menuOuter a[href*='productgroupId=" + productgroupId + "']").addClass("selected");
-	}
-	else if(currentLink.match(/b2c\/index.php/) || currentLink.match(/b2c\/index.php/))
-	{
-		
-	}
+	$(document).bind("onMenuLoaded",function(){
+		Cufon.replace("#menuOuter a",{hover:true});
+	});
 }

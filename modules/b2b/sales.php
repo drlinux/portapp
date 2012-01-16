@@ -7,9 +7,6 @@ $model = new Productsalesmovement;
 
 switch($_action)
 {
-	case 'continueShopping':
-		header("Location: " . PROJECT_URL . "modules/b2b/");
-		break;
 	case 'jsonPaymentgroup':
 		$paymentgroup = new Paymentgroup;
 		echo(json_encode($paymentgroup->getPaymentgroup($_GET[$paymentgroup->sIndexColumn])));

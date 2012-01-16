@@ -127,7 +127,8 @@ switch($_action)
 				"yourIP"=>$Root->yourIP,
 				"msg"=>"Kart bilgileri hatalı"
 				);
-				echo "Kart bilgileri hatalı";exit;
+				echo "Hata oluştu. Hata Kodu: ".$Root->respCode.". Hata:".$Root->respText;exit;
+				//print_r($data);exit;
 			}
 		}
 		

@@ -211,7 +211,7 @@ function Productcomment()
 		if ($target.length) {
 			var url = $target.attr("cas:url");
 			var productId = $target.attr("cas:var");
-			var template = $target.html();
+			var tpl = $target.html();
 			$target.html('');
 			
 			var formData = [];
@@ -227,7 +227,7 @@ function Productcomment()
 					$target.html('');
 					var items = [];
 					$.each(response.aaData, function(key, val) {
-						items.push($.sprintf(template, val.productcommentContent, val.productcommentDatetime, val.userFirstname));
+						items.push($.sprintf(tpl, val.productcommentContent, val.productcommentDatetime, val.userFirstname));
 					});
 					$target.html(items.join(''));
 				}
@@ -703,6 +703,31 @@ function Postaladdress()
 		
 		var postaladdressType = $form.find("[name=postaladdressType]").val();
 		
+		$form.ajaxSubmit({
+			data: { action: 'savePostaladdress' },
+			dataType: 'json',
+			beforeSubmit: function(a,f,o) {
+				//console.log(a);
+			},
+			success: function(response) {
+				//console.log(response);
+				if (response.success == true) {
+					$("#dialog-form").dialog("close");
+					if (postaladdressType == "deliveryaddress") {
+						getDeliveryaddresses();
+					}
+					else if (postaladdressType == "invoiceaddress") {
+						getInvoiceaddresses();
+					}
+					CommonItems.casDialog(jQuery.i18n.prop('ALERT_Completed'));
+				}
+				else {
+					CommonItems.casDialog(response.msg);
+				}
+			}
+		});
+
+		/*
 		$form.validate({
 			submitHandler: function(f) {
 				$form.ajaxSubmit({
@@ -764,6 +789,7 @@ function Postaladdress()
 				}
 			}
 		});
+		*/
 		return false;
 	};
 	
@@ -773,7 +799,7 @@ function Postaladdress()
 		
 		$form.find('input[name=postaladdressId]').val(postaladdressId);
 		$form.find('input[name=postaladdressType]').val(postaladdressType);
-		
+		console.log("postaladdressId:" + postaladdressId);
 		$.ajax({
 			type		: "get",
 			cache		: false,
@@ -784,6 +810,7 @@ function Postaladdress()
 				CommonItems.casLoaderShow();
 			},
 			success		: function(response) {
+				console.log("response:" + response.postaladdressContent);
 				$form.find('input[name=postaladdressContent]').val(response.postaladdressContent);
 				$form.find('input[name=postaladdressCity]').val(response.postaladdressCity);
 				$form.find('input[name=postaladdressCounty]').val(response.postaladdressCounty);
@@ -800,13 +827,16 @@ function Postaladdress()
 								Delete: function() {
 									deletePostaladdress($form.get(0));
 									$(this).dialog("close");
+									return false;
 								},
 								Ok: function() {
 									savePostaladdress($form.get(0));
 									$(this).dialog("close");
+									return false;
 								},
 								Cancel: function() {
 									$(this).dialog("close");
+									return false;
 								}
 							}
 						};
@@ -818,16 +848,18 @@ function Postaladdress()
 								Ok: function() {
 									savePostaladdress($form.get(0));
 									$(this).dialog("close");
+									return false;
 								},
 								Cancel: function() {
 									$(this).dialog("close");
+									return false;
 								}
 							}
 						};
 				}
 				// TODO: jQuery dialog butonları çalışmıyor
-				//$("#dialog-form").dialog(opts);
-				$("#dialog-form").dialog();
+				$("#dialog-form").dialog(opts);
+				//$("#dialog-form").dialog();
 			}
 		});
 		
@@ -1217,7 +1249,7 @@ function Productattribute()
 		if ($target.length) {
 			var url = $target.attr("cas:url");
 			var productId = $target.attr("cas:var");
-			var template = $target.html();
+			var tpl = $target.html();
 			$target.html('');
 			
 			var formData = [];
@@ -1239,7 +1271,7 @@ function Productattribute()
 					$target.html('');
 					var items = [];
 					$.each(response.aaData, function(key, val) {
-						items.push($.sprintf(template, val.salescampaignId, val.pictureFile));
+						items.push($.sprintf(tpl, val.salescampaignId, val.pictureFile));
 					});
 					$target.html(items.join(''));
 					*/
@@ -1439,7 +1471,7 @@ function Productattribute()
 						items.push('<tr>');
 						items.push('<td colspan="6">');
 						items.push('<span class="buttonset fr mb10 mt5">');
-						items.push('<a class="btnContinueShopping" href="'+url+'?action=continueShopping">Alışverişe Devam</a>');
+						items.push('<a class="btnContinueShopping" href="'+CommonItems.getLocation()+'">Alışverişe Devam</a>');
 						items.push('<button type="submit" onclick="Productattribute.emptyProductattributebasket(this.form); return false;">Sepeti Temizle</button>');
 						items.push('</span>');
 						items.push('</td>');
@@ -1515,7 +1547,7 @@ function Productattribute()
 						$target.append('<div id="divAlertPaymentgroup"></div>');
 					}
 					else {
-						$target.html('Sepetiniz boş. <a href="'+url+'?action=continueShopping">Alışverişe devam edin.</a>');
+						$target.html('Sepetiniz boş. <a href="'+CommonItems.getLocation()+'">Alışverişe devam edin.</a>');
 					}
 				}
 			});
@@ -1949,7 +1981,8 @@ function Productattribute()
 					var items = [];
 					if (response.iTotalRecords > 0) {
 						$.each(response.aaData, function(key, val) {
-							items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, val.productattributepriceMVCur, val.productattributepriceMDVCur));
+							var status = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
+							items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, status, val.productattributepriceMVCur, val.productattributepriceMDVCur));
 						});
 					}
 					else {
@@ -1987,7 +2020,7 @@ function Productattribute()
 		if ($target.length) {
 			$.each($target, function(index, element) {
 				var url = $(element).attr("cas:url");
-				var template = $(element).html();
+				var tpl = $(element).html();
 				$(element).html('');
 				$.ajax({
 					url: url,
@@ -2001,7 +2034,7 @@ function Productattribute()
 						$(element).html('');
 						var items = [];
 						$.each(response.aaData, function(key, val) {
-							items.push($.sprintf(template, val.salescampaignTitle, val.salescampaignEnd, val.salescampaignId, val.salescampaignId, val.pictureFile));
+							items.push($.sprintf(tpl, val.salescampaignTitle, val.salescampaignEnd, val.salescampaignId, val.salescampaignId, val.pictureFile));
 						});
 						$(element).html(items.join(''));
 					}
@@ -2030,7 +2063,8 @@ function Productattribute()
 						$(element).html('');
 						var items = [];
 						$.each(response.aaData, function(key, val) {
-							items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, val.productattributepriceMVCur, val.productattributepriceMDVCur));
+							var status = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
+							items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, status, val.productattributepriceMVCur, val.productattributepriceMDVCur));
 						});
 						$(element).html(items.join(''));
 					},
@@ -2078,7 +2112,9 @@ function Productattribute()
 						$(element).html('');
 						var items = [];
 						$.each(response.aaData, function(key, val) {
-							items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, val.productattributepriceMVCur, val.productattributepriceMDVCur));
+							var status = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
+							
+							items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, status, val.productattributepriceMVCur, val.productattributepriceMDVCur));
 						});
 						$(element).html(items.join(''));
 					},
@@ -2220,8 +2256,8 @@ function Productattribute()
 			$.each($target, function(index, element) {
 				var url = $(this).attr("cas:url");
 				var productgroupId = $(this).attr("cas:var");
-				var template = $(element).html();
-				//console.log($(template).attr("href")); //converting a javascript string to a html object
+				var tpl = $(element).html();
+				//console.log($(tpl).attr("href")); //converting a javascript string to a html object
 				$(element).html('');
 				
 				$.ajax({
@@ -2235,15 +2271,15 @@ function Productattribute()
 						$.each(response.aaData, function(key, val) {
 							/*
 							if (productgroupId == val.productgroupId) {
-								//$(template).addClass("selected");
-								//console.log($(template).hasClass("selected"));
-								items.push($.sprintf(template, val.productgroupId, "selected", val.productgroupTitle));
+								//$(tpl).addClass("selected");
+								//console.log($(tpl).hasClass("selected"));
+								items.push($.sprintf(tpl, val.productgroupId, "selected", val.productgroupTitle));
 							}
 							else {
-								items.push($.sprintf(template, val.productgroupId, "" , val.productgroupTitle));
+								items.push($.sprintf(tpl, val.productgroupId, "" , val.productgroupTitle));
 							}
 							*/
-							items.push($.sprintf(template, val.productgroupId, val.productgroupTitle));
+							items.push($.sprintf(tpl, val.productgroupId, val.productgroupTitle));
 						});
 						$(element).html(items.join(''));
 						// Ana menü yüklendikten sonra çalıştırmak istediğimiz bir fonksiyon olduğunda kullanacağımız bir event
@@ -2738,9 +2774,12 @@ function Banner()
 	{
 		var $target = $('[cas-js=getBanners]');
 		if ($target.length) {
-			var url = $target.attr("cas:url");
+			
+			var url = CommonItems.getLocation() + "index.php";
+			
 			var theme = $target.attr("cas:theme");
 			init(theme);
+			
 			$.ajax({
 				url: url,
 				type: 'get',

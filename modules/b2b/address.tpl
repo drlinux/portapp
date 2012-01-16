@@ -33,9 +33,9 @@
 					<label>{#LABEL_Country#}</label>
 					<input type="text" name="postaladdressCountry" required="required" />
 				</li>
-				<li class="buttonset">
-					<button type="submit" onclick="Postaladdress.savePostaladdress(this.form);">{#BUTTON_Save#}</button>
-					<button type="submit" onclick="Postaladdress.deletePostaladdress(this.form);">{#BUTTON_Delete#}</button>
+				<li class="buttonset dn">
+					<button type="button" onclick="Postaladdress.savePostaladdress(this.form);">{#BUTTON_Save#}</button>
+					<button type="button" onclick="Postaladdress.deletePostaladdress(this.form);">{#BUTTON_Delete#}</button>
 				</li>
 			</ul>
 		</form>

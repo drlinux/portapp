@@ -9,28 +9,26 @@
 	<div id="sidebar">
 		<ul style="list-style-type: none; padding: 0px;" class="productsList bigProductList">
 		{foreach from=$data.productattribute.aaData item="entry"}
-			<li class="productItem">
-					<label class="labelDiscount">
-					{if $entry.productimpactDiscountRate neq null}
-					{$entry.productimpactDiscountRate * 100}%
-					{else}
-					{$entry.productimpactDiscountPrice}TL
-					{/if}
-					</label>
-					<a class="productLogoLink" href="modules/b2b/product.php?action=show&productId={$entry.productId}">
-						<img class="productLogo" src="img/product/2_{$entry.pictureFile}" width="100px" height="100px">
-					</a>
-					<a class="productName" href="modules/b2b/product.php?action=show&productId={$entry.productId}">{$entry.productattributeCode}</a>
-					<div class="costsOuter">
-						<span class="oldCost">
-						<!-- {$entry.productattributepriceMVCur}<br /> -->
-						{$entry.productattributepriceMDVCur}
-							<span class="scratch"></span>
-						</span>
-						<span class="currentCost">{$entry.productattributePrice}</span>	
-						<span class="btnAddToBasket" onclick="Productattribute.updateProductattributebasket_withoutForm({$entry.productattributeId},1); return false;" title="Sepete Ekle" >Sepete Ekle</span>
-					</div>
-			</li>
+		<li class="productItem">
+			<label class="labelDiscount">
+				<span class="discountPercent">{if $entry.productimpactDiscountRate gt 0}%{$entry.productimpactDiscountRate * 100}{/if}</span>
+				<span class="discountCount">{if $entry.productimpactDiscountPrice gt 0}{$entry.productimpactDiscountPrice}{/if}</span>
+				<span class="discountText">{if $entry.productimpactDiscountRate gt 0 or productimpactDiscountPrice gt 0}İndirimli Ürün{/if}</span>
+			</label>
+			<a href="modules/b2b/product.php?action=show&amp;productId={$entry.productId}" class="productLogoLink">
+				<img src="img/product/3_{$entry.pictureFile}" class="productLogo">
+			</a>
+			<span class="productName">{$entry.productTitle}</span>
+			<div class="costsOuter">
+				<!-- <span class="oldCost {if $entry.productimpactDiscountRate eq null and productimpactDiscountPrice eq null}dn{/if}"> -->
+				<span class="oldCost {if $entry.productimpactDiscountRate gt 0 or productimpactDiscountPrice gt 0}{else}dn{/if}">
+					{$entry.productattributepriceMVCur}
+					<span class="cross"></span>
+				</span>
+				<span class="currentCost">{$entry.productattributepriceMDVCur}</span>
+			</div>
+			<a class="btnAddToBasket" href="modules/b2b/sales.php?action=updateProductattributebasket&productattributeId={$entry.productattributeId}&productattributebasketQuantity=1">Sepete Ekle</a>
+		</li>
 		{/foreach}
 		</ul>
 	</div>

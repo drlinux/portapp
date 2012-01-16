@@ -95,7 +95,7 @@
 					<a href="modules/b2c/product.php?action=show&amp;productId=%s" class="productLogoLink">
 						<img src="img/product/2_%s" class="productLogo">
 					</a>
-					<span class="c-ffffff">%s</span>
+					<span class="productName">%s</span>
 					<div class="costsOuter">
 						<span class="oldCost">
 							%s
