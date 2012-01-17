@@ -20,14 +20,13 @@
 			</a>
 			<span class="productName">{$entry.productTitle}</span>
 			<div class="costsOuter">
-				<!-- <span class="oldCost {if $entry.productimpactDiscountRate eq null and productimpactDiscountPrice eq null}dn{/if}"> -->
 				<span class="oldCost {if $entry.productimpactDiscountRate gt 0 or productimpactDiscountPrice gt 0}{else}dn{/if}">
 					{$entry.productattributepriceMVCur}
 					<span class="cross"></span>
 				</span>
 				<span class="currentCost">{$entry.productattributepriceMDVCur}</span>
 			</div>
-			<a class="btnAddToBasket" href="modules/b2b/sales.php?action=updateProductattributebasket&productattributeId={$entry.productattributeId}&productattributebasketQuantity=1">Sepete Ekle</a>
+			<a class="btnAddToBasket" href="javascript:void(0);" onclick="Productattribute.updateProductattributebasket2({$entry.productattributeId}, 1);">Sepete Ekle</a>
 		</li>
 		{/foreach}
 		</ul>

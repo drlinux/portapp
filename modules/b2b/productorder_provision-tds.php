@@ -4,7 +4,6 @@ require_once dirname(__FILE__) . '/../../config/config.inc.php';
 // TODO: Bankadan data geldiği için burada sorun çıkarıyor
 //Permission::checkPermissionRedirect("b2b");
 
-
 $productattribute = new Productattribute;
 $aProductattribute = $productattribute->getProductattributesFromBasket();
 if (!$aProductattribute) {
@@ -126,77 +125,27 @@ if ( $oosResolveMerchantDataResponse->approved == 1 ) {
 	// XML Parse
 	$Root = new SimpleXMLElement($result);
 	
-	header ('Content-type: text/html; charset=utf-8');
+	//header ('Content-type: text/html; charset=utf-8');
 	if ( $Root->approved == 1 ) {
-		echo "Ödeme tamamlandı";
+		//echo "Ödeme tamamlandı";exit;
 		
 		$XID = $oosResolveMerchantDataResponse->oosResolveMerchantDataResponse->xid;
 		
 		$productorder = new Productorder();
-		$productorder->insert(
-			$productorder->sTable,
-			array(
-				"productorderstatusId"=>1,
-				"userId"=>$_SESSION["userId"],
-				"XID"=>$XID,
-				"productorderDatetime"=>date("Y-m-d H:i:s"),
-				"paymentId"=>$_SESSION["paymentId"],
-				"transportationId"=>$_SESSION["transportationId"],
-				"deliveryaddressId"=>$_SESSION["deliveryaddressId"],
-				"invoiceaddressId"=>$_SESSION["invoiceaddressId"]
-			)
-		);
-		unset($_SESSION["paymentId"]);
-		unset($_SESSION["transportationId"]);
-		unset($_SESSION["deliveryaddressId"]);
-		unset($_SESSION["invoiceaddressId"]);
+		$productorderId = $productorder->saveProductorder($XID);
 		
-		$rows = $productorder->select($productorder->sTable, "XID = :XID", array("XID"=>$XID));
-		$productorderId = $rows[0]["productorderId"];
-		
-		$productsalesmovement = new Productsalesmovement();
-		foreach ($aProductattribute["aaData"] as $productattribute) {
-			$productsalesmovement->insert(
-				$productsalesmovement->sTable,
-				array(
-					"productorderId"=>$productorderId,
-					"productattributeId"=>$productattribute["productattribute"]["productattributeId"],
-					"productsalesmovementQuantity"=>$productattribute["productattributebasketQuantity"],
-					"productsalesmovementPrice"=>$productattribute["productattribute"]["productattributepriceMDV"]
-				)
-			);
-			setcookie("productattributebasket[".$productattribute["productattribute"]["productattributeId"]."]", "", time()-60*60);
-		}
-		
-		$mailer = new CasMailer();
-		$mailer->Subject = "Sipariş";
-		$mailer->MsgHTML(sprintf("Sayın %s;<br/>Siparişiniz işleme alınmıştır.<br/>Sipariş Kodunuz: %s<br/>Toplam Miktar: %s<br/>Ödeme Tipi: %s", $aUser["userLastname"], $XID, $aProductattribute["productattributebasketTotalCur"], $aPayment["paymentgroup"]["paymentgroupTitle"]));
-		$mailer->AddAddress($aUser["userEmail"]);
-		// TODO: CC ye firm temsilcisinin e-posta adresini koy
-		//$mailer->AddCC(_EMAIL_USERNAME_);
-		if(!$mailer->Send()) {
-			//$this->msg = $smarty->getConfigVariable("ALERT_MailerSendError");//$mailer->ErrorInfo
-			//return false;
-		}
-		else {
-			//$this->msg = $smarty->getConfigVariable("ALERT_MailerSendSuccessfully");
-			//return true;
-		}
-		
-		//echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));
 		header("Location: " . PROJECT_URL . "modules/b2b/productorder.php?action=showProductorder&productorderId=" . $productorderId);
 		exit;
 		
 	}
 	else {
-		echo "Ödeme tamamlanamadı";
+		echo "Ödeme tamamlanamadı";exit;
 	}
 
 }
 else {
-	header ('Content-type: text/html; charset=utf-8');
-	echo "merchantPacket verisi çözümlenemedi";
+	//header ('Content-type: text/html; charset=utf-8');
+	echo "merchantPacket verisi çözümlenemedi";exit;
 	//echo $oosResolveMerchantDataResponse->respCode . PHP_EOL;
 	//echo $oosResolveMerchantDataResponse->respText . PHP_EOL;
 }
-exit;

@@ -199,7 +199,6 @@ input[type=text], input[type=password], input[type=email]
 
 .productItem .oldCost
 {
-	display:block;
 	color:#000 !important;
 	text-decoration: line-through;
 }

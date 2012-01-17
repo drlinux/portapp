@@ -5,40 +5,32 @@ Permission::checkPermissionRedirect("b2b");
 
 $_action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'view';
 
-$model = new Productorder;
+$model = new Productorder();
 
 switch($_action)
 {
 	
 	case 'provision':
 		
-		$productattribute = new Productattribute;
-		$aProductattribute = $productattribute->getProductattributesFromBasket();
-		if (!$aProductattribute) {
-			$data["process"] = array(
-				"success"=>false,
-				"msg"=>"Sepetiniz boş olduğundan işleme devam edilemiyor"
-			);
-			break;
-		}
-		
-		
-		$user = new User();
-		$aUser = $user->getEntry($_SESSION["userId"]);
-		//print_r($aUser);exit;
-		
 		$payment = new Payment();
 		$aPayment = $payment->getPayment($_SESSION["paymentId"]);
 		//print_r($aPayment);exit;
 		
-		
 		if ($aPayment["paymentgroup"]["paymentgroupType"] == "mt")
 		{
+			$XID = 'MT_00000'.date("ymdHis");
+			$productorderId = $model->saveProductorder($XID);
 			
+			//header("Location: " . PROJECT_URL . "modules/b2b/productorder.php?action=showProductorder&productorderId=" . $productorderId);
+			echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));exit;
 		}
 		elseif ($aPayment["paymentgroup"]["paymentgroupType"] == "pd")
 		{
+			$XID = 'PD_00000'.date("ymdHis");
+			$productorderId = $model->saveProductorder($XID);
 			
+			//header("Location: " . PROJECT_URL . "modules/b2b/productorder.php?action=showProductorder&productorderId=" . $productorderId);
+			echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));exit;
 		}
 		elseif ($aPayment["paymentgroup"]["paymentgroupType"] == "cc")
 		{
@@ -54,7 +46,7 @@ switch($_action)
 			$installment	= ($_POST["installment"]==1)?"00":$_POST["installment"];//Taksit sayisi (taksitsiz işlemlerde taksit sayısı "00" gönderilmelidir)
 		
 			$posnetid		= $aPayment["paymentgroup"]["paymentgroupPosnetid"];
-			$XID			= 'YKB_0000'.date("ymdHis");//YKB_0000080603143050
+			$XID			= 'CC_00000'.date("ymdHis");//YKB_0000080603143050
 			$cardHolderName	= $_POST["cardHolderName"];
 			
 			$request = "xmldata=".
@@ -219,10 +211,9 @@ switch($_action)
 			/*
 			 * Money Transfer
 			*/
-				
-			$data["XID"] = 'MOT_0000'.date("ymdHis");
+			
 			$data["amount"] = ($amount<1)?1:$amount;
-			$model->displayTemplate("b2b", "checkout_mt", $data);
+			$model->displayTemplate("b2b", "checkout_mt_pd", $data);
 		}
 		elseif ($data["payment"]["paymentgroupId"] == 2)
 		{
@@ -230,33 +221,29 @@ switch($_action)
 			 * Payment on Delivery
 			*/
 				
-			$data["XID"] = 'POD_0000'.date("ymdHis");
 			$data["amount"] = ($amount<1)?1:$amount;
-			$model->displayTemplate("b2b", "checkout_pd", $data);
+			$model->displayTemplate("b2b", "checkout_mt_pd", $data);
 		}
 		elseif ($data["payment"]["paymentgroupId"] == 3)
 		{
 			/*
 			 * Other Credit Cards
 			*/
-			// TODO: Diğer kredi kartı için form oluştur.
-			$data["XID"] = 'CCO_0000'.date("ymdHis");
+			
 			$data["amount"] = ($amount<1)?1:$amount;
-			$model->displayTemplate("b2b", "checkout_cc_others", $data);
+			$model->displayTemplate("b2b", "checkout_cc", $data);
 		}
 		elseif ($data["payment"]["paymentgroupId"] == 4)
 		{
 			/*
 			 * world - 0067 - paymentgroupId=5
 			*/
-				
-			$data["XID"] = 'YKB_0000'.date("ymdHis");//Herbir alışveriş işlemi için üye işyeri tarafından oluşturulan 20 karakterli alfa-numerik sipariş numarası
+			
 			$data["amount"] = $amount*100;//tutar*100 - Alışveriş tutarı (14,8 TL için 1480 giriniz.)
 			$data["instalment"] = ($period==1)?"00":$period;//Taksit sayisi (taksitsiz işlemlerde taksit sayısı "00" gönderilmelidir)
-				
 			//print_r($data);exit;
-				
-			$model->displayTemplate("b2b", "checkout_cc_world", $data);
+			
+			$model->displayTemplate("b2b", "checkout_cc", $data);
 		}
 		elseif ($data["payment"]["paymentgroupId"] == 5)
 		{
@@ -286,10 +273,9 @@ switch($_action)
 			$data["strErrorURL"] = $path . "3DPayResults.php";
 			$SecurityData = strtoupper(sha1($strProvisionPassword.$strTerminalID_));
 			$data["HashData"] = strtoupper(sha1($data["strTerminalID"].$data["strOrderID"].$data["strAmount"].$data["strSuccessURL"].$data["strErrorURL"].$data["strType"].$data["strInstallmentCount"].$strStoreKey.$SecurityData));
-				
-				
+			
 			//print_r($data);exit;
-				
+			
 			$model->displayTemplate("b2b", "checkout_cc_bonus", $data);
 		}
 		elseif ($data["payment"]["paymentgroupId"] == 6)
@@ -315,10 +301,9 @@ switch($_action)
 				
 			$data["lang"] = "tr";
 			$data["currency"] = "949";
-				
-				
+			
 			//print_r($data);exit;
-				
+			
 			$model->displayTemplate("b2b", "checkout_cc_axess", $data);
 		}
 

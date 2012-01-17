@@ -15,7 +15,7 @@ switch($_action)
 		break;
 	case 'saveUser':
 		if ($model->isValidRegisterForm($_POST)) {
-			echo(json_encode(array("success"=>$model->saveRegisterForm($_POST), "msg"=>$model->msg, "field"=>$model->field)));
+			echo(json_encode(array("success"=>$model->saveRegisterForm($_POST, _ROLE_B2B), "msg"=>$model->msg, "field"=>$model->field)));
 		}
 		else {
 			echo(json_encode(array("success"=>false, "msg"=>$model->msg, "field"=>$model->field)));

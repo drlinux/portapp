@@ -103,7 +103,7 @@
 						</span>
 						<span class="currentCost">%s</span>
 					</div>
-					<a class="btnAddToBasket" href="">Sepete Ekle</a>
+					<a class="btnAddToBasket" href="javascript:void(0);" onclick="Productattribute.updateProductattributebasket2(%s, 1);">Sepete Ekle</a>
 				</li>
 			</ul>
 		</div>

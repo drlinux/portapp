@@ -597,47 +597,18 @@ function Payment()
 		}
 	};
 	
-	/*var confirmOrder = function (form)
-	{
-		$form = $(form);
-		$form.validate({
-			submitHandler: function(f) {
-				$form.ajaxSubmit({
-					data: { action: 'confirmOrder' },
-					dataType: 'json',
-					beforeSubmit: function(a,f,o) {
-						//console.log(a);
-					},
-					success: function(response) {
-						//console.log(response);
-						if (response.success == true) {
-							CommonItems.casDialog({
-								content: jQuery.i18n.prop('ALERT_Completed'),
-								onClosed: function () {
-									window.location.replace( CommonItems.getLocation() + 'productorder.php?action=showProductorder&productorderId=' + response.productorderId );
-								}
-							});
-						}
-						else {
-							CommonItems.casDialog(response.msg);
-						}
-					}
-				});
-			}
-		});
-		return false;
-	};*/
-	
-	
-	// TODO: Burada form.validate kullanırken hata oluşuyordu o yüzden şimdilik normal ajax yaptım, orjinal hali yukarıda, bir ara göz atmak lazım.
 	var confirmOrder = function (form)
 	{
 		$form = $(form);
-		CommonItems.casLoaderShow();
-		$.ajax({
-			data: "action=confirmOrder&" + $form.serialize(),
+		$form.ajaxForm({
+			data: { action: 'provision' },
 			dataType: 'json',
+			beforeSubmit: function(a,f,o) {
+				//console.log(a);
+				CommonItems.casLoaderShow();
+			},
 			success: function(response) {
+				//console.log(response);
 				if (response.success == true) {
 					CommonItems.casDialog({
 						content: jQuery.i18n.prop('ALERT_Completed'),
@@ -649,14 +620,11 @@ function Payment()
 				else {
 					CommonItems.casDialog(response.msg);
 				}
-			},
-			complete: function(){
-				CommonItems.casLoaderHide();
 			}
 		});
 		return false;
 	};
-
+	
 	var Obj = new Object();
 	Obj.checkBincode = checkBincode;
 	Obj.confirmOrder = confirmOrder;
@@ -1441,24 +1409,9 @@ function Productattribute()
 						min: 0
 					})
 					.change(function() {
-						// TODO: updateProductattributebasket ile birleştir
 						var productattributeId = $(this).attr("productattributeId");
 						var productattributebasketQuantity = $(this).val();
-						var formData = [];
-						formData.push({ name: "action", value: "updateProductattributebasket" });
-						formData.push({ name: "productattributeId", value: productattributeId });
-						formData.push({ name: "productattributebasketQuantity", value: productattributebasketQuantity });
-						$.post(url, formData, function(response) {
-							console.log(response);
-							if (response.success == true) {
-								getShoppingbasket2();
-								CommonItems.casDialog(response.msg);
-							}
-							else {
-								getShoppingbasket2();
-								CommonItems.casDialog(response.msg);
-							}
-						}, "json");
+						updateProductattributebasket2(productattributeId, productattributebasketQuantity);
 						return false;
 					});
 					
@@ -1780,6 +1733,27 @@ function Productattribute()
 		});
 	};
 	
+	var updateProductattributebasket2 = function (productattributeId, productattributebasketQuantity)
+	{
+		var formData = [];
+		formData.push({ name: "action", value: "updateProductattributebasket" });
+		formData.push({ name: "productattributeId", value: productattributeId });
+		formData.push({ name: "productattributebasketQuantity", value: productattributebasketQuantity });
+		$.post(CommonItems.getLocation() + "sales.php", formData, function(response) {
+			if (response.success == true) {
+				getShoppingbasket();
+				getShoppingbasket2();
+				CommonItems.casDialog(response.msg);
+			}
+			else {
+				getShoppingbasket();
+				getShoppingbasket2();
+				CommonItems.casDialog(response.msg);
+			}
+		}, "json");
+		return false;
+	};
+	
 	var updateProductattributebasket = function (form)
 	{
 		$form = $(form);
@@ -1982,7 +1956,7 @@ function Productattribute()
 					if (response.iTotalRecords > 0) {
 						$.each(response.aaData, function(key, val) {
 							var status = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
-							items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, status, val.productattributepriceMVCur, val.productattributepriceMDVCur));
+							items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, status, val.productattributepriceMVCur, val.productattributepriceMDVCur, val.productattributeId));
 						});
 					}
 					else {
@@ -2064,7 +2038,7 @@ function Productattribute()
 						var items = [];
 						$.each(response.aaData, function(key, val) {
 							var status = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
-							items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, status, val.productattributepriceMVCur, val.productattributepriceMDVCur));
+							items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, status, val.productattributepriceMVCur, val.productattributepriceMDVCur, val.productattributeId));
 						});
 						$(element).html(items.join(''));
 					},
@@ -2113,8 +2087,7 @@ function Productattribute()
 						var items = [];
 						$.each(response.aaData, function(key, val) {
 							var status = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
-							
-							items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, status, val.productattributepriceMVCur, val.productattributepriceMDVCur));
+							items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, status, val.productattributepriceMVCur, val.productattributepriceMDVCur, val.productattributeId));
 						});
 						$(element).html(items.join(''));
 					},
@@ -2168,7 +2141,8 @@ function Productattribute()
 					$target.html('');
 					var items = [];
 					$.each(response.aaData, function(key, val) {
-						items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, val.productattributepriceMVCur, val.productattributepriceMDVCur));
+						var status = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
+						items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, status, val.productattributepriceMVCur, val.productattributepriceMDVCur, val.productattributeId));
 					});
 					$target.html(items.join(''));
 				},
@@ -2199,6 +2173,7 @@ function Productattribute()
 	{
 		var $target = $('[cas-js=getProductsByBrandId]');
 		if ($target.length) {
+			
 			var url = $target.attr("cas:url");
 			var limit = $target.attr("cas:limit");
 			var brandId = $target.attr("cas:var");
@@ -2222,7 +2197,12 @@ function Productattribute()
 					$target.html('');
 					var items = [];
 					$.each(response.aaData, function(key, val) {
-						items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, val.productattributepriceMVCur, val.productattributepriceMDVCur));
+						var discountPercent = '%' + (val.productimpactDiscountRate*100);
+						var discountCount = val.productimpactDiscountPrice;
+						var discountText = (val.productimpactDiscountRate > 0 || val.productimpactDiscountPrice > 0)?"İndirimli Ürün":"";
+						//var status = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
+						var status = (val.productimpactDiscountRate > 0 || val.productimpactDiscountPrice >0) ? "" : "dn";
+						items.push($.sprintf(tpl, discountPercent, discountCount, discountText, val.productId, val.pictureFile, val.productTitle, status, val.productattributepriceMVCur, val.productattributepriceMDVCur, val.productattributeId));
 					});
 					$target.html(items.join(''));
 				},
@@ -2318,6 +2298,7 @@ function Productattribute()
 	
 	Obj.removeProductattributebasket = removeProductattributebasket;
 	Obj.updateProductattributebasket = updateProductattributebasket;
+	Obj.updateProductattributebasket2 = updateProductattributebasket2;
 	
 	return Obj;
 }

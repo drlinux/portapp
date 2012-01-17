@@ -23,7 +23,7 @@ switch($_action) {
 	case 'save':
 		$formvars = array_merge($_POST, $_FILES);
 		$permissionId = $model->saveEntry($formvars, array("i18n"=>true));
-		$model->insert("role_permission", array("roleId"=>_ROLE_ADMIN, "permissionId"=>$permissionId));
+		$model->insert("role_permission", array("roleId"=>_ROLE_ADMIN_LEVEL1, "permissionId"=>$permissionId));
 		header("Location: " . $_SERVER["PHP_SELF"]);
 		break;
 	case 'delete':

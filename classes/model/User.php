@@ -559,21 +559,21 @@ class User extends CasBase
 
 	}
 
-	function saveRegisterForm($formvars)
+	function saveRegisterForm($formvars, $roleId=_ROLE_B2C)
 	{
 		global $smarty;
 
 		$userPass = CasString::randomStringGenerator();
 
 		if ($this->insert(
-		$this->sTable,
-		array(
-					"userName"=>$formvars["userEmail"], 
-					"userPass"=>sha1($userPass),
-					"userEmail"=>$formvars["userEmail"], 
-					"userFirstname"=>$formvars["userFirstname"], 
-					"userLastname"=>$formvars["userLastname"]
-		)
+			$this->sTable,
+			array(
+				"userName"=>$formvars["userEmail"], 
+				"userPass"=>sha1($userPass),
+				"userEmail"=>$formvars["userEmail"], 
+				"userFirstname"=>$formvars["userFirstname"], 
+				"userLastname"=>$formvars["userLastname"]
+			)
 		))
 		{
 
@@ -585,10 +585,10 @@ class User extends CasBase
 				
 			$this->insert(
 				"user_role",
-			array(
+				array(
 					"userId"=>$userId,
-					"roleId"=>_ROLE_B2C
-			)
+					"roleId"=>$roleId
+				)
 			);
 				
 			$mailer = new CasMailer();
