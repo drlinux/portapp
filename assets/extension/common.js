@@ -2141,8 +2141,11 @@ function Productattribute()
 					$target.html('');
 					var items = [];
 					$.each(response.aaData, function(key, val) {
-						var status = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
-						items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, status, val.productattributepriceMVCur, val.productattributepriceMDVCur, val.productattributeId));
+						var discountPercent = (val.productimpactDiscountRate == null) ? "dn" : "";
+						var discountCount = (val.productimpactDiscountPrice == null) ? "dn" : "";
+						var discountText = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "" : "İndirimli Ürün";
+						var oldCost = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
+						items.push($.sprintf(tpl, discountPercent, val.productimpactDiscountRate*100, discountCount, val.productimpactDiscountPrice, discountText, val.productId, val.pictureFile, val.productTitle, oldCost, val.productattributepriceMVCur, val.productattributepriceMDVCur, val.productattributeId));
 					});
 					$target.html(items.join(''));
 				},
