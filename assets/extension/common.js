@@ -1449,9 +1449,11 @@ function Productattribute()
 							items.push('<td style="width:103px;">');
 							items.push('<span class="name">'+val1.productattribute.productTitle+'</span>');
 							items.push('<span class="note">');
-							$.each(val1.productattribute.attribute, function(key2, val2) {
-								items.push('<div>' + val2.attributegroupTitle + ': ' + val2.attributeTitle + '</div>');
-							});
+							if (val1.productattribute.attribute != null) {
+								$.each(val1.productattribute.attribute, function(key2, val2) {
+									items.push('<div>' + val2.attributegroupTitle + ': ' + val2.attributeTitle + '</div>');
+								});
+							}
 							items.push('</span>');
 							items.push('</td>');
 							items.push('<td style="width:218px;">');
@@ -1568,6 +1570,7 @@ function Productattribute()
 			},
 			success: function(response, textStatus, xhr) {
 				if (response.success == true) {
+					getShoppingbasket();
 					getShoppingbasket2();
 					CommonItems.casDialog("Sepetiniz temizlendi");
 				}
@@ -1955,8 +1958,11 @@ function Productattribute()
 					var items = [];
 					if (response.iTotalRecords > 0) {
 						$.each(response.aaData, function(key, val) {
-							var status = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
-							items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, status, val.productattributepriceMVCur, val.productattributepriceMDVCur, val.productattributeId));
+							var discountPercent = (val.productimpactDiscountRate == null) ? "dn" : "";
+							var discountCount = (val.productimpactDiscountPrice == null) ? "dn" : "";
+							var discountText = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
+							var oldCost = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
+							items.push($.sprintf(tpl, discountPercent, val.productimpactDiscountRate*100, discountCount, val.productimpactDiscountPrice, discountText, val.productId, val.pictureFile, val.productTitle, oldCost, val.productattributepriceMVCur, val.productattributepriceMDVCur, val.productattributeId));
 						});
 					}
 					else {
@@ -2037,8 +2043,11 @@ function Productattribute()
 						$(element).html('');
 						var items = [];
 						$.each(response.aaData, function(key, val) {
-							var status = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
-							items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, status, val.productattributepriceMVCur, val.productattributepriceMDVCur, val.productattributeId));
+							var discountPercent = (val.productimpactDiscountRate == null) ? "dn" : "";
+							var discountCount = (val.productimpactDiscountPrice == null) ? "dn" : "";
+							var discountText = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
+							var oldCost = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
+							items.push($.sprintf(tpl, discountPercent, val.productimpactDiscountRate*100, discountCount, val.productimpactDiscountPrice, discountText, val.productId, val.pictureFile, val.productTitle, oldCost, val.productattributepriceMVCur, val.productattributepriceMDVCur, val.productattributeId));
 						});
 						$(element).html(items.join(''));
 					},
@@ -2086,8 +2095,11 @@ function Productattribute()
 						$(element).html('');
 						var items = [];
 						$.each(response.aaData, function(key, val) {
-							var status = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
-							items.push($.sprintf(tpl, val.productimpactDiscountRate*100, val.productimpactDiscountPrice, val.productId, val.pictureFile, val.productTitle, status, val.productattributepriceMVCur, val.productattributepriceMDVCur, val.productattributeId));
+							var discountPercent = (val.productimpactDiscountRate == null) ? "dn" : "";
+							var discountCount = (val.productimpactDiscountPrice == null) ? "dn" : "";
+							var discountText = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
+							var oldCost = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
+							items.push($.sprintf(tpl, discountPercent, val.productimpactDiscountRate*100, discountCount, val.productimpactDiscountPrice, discountText, val.productId, val.pictureFile, val.productTitle, oldCost, val.productattributepriceMVCur, val.productattributepriceMDVCur, val.productattributeId));
 						});
 						$(element).html(items.join(''));
 					},
@@ -2143,7 +2155,7 @@ function Productattribute()
 					$.each(response.aaData, function(key, val) {
 						var discountPercent = (val.productimpactDiscountRate == null) ? "dn" : "";
 						var discountCount = (val.productimpactDiscountPrice == null) ? "dn" : "";
-						var discountText = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "" : "İndirimli Ürün";
+						var discountText = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
 						var oldCost = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
 						items.push($.sprintf(tpl, discountPercent, val.productimpactDiscountRate*100, discountCount, val.productimpactDiscountPrice, discountText, val.productId, val.pictureFile, val.productTitle, oldCost, val.productattributepriceMVCur, val.productattributepriceMDVCur, val.productattributeId));
 					});
@@ -2200,12 +2212,11 @@ function Productattribute()
 					$target.html('');
 					var items = [];
 					$.each(response.aaData, function(key, val) {
-						var discountPercent = '%' + (val.productimpactDiscountRate*100);
-						var discountCount = val.productimpactDiscountPrice;
-						var discountText = (val.productimpactDiscountRate > 0 || val.productimpactDiscountPrice > 0)?"İndirimli Ürün":"";
-						//var status = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
-						var status = (val.productimpactDiscountRate > 0 || val.productimpactDiscountPrice >0) ? "" : "dn";
-						items.push($.sprintf(tpl, discountPercent, discountCount, discountText, val.productId, val.pictureFile, val.productTitle, status, val.productattributepriceMVCur, val.productattributepriceMDVCur, val.productattributeId));
+						var discountPercent = (val.productimpactDiscountRate == null) ? "dn" : "";
+						var discountCount = (val.productimpactDiscountPrice == null) ? "dn" : "";
+						var discountText = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
+						var oldCost = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
+						items.push($.sprintf(tpl, discountPercent, val.productimpactDiscountRate*100, discountCount, val.productimpactDiscountPrice, discountText, val.productId, val.pictureFile, val.productTitle, oldCost, val.productattributepriceMVCur, val.productattributepriceMDVCur, val.productattributeId));
 					});
 					$target.html(items.join(''));
 				},

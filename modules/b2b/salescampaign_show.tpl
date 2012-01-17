@@ -11,9 +11,9 @@
 		{foreach from=$data.productattribute.aaData item="entry"}
 		<li class="productItem">
 			<label class="labelDiscount">
-				<span class="discountPercent">{if $entry.productimpactDiscountRate gt 0}%{$entry.productimpactDiscountRate * 100}{/if}</span>
-				<span class="discountCount">{if $entry.productimpactDiscountPrice gt 0}{$entry.productimpactDiscountPrice}{/if}</span>
-				<span class="discountText">{if $entry.productimpactDiscountRate gt 0 or productimpactDiscountPrice gt 0}İndirimli Ürün{/if}</span>
+				<span class="discountPercent {if $entry.productimpactDiscountRate gt 0}{else}dn{/if}">%{$entry.productimpactDiscountRate * 100}</span>
+				<span class="discountCount {if $entry.productimpactDiscountPrice gt 0}{else}dn{/if}">{$entry.productimpactDiscountPrice}</span>
+				<span class="discountText {if $entry.productimpactDiscountRate gt 0 or productimpactDiscountPrice gt 0}{else}dn{/if}">İndirimli Ürün</span>
 			</label>
 			<a href="modules/b2b/product.php?action=show&amp;productId={$entry.productId}" class="productLogoLink">
 				<img src="img/product/3_{$entry.pictureFile}" class="productLogo">

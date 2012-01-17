@@ -160,9 +160,9 @@ $(function() {
 	<ul class="productsList bigProductList" cas-js="getProductsSimilar" cas:url="modules/b2c/index.php" cas:var="{$data.category.defaultx.categoryId}" cas:limit="{$_THEME_B2C_LIMITPRODUCTS1}" cas-break="{$_THEME_B2C_NUMBEROFPRODUCTSDISPLAYED}">
 		<li class="productItem">
 			<label class="labelDiscount">
-				<span class="discountPercent">%%%s</span>
-				<span class="discountCount">%s</span>
-				<span class="discountText">İndirimli Ürün</span>
+				<span class="discountPercent %s">%%%s</span>
+				<span class="discountCount %s">%s</span>
+				<span class="discountText %s">İndirimli Ürün</span>
 			</label>
 			<a href="modules/b2c/product.php?action=show&amp;productId=%s" class="productLogoLink">
 				<img src="img/product/3_%s" class="productLogo">

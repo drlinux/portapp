@@ -83,11 +83,11 @@
 			</div>
 			<div id="contentsFullWidthOuter">
 				<div id="wholeContentsOuter">
-					{include file="$tpl_leftbar.tpl"}
+					{include file="$tpl_leftbar.tpl" display=$smarty.session.userId}
 					<div id="contentsOuter">
 					{include file="$tpl_content.tpl" msg=$msg data=$data}
 					</div>
-					{include file="$tpl_rightbar.tpl"}
+					{include file="$tpl_rightbar.tpl" display=$smarty.session.userId}
 				</div>
 			</div>
 		</div>

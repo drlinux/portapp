@@ -1,3 +1,4 @@
+{if $display neq 0}
 <div id="leftBarOuter" class="sidebar">
 	<div class="subMenuOuter" style="display:none;">
 		<div class="top">ARAMA YAP</div>
@@ -82,3 +83,4 @@
 	</div>
 	
 </div>
+{/if}
