@@ -1,6 +1,8 @@
 <?php
 require_once dirname(__FILE__) . '/../../config/config.inc.php';
 
+Permission::checkPermissionRedirect("b2b");
+
 $_action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'view';
 
 $model = new Productgroup;
