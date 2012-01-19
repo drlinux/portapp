@@ -31,7 +31,7 @@ switch($_action)
 		break;
 	case 'show':
 		$productId = $_GET["productId"];
-		if ($productId == null) header("Location: " . PROJECT_URL . "modules/b2b/");
+		if ($productId == null) header("Location: " . $project['url'] . "modules/b2b/");
 		$data = $model->getProductattributeByProductId($productId);
 		//print_r($data);exit;
 		
@@ -42,6 +42,6 @@ switch($_action)
 		break;
 	case 'view':
 	default:
-		$model->displayTemplate("b2b", "product");
+		$model->displayTemplate("b2b", "product_list");
 		break;
 }

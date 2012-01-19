@@ -2,6 +2,8 @@
 //str_replace('\\', '/', $path)
 $currentDir = dirname(__FILE__);
 
+define('__PS_BASE_URI__', '/portapp/');
+
 /* URLs */
 define('_THEMES_DIR_', __PS_BASE_URI__.'themes/');
 define('_MODULE_DIR_', __PS_BASE_URI__.'modules/');

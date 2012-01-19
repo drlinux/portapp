@@ -1,7 +1,16 @@
 $(startDefault);
 
+var global_settings = {};
+
 function startDefault()
 {
+   var defaults = {
+                   use_jqzoom:true
+           };
+   
+   global_settings = $.extend(defaults, global_settings);
+   
+   //////////////////////////////////////////////////////////////////////////////
 	CommonItems = new CommonItems();
 	
 	GMAPHelper = new GMAPHelper();
@@ -80,7 +89,61 @@ function startDefault()
 			$("#menuOuter a[href*='productgroupId=" + productgroupId + "']").addClass("selected");
 		}
 	});
+	
+	fixContentsWidth();
 }
+
+function fixContentsWidth()
+{
+       var leftBar                         =         $("#leftBarOuter");
+       var rightBar                         =         $("#rightBarOuter");
+       var contents                        =        $("#contentsOuter");
+       var wholeContents                =        $("#wholeContentsOuter");
+       var hasLeftBar                         =         leftBar.length > 0 ? true : false;
+       var hasRightBar                 =         rightBar.length > 0 ? true : false;
+       var leftBarWidth                 =         hasLeftBar ? parseInt(leftBar.outerWidth(true)) : 0;
+       var rightBarWidth                 =         hasRightBar ? parseInt(rightBar.outerWidth(true)) : 0;
+       var contentsWidth                 =         parseInt(contents.outerWidth(true)); // margin değerini hesaa katmak istersen outerWidth(true) olarak kullan
+       var wholeContentsWidth        =        parseInt(wholeContents.width());
+       var calculatedWidth                =        0;
+       
+       if(!hasLeftBar || !hasRightBar )
+       {
+               var calculatedWidth = 0;
+               
+               if(!hasLeftBar && !hasRightBar)
+               {
+                       calculatedWidth = wholeContentsWidth - (leftBarWidth + rightBarWidth);
+               }
+               else if(!hasLeftBar)
+               {
+                       calculatedWidth = wholeContentsWidth - rightBarWidth;
+               }
+               else
+               {
+                       calculatedWidth = wholeContentsWidth - leftBarWidth;
+                       //alert("right: " + rightBar.length);
+               }
+               
+               // contents objesinin margin, padding ve border değerlerinin toplamını 
+               // alıp kullanacağın genişlik değerinden çıkarki taşma olmasın
+               var extraWidth = contentsWidth - parseInt(contents.width()); 
+               calculatedWidth -= extraWidth;
+               
+               contents.width(calculatedWidth);
+       }
+       
+       // Fix CasContents
+       contents.find(".casContent").each(function(){
+               var usableArea = $(this).parent();
+               var usableWidth        = parseInt(usableArea.width());
+               var thisWidth = parseInt($(this).width()); 
+               var thisExtraWidth = parseInt($(this).outerWidth()) - thisWidth; // margin değerini hesaa katmak istersen outerWidth(true) olarak kullan
+               var calculatedWidth = usableWidth - thisExtraWidth;
+               $(this).width(calculatedWidth);
+       });
+}
+ 
 
 var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 var emailblockReg = /^([\w-\.]+@(?!gmail.com)(?!yahoo.com)(?!hotmail.com)([\w-]+\.)+[\w-]{2,4})?$/;
@@ -1932,10 +1995,12 @@ function Productattribute()
 			var sSearch = $target.attr("cas:var");
 			var limit = $target.attr("cas:limit");
 			
-			if (sSearch == "" || sSearch == null) {
-				$target.html('');
-				return false;
-			}
+			// TODO: aktif hale geldiğinde b2b de ürün listelemiyor
+			// aktifken b2c de tüm ürünleri listeliyor
+			//if (sSearch == "" || sSearch == null) {
+				//$target.html('');
+				//return false;
+			//}
 			
 			var tpl = $target.html();
 			$target.html('');
@@ -3576,7 +3641,7 @@ function CommonItems()
 	}
 	
 	var jqzoom = $('a.jqzoom');
-	if (jqzoom.length) {
+	if (jqzoom.length && global_settings.use_jqzoom) {
 		$(jqzoom).jqzoom({
 			preloadText: jQuery.i18n.prop('ALERT_Loading'),
 			zoomType: "reverse",
@@ -3587,6 +3652,10 @@ function CommonItems()
 			background: "#000"
 		});
 	}
+	else
+		{
+		$('a.jqzoom').click(function(){return false;});
+		}
 	
 	$("input.phone").each(function() {
 		$(this).mask("999-999-9999");

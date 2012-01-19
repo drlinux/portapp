@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<base href="{$PROJECT_URL}" />
+<base href="{$project.url}" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="icon" type="image/png" href="img/favicon.png" />
 
@@ -72,7 +72,7 @@
 <div id="container">
 	<div id="navigation">
 		<span class="buttonset fr">
-			<button cas-js="getBreadcrumbsIso639" cas:url="modules/b2b/index.php" cas:uri="{$PROJECT_ENCODEDURI}"></button>
+			<button cas-js="getBreadcrumbsIso639" cas:url="modules/b2b/index.php" cas:uri="{$project.encodedUri}"></button>
 			<button cas-js="getLoginoutButton" cas:url="modules/b2b/index.php"></button>
 			<!-- <button type="submit" onclick="location.href='modules/b2b/register.php'">{#BUTTON_Register#}</button> -->
 		</span>

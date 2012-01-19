@@ -12,7 +12,7 @@
 			<ul data-role="listview">
 				{foreach from=$data.aaData item="entry"}
 				<li>
-					<a href="{$PROJECT_URL}modules/mb2c/product.php?action=show&productId={$entry.productId}" data-transition="flip">
+					<a href="{$project.url}modules/mb2c/product.php?action=show&productId={$entry.productId}" data-transition="flip">
 						<img src="img/product/2_{$entry.pictureFile}" />
 						<h3>{$entry.productTitle}</h3>
 						<p>{$entry.productContent}</p>

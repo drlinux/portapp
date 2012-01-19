@@ -15,7 +15,7 @@ switch($_action)
 		break;
 	case 'saveUser':
 		if ($model->isValidRegisterForm($_POST)) {
-			echo(json_encode(array("success"=>$model->saveRegisterForm($_POST), "msg"=>$model->msg, "field"=>$model->field)));
+			echo(json_encode(array("success"=>$model->saveRegisterForm($_POST, $smarty->getVariable("_USER_ROLE_B2C") , $smarty->getVariable("_USER_INITIALSTATUS_B2C")), "msg"=>$model->msg, "field"=>$model->field)));
 		}
 		else {
 			echo(json_encode(array("success"=>false, "msg"=>$model->msg, "field"=>$model->field)));

@@ -184,7 +184,7 @@ if ( $oosResolveMerchantDataResponse->approved == 1 ) {
 		}
 		
 		//echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));
-		header("Location: " . PROJECT_URL . "modules/b2c/productorder.php?action=showProductorder&productorderId=" . $productorderId);
+		header("Location: " . $project['url'] . "modules/b2c/productorder.php?action=showProductorder&productorderId=" . $productorderId);
 		exit;
 		
 	}

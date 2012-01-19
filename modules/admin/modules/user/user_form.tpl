@@ -8,6 +8,11 @@
 	<div id="tabs-1">
 		<form autocomplete="off" method="post" action="{$SCRIPT_NAME}">
 		<ul class="ulform">
+			<li>
+				<label>{#LABEL_Status#}</label>
+				<input type="radio" name="userStatus" value="1" {if $data.model.userStatus eq 1}checked="checked"{/if} required="required" />Etkin
+				<input type="radio" name="userStatus" value="0" {if $data.model.userStatus eq 0}checked="checked"{/if} required="required" />Etkin değil
+			</li>
 			<li class="dn">
 				<label>{#LABEL_Id#}</label>
 				<input type="text" name="userId" value="{$data.model.userId}" readonly="readonly" />

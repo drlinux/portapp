@@ -28,7 +28,7 @@ switch($_action)
 		}
 		else {
 			//$URI = $g_project->uri;
-			$URI = PROJECT_URL . "modules/admin/";
+			$URI = $project['url'] . "modules/admin/";
 		}
 
 		header("Location: " . $URI);
@@ -68,7 +68,7 @@ switch($_action)
 		echo(json_encode(array("success"=>$model->authenticate($_POST), "uri"=>$_POST["uri"], "msg"=>$model->msg)));
 		break;
 	case 'login':
-		if (isset($_SESSION["userId"])) header("Location: " . PROJECT_URL . "modules/admin/");
+		if (isset($_SESSION["userId"])) header("Location: " . $project['url'] . "modules/admin/");
 		$model->displayTemplate("admin", "login_form", $_REQUEST);
 		break;
 	case 'logout':
@@ -79,7 +79,7 @@ switch($_action)
 		session_destroy();
 		session_start();
 		$_SESSION["PROJECT_LANGUAGE"] = $language;
-		header("Location: " . PROJECT_URL . "modules/admin/");
+		header("Location: " . $project['url'] . "modules/admin/");
 		break;
 
 
@@ -87,7 +87,7 @@ switch($_action)
 		$model->mungeFormData($_POST);
 		if($model->isValidForm($_POST) && $model->authenticate($_POST)) {
 			if (!isset($_POST["uri"]) || $_POST["uri"]=="") {
-				$redir = PROJECT_URL . "modules/admin/";
+				$redir = $project['url'] . "modules/admin/";
 			}
 			else {
 				$redir = $_POST["uri"];

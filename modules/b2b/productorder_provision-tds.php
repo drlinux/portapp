@@ -134,7 +134,7 @@ if ( $oosResolveMerchantDataResponse->approved == 1 ) {
 		$productorder = new Productorder();
 		$productorderId = $productorder->saveProductorder($XID);
 		
-		header("Location: " . PROJECT_URL . "modules/b2b/productorder.php?action=showProductorder&productorderId=" . $productorderId);
+		header("Location: " . $project['url'] . "modules/b2b/productorder.php?action=showProductorder&productorderId=" . $productorderId);
 		exit;
 		
 	}

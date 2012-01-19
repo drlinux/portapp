@@ -21,7 +21,7 @@ switch($_action)
 			$XID = 'MT_00000'.date("ymdHis");
 			$productorderId = $model->saveProductorder($XID);
 			
-			//header("Location: " . PROJECT_URL . "modules/b2b/productorder.php?action=showProductorder&productorderId=" . $productorderId);
+			//header("Location: " . $project['url'] . "modules/b2b/productorder.php?action=showProductorder&productorderId=" . $productorderId);
 			echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));exit;
 		}
 		elseif ($aPayment["paymentgroup"]["paymentgroupType"] == "pd")
@@ -29,7 +29,7 @@ switch($_action)
 			$XID = 'PD_00000'.date("ymdHis");
 			$productorderId = $model->saveProductorder($XID);
 			
-			//header("Location: " . PROJECT_URL . "modules/b2b/productorder.php?action=showProductorder&productorderId=" . $productorderId);
+			//header("Location: " . $project['url'] . "modules/b2b/productorder.php?action=showProductorder&productorderId=" . $productorderId);
 			echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));exit;
 		}
 		elseif ($aPayment["paymentgroup"]["paymentgroupType"] == "cc")
@@ -106,7 +106,7 @@ switch($_action)
 				$data["posnetData2"] = $Root->oosRequestDataResponse->data2;
 				$data["digest"] = $Root->oosRequestDataResponse->sign;
 				$data["vftCode"] = "";
-				$data["merchantReturnURL"] = PROJECT_URL . "modules/b2b/productorder_provision-tds.php";
+				$data["merchantReturnURL"] = $project['url'] . "modules/b2b/productorder_provision-tds.php";
 				
 				$model->displayTemplate("b2b", $model->sTable."_cc_provision", $data);
 				break;

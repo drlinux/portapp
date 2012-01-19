@@ -14,7 +14,7 @@ switch($_action)
 		break;
 	case 'show':
 		$salescampaignId = $_REQUEST[$model->sIndexColumn];
-		if ($salescampaignId == null) header("Location: " . PROJECT_URL . "modules/b2b/");
+		if ($salescampaignId == null) header("Location: " . $project['url'] . "modules/b2b/");
 		$data = $model->getSalescampaign($salescampaignId);
 		//print_r($data);exit;
 		

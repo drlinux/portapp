@@ -43,7 +43,8 @@ class Usertrack extends CasBase
 		
 	public function addTrack($type=1, $note=null)
 	{
-		if (_TRACKING_) {
+		global $smarty;
+		if ( $smarty->getVariable("_SITE_TRACKING") == "1" ) {
 			$this->insert(
 				$this->sTable,
 				array(

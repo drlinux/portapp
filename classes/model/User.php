@@ -8,7 +8,7 @@ class User extends CasBase
 
 		$this->sTable		= strtolower(__CLASS__);
 
-		$this->aAllField		= array("userId", "userName", "userPass", "userEmail", "userFirstname", "userLastname", "userBirthdate", "userGender", "userPhone", "userTckn"/*, "userCoordinate"*/);
+		$this->aAllField		= array("userId", "userStatus", "userName", "userPass", "userEmail", "userFirstname", "userLastname", "userBirthdate", "userGender", "userPhone", "userTckn"/*, "userCoordinate"*/);
 		$this->sIndexColumn		= "userId";
 		$this->sIndexColumnFull	= $this->sTable.".".$this->sIndexColumn;
 
@@ -364,7 +364,7 @@ class User extends CasBase
 
 
 	// TODO: Uzun kayıt formu için
-	function ___isValidRegisterForm1($formvars)
+	function isValidRegisterForm1($formvars)
 	{
 
 		// reset message
@@ -416,11 +416,13 @@ class User extends CasBase
 
 	function saveRegisterForm1($formvars)
 	{
+		global $smarty;
+		
 		$userPass = CasString::randomStringGenerator();
 
 		if ($this->insert(
-		$this->sTable,
-		array(
+			$this->sTable,
+			array(
 					"userName"=>$formvars["userEmail"], 
 					"userPass"=>sha1($userPass),
 					"userEmail"=>$formvars["userEmail"], 
@@ -430,7 +432,7 @@ class User extends CasBase
 					"userTckn"=>$formvars["userTckn"],
 					"userGender"=>$formvars["userGender"], 
 					"userPhone"=>$formvars["userPhone"]
-		)
+			)
 		))
 		{
 
@@ -444,7 +446,7 @@ class User extends CasBase
 				"user_role",
 			array(
 					"userId"=>$userId,
-					"roleId"=>_ROLE_B2C
+					"roleId"=>$smarty->getVariable("_USER_ROLE_B2C")
 			)
 			);
 
@@ -559,7 +561,7 @@ class User extends CasBase
 
 	}
 
-	function saveRegisterForm($formvars, $roleId=_ROLE_B2C)
+	function saveRegisterForm($formvars, $roleId, $userStatus)
 	{
 		global $smarty;
 
@@ -568,6 +570,7 @@ class User extends CasBase
 		if ($this->insert(
 			$this->sTable,
 			array(
+				"userStatus"=>$userStatus,
 				"userName"=>$formvars["userEmail"], 
 				"userPass"=>sha1($userPass),
 				"userEmail"=>$formvars["userEmail"], 

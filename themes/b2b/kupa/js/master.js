@@ -1,5 +1,7 @@
 $(MasterStart);
 
+global_settings.use_jqzoom = false;
+
 function MasterStart()
 {
 	$("[cas-break]").each(function(){

@@ -47,7 +47,7 @@ $config['time'] = '%H:%M:%S';
 $config['datetime'] = '%d.%m.%Y %H:%M';
 $smarty->assign('config', $config);
 
-// TODO: buna bir bak
+// TODO: buna bir bak xampp de kullanılmış
 /*
 if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
 	$uri = 'https://';
@@ -62,7 +62,9 @@ if (isset($_SERVER["HTTP_HOST"]) AND (!empty($_SERVER["HTTP_HOST"])))
 	if(isset($_SERVER["HTTPS"]) AND (!empty($_SERVER["HTTPS"])) AND strtolower($_SERVER['HTTPS'])!='off')
 	{
 		$url_scheme = "https://";
-	} else {
+	}
+	else
+	{
 		$url_scheme = "http://";
 
 		// FIXME: Always use https
@@ -78,19 +80,11 @@ if (isset($_SERVER["HTTP_HOST"]) AND (!empty($_SERVER["HTTP_HOST"])))
 	}
 	*/
 	
-	define("PROJECT_URL", $url_scheme . $_SERVER["HTTP_HOST"] . __PS_BASE_URI__);
-	$smarty->assign("PROJECT_URL", PROJECT_URL);
-	
-	//$this->url = $url_scheme . $_SERVER["HTTP_HOST"] . '/portapp/';
-	//$this->url .= str_replace( '\\', '/', substr($_SERVER["PHP_SELF"], 0, -24));
-
 	$op = ($_SERVER['QUERY_STRING']=="") ? $_SERVER['PHP_SELF'] : $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
 	//$op = str_replace("&","&#38;",$op);
 	$uri = $url_scheme . $_SERVER['HTTP_HOST'] . $op;
-	$smarty->assign("PROJECT_ENCODEDURI", urlencode($uri));
 	
-	// TODO: Bu şekilde de yapabiliriz
-	$project['url'] = PROJECT_URL;
+	$project['url'] = $url_scheme . $_SERVER["HTTP_HOST"] . __PS_BASE_URI__;
 	$project['uri'] = $uri;
 	$project['encodedUri'] = urlencode($uri);
 	$smarty->assign('project', $project);
@@ -102,4 +96,6 @@ $setting = new Setting();
 $aSetting = $setting->getSettings();
 foreach ($aSetting["options"] as $settingParameter=>$settingValue) {
 	$smarty->assign($settingParameter, $settingValue);
+	// TODO: Bu şekilde yapsak?
+	//$smarty->assign('setting', $blabla);
 }

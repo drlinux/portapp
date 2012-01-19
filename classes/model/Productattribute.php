@@ -238,8 +238,9 @@ class Productattribute extends CasBase
 	
 	function getProductattributeByProductattributeId($productattributeId)
 	{
+		global $smarty;
 		
-		$roleId = ($roleId==null)?(isset($_SESSION["roleId"])?$_SESSION["roleId"]:_ROLE_B2C):$roleId;
+		$roleId = ($roleId==null)?(isset($_SESSION["roleId"])?$_SESSION["roleId"]:$smarty->getVariable("_USER_ROLE_B2C")):$roleId;
 		
 		$sQuery = "
 			SELECT 

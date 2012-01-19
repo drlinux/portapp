@@ -169,7 +169,7 @@ switch($_action)
 					"user_role",
 					array(
 						"userId"=>$userId,
-						"roleId"=>_ROLE_B2C
+						"roleId"=>$smarty->getVariable("_USER_ROLE_B2C")
 					)
 				);
 

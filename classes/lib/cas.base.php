@@ -89,7 +89,7 @@ class CasBase extends CasDatabase
 				
 		$smarty->assign('tpl_content', $tpl);
 
-		if (_CODEPACKING_) {
+		if ($smarty->getVariable("_SITE_CODEPACKING") == "1") {
 			$smarty->loadFilter('output', 'trimwhitespace');
 			$smarty->loadFilter('output', 'javascriptpacker');
 		}

@@ -3,7 +3,7 @@
 <head>
 <meta charset=utf-8>
 <meta name="viewport" content="width=620">
-<base href="{$PROJECT_URL}" />
+<base href="{$project.url}" />
 
 <link rel="icon" type="image/png" href="img/favicon.png" />
 

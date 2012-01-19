@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<base href="{$PROJECT_URL}" />
+<base href="{$project.url}" />
 <link rel="icon" type="image/png" href="img/favicon.png" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
@@ -85,7 +85,7 @@
 	<div id="header">
 		<span style="font-size: 2em; font-weight: normal;"><a href="modules/admin/" style="text-decoration: none; color: inherit; ">portapp</a></span><sub></sub>
 		<span class="buttonset fr">
-			<button cas-js="getBreadcrumbsIso639" cas:url="modules/admin/index.php" cas:uri="{$PROJECT_ENCODEDURI}"></button>
+			<button cas-js="getBreadcrumbsIso639" cas:url="modules/admin/index.php" cas:uri="{$project.encodedUri}"></button>
 			<button cas-js="getLoginoutButton" cas:url="modules/admin/index.php"></button>
 		</span>
 	</div>

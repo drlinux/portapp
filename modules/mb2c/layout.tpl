@@ -1,7 +1,7 @@
 <!DOCTYPE html> 
 <html> 
 <head>
-<base href="{$PROJECT_URL}" />
+<base href="{$project.url}" />
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"> 
 <title>Multi-page template</title> 

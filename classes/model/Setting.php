@@ -8,7 +8,7 @@ class Setting extends CasBase
 		parent::__construct();
 		
 		$this->sTable		= strtolower(__CLASS__);
-
+		
 		$this->aAllField		= array("settingId", "settingParameter", "settingValue");
 		$this->sIndexColumn		= "settingId";
 		$this->sIndexColumnFull	= $this->sTable.".".$this->sIndexColumn;

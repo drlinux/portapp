@@ -19,8 +19,6 @@ header('Content-type: text/html; charset=utf-8');
 
 session_start();
 
-require_once(dirname(__FILE__).'/settings.inc.php');
-
 /* Include all defines */
 require_once(dirname(__FILE__).'/defines.inc.php');
 
