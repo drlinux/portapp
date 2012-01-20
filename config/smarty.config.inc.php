@@ -22,11 +22,9 @@ $smarty->cache_lifetime	= 120;
 if (!isset($_SESSION["PROJECT_LANGUAGE"])) {
 	$_SESSION["PROJECT_LANGUAGE"] = 1;
 }
-$smarty->assign("PROJECT_LANGUAGE", $_SESSION["PROJECT_LANGUAGE"]);
 
 $smarty->clearConfig();
-// TODO: Seçilen dile göre ilgili properties dosyası seçilecek
-$smarty->configLoad('Messages_tr.properties');
+$smarty->configLoad('Messages_'.$_SESSION["PROJECT_LANGUAGE"].'.properties');
 
 
 // Set default currency
@@ -57,6 +55,7 @@ if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
 $uri .= $_SERVER['HTTP_HOST'];
 header('Location: '.$uri.'/xampp/');
 */
+
 if (isset($_SERVER["HTTP_HOST"]) AND (!empty($_SERVER["HTTP_HOST"])))
 {
 	if(isset($_SERVER["HTTPS"]) AND (!empty($_SERVER["HTTPS"])) AND strtolower($_SERVER['HTTPS'])!='off')
@@ -87,6 +86,7 @@ if (isset($_SERVER["HTTP_HOST"]) AND (!empty($_SERVER["HTTP_HOST"])))
 	$project['url'] = $url_scheme . $_SERVER["HTTP_HOST"] . __PS_BASE_URI__;
 	$project['uri'] = $uri;
 	$project['encodedUri'] = urlencode($uri);
+	$project['language'] = $_SESSION["PROJECT_LANGUAGE"];
 	$smarty->assign('project', $project);
 }
 

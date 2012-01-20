@@ -74,16 +74,6 @@ class CasString
 		return implode("/", $a);
 	}
 
-	function retrieveModules() {
-		$dir = $this->docroot. 'modules/';
-		foreach (scandir($dir) as $k=>$v) {
-			if (is_dir($dir . $v) && $v!="." && $v!="..") {
-				$this->modules[] = $v;
-			}
-		}
-		return $this->modules;
-	}
-
 	/*
 	 * Reads the extension of the file
 	 *

@@ -11,15 +11,11 @@ switch($_action)
 		if(isset($_GET['language'])) {
 			$_SESSION["PROJECT_LANGUAGE"] = $_GET['language'];
 		}
-		else {
-			$_SESSION["PROJECT_LANGUAGE"] = $g_project->language;
-		}
 
 		if(isset($_GET["uri"])) {
 			$URI = urldecode($_GET['uri']);
 		}
 		else {
-			//$URI = $g_project->uri;
 			$URI = _MODULE_DIR_ . "b2c/";
 		}
 
