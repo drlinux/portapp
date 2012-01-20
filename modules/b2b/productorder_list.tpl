@@ -21,7 +21,7 @@
 					</li>
 					<li>
 						<label>Kargo:</label>
-						{$productorder.transportationTitle}
+						{$productorder.transportation.transportationTitle} ({$productorder.transportation.transportationPriceCur})
 					</li>
 					<li>
 						<label>Sipariş Durumu:</label>

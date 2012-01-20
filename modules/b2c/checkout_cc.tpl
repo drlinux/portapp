@@ -18,19 +18,27 @@
 	<ul class="ulform">
 		<li>
 			<label>Kart Sahibinin Adı Soyadı</label>
-			<input type="text" name="cardHolderName" value="" required="required" />
+			<input type="text" name="cardHolderName" required="required" />
 		</li>
 		<li>
 			<label>Kredi Kartı Numarası</label>
-			<input type="text" class="ccno" name="ccno" value="" required="required" />
+			<input type="text" class="ccno" required="required" onkeyup="this.form.ccno.value=this.value.replace(/\-/g, '');" />
+		</li>
+		<li class="dn">
+			<label>Kredi Kartı Numarası</label>
+			<input type="text" name="ccno" required="required" />
 		</li>
 		<li>
 			<label>Güvenlik Kodu</label>
-			<input type="text" class="cvc" name="cvc" value="" required="required" />
+			<input type="text" class="cvc" name="cvc" required="required" />
 		</li>
 		<li>
 			<label>Son Kullanma Tarihi (Yıl-Ay)</label>
-			<input type="text" class="expDate" name="expDate" value="" required="required" />
+			<input type="text" class="expDate" required="required" onkeyup="this.form.expDate.value=this.value.replace(/\-/g, '');" />
+		</li>
+		<li class="dn">
+			<label>Son Kullanma Tarihi (Yıl-Ay)</label>
+			<input type="text" name="expDate" required="required" />
 		</li>
 		<li class="dn">
 			<label>Toplam Tutar</label>

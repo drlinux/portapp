@@ -16,7 +16,7 @@
 		</li>
 		<li>
 			<label>Kargo:</label>
-			{$data.transportationTitle}
+			{$data.transportation.transportationTitle} ({$data.transportation.transportationPriceCur})
 		</li>
 		<li>
 			<label>Sipariş Durumu:</label>
