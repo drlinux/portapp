@@ -1,5 +1,4 @@
 <?php
-// define smarty lib directory
 define('SMARTY_DIR', _PS_ROOT_DIR_ . '/assets/smarty/');
 require(SMARTY_DIR . 'Smarty.class.php');
 
@@ -23,8 +22,10 @@ if (!isset($_SESSION["PROJECT_LANGUAGE"])) {
 	$_SESSION["PROJECT_LANGUAGE"] = 1;
 }
 
+$sLanguage = ($_SESSION["PROJECT_LANGUAGE"]==1)?"_tr":"";
+
 $smarty->clearConfig();
-$smarty->configLoad('Messages_'.$_SESSION["PROJECT_LANGUAGE"].'.properties');
+$smarty->configLoad("Messages$sLanguage.properties");
 
 
 // Set default currency
@@ -45,50 +46,37 @@ $config['time'] = '%H:%M:%S';
 $config['datetime'] = '%d.%m.%Y %H:%M';
 $smarty->assign('config', $config);
 
-// TODO: buna bir bak xampp de kullanılmış
-/*
-if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
-	$uri = 'https://';
-} else {
-	$uri = 'http://';
+
+if(isset($_SERVER["HTTPS"]) AND (!empty($_SERVER["HTTPS"])) AND strtolower($_SERVER['HTTPS'])!='off')
+{
+	$url_scheme = "https://";
 }
-$uri .= $_SERVER['HTTP_HOST'];
-header('Location: '.$uri.'/xampp/');
+else
+{
+	$url_scheme = "http://";
+
+	// FIXME: Always use https
+	$url_scheme = "https://";
+	header("Location: " . $url_scheme . $_SERVER["HTTP_HOST"] . __PS_BASE_URI__);
+}
+
+
+/*
+if( "www." != substr( $_SERVER[ 'HTTP_HOST' ] , 0 , 4) ){
+	header("Location: " . $url_scheme . "www." .  $_SERVER[ 'HTTP_HOST' ] .  __PS_BASE_URI__ , TRUE, 301);
+	exit;
+}
 */
 
-if (isset($_SERVER["HTTP_HOST"]) AND (!empty($_SERVER["HTTP_HOST"])))
-{
-	if(isset($_SERVER["HTTPS"]) AND (!empty($_SERVER["HTTPS"])) AND strtolower($_SERVER['HTTPS'])!='off')
-	{
-		$url_scheme = "https://";
-	}
-	else
-	{
-		$url_scheme = "http://";
+$op = ($_SERVER['QUERY_STRING']=="") ? $_SERVER['PHP_SELF'] : $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
+//$op = str_replace("&","&#38;",$op);
+$uri = $url_scheme . $_SERVER['HTTP_HOST'] . $op;
 
-		// FIXME: Always use https
-		$url_scheme = "https://";
-		header("Location: " . $url_scheme . $_SERVER["HTTP_HOST"] . __PS_BASE_URI__);
-	}
-	
-	
-	/*
-	if( "www." != substr( $_SERVER[ 'HTTP_HOST' ] , 0 , 4) ){
-		header("Location: " . $url_scheme . "www." .  $_SERVER[ 'HTTP_HOST' ] .  __PS_BASE_URI__ , TRUE, 301);
-		exit;
-	}
-	*/
-	
-	$op = ($_SERVER['QUERY_STRING']=="") ? $_SERVER['PHP_SELF'] : $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
-	//$op = str_replace("&","&#38;",$op);
-	$uri = $url_scheme . $_SERVER['HTTP_HOST'] . $op;
-	
-	$project['url'] = $url_scheme . $_SERVER["HTTP_HOST"] . __PS_BASE_URI__;
-	$project['uri'] = $uri;
-	$project['encodedUri'] = urlencode($uri);
-	$project['language'] = $_SESSION["PROJECT_LANGUAGE"];
-	$smarty->assign('project', $project);
-}
+$project['url'] = $url_scheme . $_SERVER["HTTP_HOST"] . __PS_BASE_URI__;
+$project['uri'] = $uri;
+$project['encodedUri'] = urlencode($uri);
+$project['language'] = $_SESSION["PROJECT_LANGUAGE"];
+$smarty->assign('project', $project);
 
 
 

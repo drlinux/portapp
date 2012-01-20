@@ -85,7 +85,7 @@
 	<div id="header">
 		<span style="font-size: 2em; font-weight: normal;"><a href="modules/admin/" style="text-decoration: none; color: inherit; ">portapp</a></span><sub></sub>
 		<span class="buttonset fr">
-			<button cas-js="getBreadcrumbsIso639" cas:url="modules/admin/index.php" cas:uri="{$project.encodedUri}"></button>
+			<button cas-js="getBreadcrumbsIso639" cas:url="modules/admin/index.php" cas:uri="{$project.encodedUri}" cas:var="{$project.language}"></button>
 			<button cas-js="getLoginoutButton" cas:url="modules/admin/index.php"></button>
 		</span>
 	</div>

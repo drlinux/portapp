@@ -576,13 +576,12 @@ function Productattributemovement()
 	return Obj;
 }
 
-function Iso639(/*url, uri*/)
+function Iso639()
 {
-	//this.url = url;
-	//this.uri = uri;
 	var $target = $('button[cas-js=getBreadcrumbsIso639]');
 	var url = $target.attr("cas:url");
 	var uri = $target.attr("cas:uri");
+	var var1 = $target.attr("cas:var");
 	
 	var tree4breadcrumbsIso639 = function(json) {
 		var op = '<ul>';
@@ -604,8 +603,7 @@ function Iso639(/*url, uri*/)
 					if (response.iTotalRecords > 1) {
 						$target
 						.button({
-							/*label: response.options["{$smarty.session.PROJECT_LANGUAGE}"],*/
-							label: response.options["1"],
+							label: response.options[var1],
 							text: true,
 							icons: {
 								primary: "ui-icon-flag",
