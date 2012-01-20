@@ -1,25 +1,18 @@
-<form action="{$SCRIPT_NAME}" method="post">
-<ul class="ulform">
-	<li class="dn">
-		<label>{#LABEL_Parameter#}</label>
-		<input type="text" name="settingParameter" value="_THEME_B2C_NAME" readonly="readonly"/>
-	</li>
-	<li>
-		<label>Şablon</label>
-		{html_options name=settingValue options=$data.templates selected=$data.template}
-	</li>
-	<li>
-		<span class="buttonset">
-			<button name="action" value="save">{#BUTTON_Save#}</button>
-		</span>
-	</li>
-</ul>
+{foreach from=$data.templates item=item1 key=key1}
+<div class="mb20" style="border-bottom: 1px solid #e4e4de;">
+<strong>{$key1}</strong>
+<form method="post" action="{$SCRIPT_NAME}">
+<input type="hidden" name="action" value="save" />
+<input type="hidden" name="module" value="{$key1}" />
+{foreach from=$item1 item=item2 key=key2}
+<div class="mb10">
+<input type="radio" name="{$key1}" value="{$item2}" {if $data.template.{$key1} eq $key2}checked="checked"{/if} onclick="this.form.submit();" />
+<a class="fancybox" href="{$smarty.const._THEMES_DIR_}{$key1}/{$item2}/capture.jpg" title="{$item2}">
+	<img src="{$smarty.const._THEMES_DIR_}{$key1}/{$item2}/capture.jpg" width="50" style="border: 1px solid #e4e4de;" />
+</a>
+{$item2}
+</div>
+{/foreach}
 </form>
-
-{foreach from=$data.templates item=entry}
-<div class="fl mr30">
-	<a class="fancybox" href="{$smarty.const._THEMES_DIR_}admin/{$entry}/capture.jpg" title="{$entry}">
-		<img src="{$smarty.const._THEMES_DIR_}b2c/{$entry}/capture.jpg" width="300" />
-	</a>
 </div>
 {/foreach}

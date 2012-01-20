@@ -4,7 +4,7 @@ class CasFilesystem
 	public function listDirectories ($path = '.')
 	{
 		$arr = array();
-		$ignore = array('cgi-bin', '.', '..');
+		$ignore = array('cgi-bin', '.', '..', '.htaccess');
 		if (is_dir($path)) {
 			if ($dh = opendir($path)) {
 				while (($file = readdir($dh)) !== false) {

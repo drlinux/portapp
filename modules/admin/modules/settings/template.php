@@ -10,17 +10,19 @@ $model = new Setting;
 switch($_action)
 {
 	case 'save':
-		$model->update($model->sTable, array("settingValue"=>$_POST["settingValue"]), "settingParameter = :settingParameter", array("settingParameter"=>$_POST["settingParameter"]));
+		$model->update($model->sTable, array("settingValue"=>$_POST[$_POST["module"]]), "settingParameter = :settingParameter", array("settingParameter"=>"_THEME_".strtoupper($_POST["module"])."_NAME"));
 		header("Location: " . $_SERVER["PHP_SELF"]);
 		break;
 	case 'view':
 	default:
 		$dir = _PS_THEMES_DIR_;
 		$filesystem = new CasFilesystem();
-		$data["templates"] = $filesystem->listDirectories(_PS_THEMES_DIR_ . "b2c/");
-		
-		$a = $model->select($model->sTable, "settingParameter = :param", array("param"=>"_THEME_B2C_NAME"), "settingValue");
-		$data["template"] = $a[0]["settingValue"];
+		$data["templates"] = $filesystem->listDirectories(_PS_THEMES_DIR_);
+		foreach ($data["templates"] as $template) {
+			$data["templates"][$template] = $filesystem->listDirectories(_PS_THEMES_DIR_ . $template . "/");
+			$a = $model->select($model->sTable, "settingParameter = :param", array("param"=>"_THEME_".strtoupper($template)."_NAME"), "settingValue");
+			$data["template"][$template] = $a[0]["settingValue"];
+		}
 		//print_r($data);exit;
 		
 		$model->displayTemplate("admin", 'template', $data);
