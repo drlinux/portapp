@@ -46,7 +46,7 @@
 		</li>
 		<li>
 			<label>{#LABEL_Birthdate#}</label>
-			<input type="date" class="date" name="userBirthdate" value="{$data.model.userBirthdate}" title="Doğum Tarihi" required="required" />
+			<input type="date" class="date" name="userBirthdate" value="{$data.model.userBirthdate}" title="Doğum Tarihi YYYY-AA-GG" required="required" />
 		</li>
 		<li>
 			<label>{#LABEL_Phone#}</label>

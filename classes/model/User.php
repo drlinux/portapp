@@ -111,7 +111,7 @@ class User extends CasBase
 	function mungeFormData(&$formvars)
 	{
 		parent::mungeFormData($formvars);
-		$formvars['userBirthdate'] = implode("-", array_reverse(explode("/", $formvars['userBirthdate'])));
+		//$formvars['userBirthdate'] = implode("-", array_reverse(explode("/", $formvars['userBirthdate'])));
 		$formvars['userPhone'] = implode("", explode("-", $formvars['userPhone']));
 	}
 
@@ -129,6 +129,7 @@ class User extends CasBase
 		$diff = array_diff($merged, array($this->sIndexColumn, "userPass", "userName", "userEmail", "userTckn"));
 
 		// check if empty
+		/*
 		foreach ($diff as $field) {
 			if(strlen($formvars[$field]) == 0) {
 				$this->msg = $smarty->getConfigVariable("ALERT_PleaseFillOutThisField");
@@ -136,6 +137,7 @@ class User extends CasBase
 				return false;
 			}
 		}
+		*/
 
 		// check others
 		if (!CasString::isTckimlik($formvars["userTcknNew"])) {
@@ -170,6 +172,7 @@ class User extends CasBase
 
 	function saveEntry($formvars)
 	{
+		$formvars2["userStatus"] = $formvars["userStatus"];
 		$formvars2["userGender"] = $formvars["userGender"];
 		$formvars2["userFirstname"] = $formvars["userFirstname"];
 		$formvars2["userLastname"] = $formvars["userLastname"];
@@ -250,7 +253,11 @@ class User extends CasBase
 
 		if ($detail = $this->isExistByUsernameAndPassword($formvars['username'], sha1($formvars['password'])))
 		{
-			if ($_SESSION["permissionId"] = $this->fetchPermissionsByUserId($detail["userId"])) {
+			if ( $detail["userStatus"] == 0 ) {
+				$this->msg = $smarty->getConfigVariable("ALERT_AccountIsNotActive");
+				return false;
+			}
+			elseif ($_SESSION["permissionId"] = $this->fetchPermissionsByUserId($detail["userId"])) {
 				$_SESSION["userId"] = $detail["userId"];
 				$_SESSION["roleId"] = $detail["roleId"];
 

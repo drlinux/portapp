@@ -19,7 +19,7 @@ switch($_action)
 		if ($aPayment["paymentgroup"]["paymentgroupType"] == "mt")
 		{
 			$XID = 'MT_00000'.date("ymdHis");
-			$productorderId = $model->saveProductorder($XID);
+			$productorderId = $model->saveProductorder($XID, 1);
 			
 			//header("Location: " . $project['url'] . "modules/b2b/productorder.php?action=showProductorder&productorderId=" . $productorderId);
 			echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));exit;
@@ -27,7 +27,7 @@ switch($_action)
 		elseif ($aPayment["paymentgroup"]["paymentgroupType"] == "pd")
 		{
 			$XID = 'PD_00000'.date("ymdHis");
-			$productorderId = $model->saveProductorder($XID);
+			$productorderId = $model->saveProductorder($XID, 1);
 			
 			//header("Location: " . $project['url'] . "modules/b2b/productorder.php?action=showProductorder&productorderId=" . $productorderId);
 			echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));exit;

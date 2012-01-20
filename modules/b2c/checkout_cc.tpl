@@ -22,15 +22,15 @@
 		</li>
 		<li>
 			<label>Kredi Kartı Numarası</label>
-			<input type="text" name="ccno" value="" required="required" />
+			<input type="text" class="ccno" name="ccno" value="" required="required" />
 		</li>
 		<li>
 			<label>Güvenlik Kodu</label>
-			<input type="text" name="cvc" value="" required="required" />
+			<input type="text" class="cvc" name="cvc" value="" required="required" />
 		</li>
 		<li>
-			<label>Son Kullanma Tarihi (YYAA)</label>
-			<input type="text" name="expDate" value="" required="required" />
+			<label>Son Kullanma Tarihi (Yıl-Ay)</label>
+			<input type="text" class="expDate" name="expDate" value="" required="required" />
 		</li>
 		<li class="dn">
 			<label>Toplam Tutar</label>

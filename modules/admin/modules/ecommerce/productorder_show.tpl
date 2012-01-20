@@ -10,8 +10,44 @@
 		<td>{$data.model.productorderDatetime}</td>
 	</tr>
 	<tr>
-		<td>Kullanıcı</td>
-		<td><a href="mailto:{$data.model.userEmail}">{$data.model.userName}</a> [{$data.model.userEmail}]</td>
+		<td>Adı Soyadı</td>
+		<td>{$data.model.userFirstname} {$data.model.userLastname}</td>
+	</tr>
+	<tr>
+		<td>TCKN</td>
+		<td>{$data.model.userTckn}</td>
+	</tr>
+	<tr>
+		<td>Kullanıcı Adı</td>
+		<td>{$data.model.userName}</td>
+	</tr>
+	<tr>
+		<td>Kullanıcı E-mail Adresi</td>
+		<td><a href="mailto:{$data.model.userEmail}">{$data.model.userEmail}</a></td>
+	</tr>
+	<tr>
+		<td>Kullanıcı Telefon Numarası</td>
+		<td>{$data.model.userPhone}</td>
+	</tr>
+	<tr>
+		<td>Teslimat Adresi</td>
+		<td>
+			{$data.model.deliveryaddress.postaladdressContent},
+			{$data.model.deliveryaddress.postaladdressCity},
+			{$data.model.deliveryaddress.postaladdressCounty},
+			{$data.model.deliveryaddress.postaladdressPostalcode},
+			{$data.model.deliveryaddress.postaladdressCountry}
+		</td>
+	</tr>
+	<tr>
+		<td>Fatura Adresi</td>
+		<td>
+			{$data.model.invoiceaddress.postaladdressContent},
+			{$data.model.invoiceaddress.postaladdressCity},
+			{$data.model.invoiceaddress.postaladdressCounty},
+			{$data.model.invoiceaddress.postaladdressPostalcode},
+			{$data.model.invoiceaddress.postaladdressCountry}
+		</td>
 	</tr>
 	<tr>
 		<td>Ödeme</td>
@@ -19,7 +55,7 @@
 	</tr>
 	<tr>
 		<td>Taşıma</td>
-		<td>{$data.model.transportationTitle}</td>
+		<td>{$data.model.transportation.transportationTitle} ({$data.model.transportation.transportationPriceCur})</td>
 	</tr>
 	<tr>
 		<td class="vat">Siparişler</td>

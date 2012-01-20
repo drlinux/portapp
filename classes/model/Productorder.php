@@ -17,7 +17,7 @@ class Productorder extends CasBase
 		
 	}
 	
-	function saveProductorder($XID)
+	function saveProductorder($XID, $productorderstatusId)
 	{
 		global $smarty;
 		
@@ -40,7 +40,7 @@ class Productorder extends CasBase
 		$this->insert(
 			$this->sTable,
 			array(
-				"productorderstatusId"=>1,
+				"productorderstatusId"=>$productorderstatusId,
 				"userId"=>$_SESSION["userId"],
 				"XID"=>$XID,
 				"productorderDatetime"=>date("Y-m-d H:i:s"),
@@ -124,8 +124,12 @@ class Productorder extends CasBase
 		$sql = array();
 		array_push($sql, "select");
 		array_push($sql, "paymentgroup_i18n.paymentgroupTitle,");
+		array_push($sql, "user.userTckn,");
+		array_push($sql, "user.userFirstname,");
+		array_push($sql, "user.userLastname,");
 		array_push($sql, "user.userName,");
 		array_push($sql, "user.userEmail,");
+		array_push($sql, "user.userPhone,");
 		array_push($sql, "productorderstatus.*,");
 		array_push($sql, "productorderstatus_i18n.*,");
 		array_push($sql, $this->sTable . ".*");

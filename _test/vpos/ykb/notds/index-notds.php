@@ -5,8 +5,8 @@ switch($_action)
 {
 	case 'submit':
 		
-		$gServer = "https://www.posnet.ykb.com/PosnetWebService/XML"; //PROD
-		//$gServer = "http://setmpos.ykb.com/PosnetWebService/XML"; //TEST
+		$XML_SERVICE_URL = "https://www.posnet.ykb.com/PosnetWebService/XML"; //PROD
+		//$XML_SERVICE_URL = "http://setmpos.ykb.com/PosnetWebService/XML"; //TEST
  
 		$mid			= "6783406546";
 		$tid			= "67599225";
@@ -14,8 +14,8 @@ switch($_action)
 		$ccno			= $_POST["ccno"];
 		$cvc			= $_POST["cvc"];
 		$expDate		= $_POST["expDate"];
-		$orderID		= 'YKB_00000000'.date("ymdHis");//1s3456z8901234567890QWER
 		$installment	= ($_POST["installment"]==1)?"00":$_POST["installment"];//Taksit sayisi (taksitsiz işlemlerde taksit sayısı "00" gönderilmelidir)
+		$orderID		= 'YKB_00000000'.date("ymdHis");//1s3456z8901234567890QWER
 		
 		$request = "xmldata=".
 					"<posnetRequest>".
@@ -36,13 +36,16 @@ switch($_action)
 		
 		
 		$ch = curl_init(); // initialize curl handle
-		curl_setopt($ch, CURLOPT_URL, $gServer); // set url to post to
+		
+		curl_setopt($ch, CURLOPT_URL, $XML_SERVICE_URL); // set url to post to
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $request); // add POST fields
+
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 1);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // return into a variable
 		curl_setopt($ch, CURLOPT_TIMEOUT, 90); // times out after 90s
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $request); // add POST fields
+		
 		$result = curl_exec($ch); // run the whole process
 		
 		if (curl_errno($ch)) {

@@ -57,6 +57,8 @@ require(dirname(__FILE__) . '/../classes/model/Userticket.php');
 require(dirname(__FILE__) . '/../classes/model/Usertrack.php');
 require(dirname(__FILE__) . '/../classes/model/Warranty.php');
 
+
+require(dirname(__FILE__) . '/../classes/lib/YKB.php');
 /**/
 
 /*

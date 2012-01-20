@@ -126,99 +126,99 @@ http://www.etid.org.tr/
 nebim: ODBC localhost veritabani sa
 
 
-	/*
-	$("div").attr("cas-class", function(i,e) {
-		if (typeof(e) === "string") {
-			var funcCall = e + '=new '+e+'();'; 
-			funcCall += e + '.' + $(this).attr("cas-method") + ';';
-			//eval(funcCall);
-			$(this).html(eval(funcCall));
+/*
+$("div").attr("cas-class", function(i,e) {
+	if (typeof(e) === "string") {
+		var funcCall = e + '=new '+e+'();'; 
+		funcCall += e + '.' + $(this).attr("cas-method") + ';';
+		//eval(funcCall);
+		$(this).html(eval(funcCall));
+	}
+});
+
+// eval için alternatif
+var tmpFunc = new Function(codeToRun);
+tmpFunc();
+http://javascript.about.com/library/bleval.htm
+*/
+
+
+var ___eval___getDeliveryaddressesTable = function ()
+{
+	var a = null;
+	$.ajax({
+		url: "modules/b2c/address.php",
+		data: "action=jsonDeliveryaddresses",
+		dataType: 'json',
+		async: false,
+		cache: false,
+		success: function(response) {
+			a = ___eval___generateDeliveryaddressesTable(response);
 		}
 	});
-	
-	// eval için alternatif
-	var tmpFunc = new Function(codeToRun);
-	tmpFunc();
-	http://javascript.about.com/library/bleval.htm
-	*/
-	
+	return a;
+};
 
-	var ___eval___getDeliveryaddressesTable = function ()
-	{
-		var a = null;
-		$.ajax({
-			url: "modules/b2c/address.php",
-			data: "action=jsonDeliveryaddresses",
-			dataType: 'json',
-			async: false,
-			cache: false,
-			success: function(response) {
-				a = ___eval___generateDeliveryaddressesTable(response);
-			}
+var ___eval___generateDeliveryaddressesTable = function (response)
+{
+	var output = '';
+	output += '<h2 name="nameDeliveryaddresses">Teslimat Adresi</h2>';
+	var items = [];
+	items.push('<table>');
+	items.push('<thead>');
+	items.push('<tr>');
+	items.push('<td>Adres</td>');
+	items.push('<td style="width: 100px;"><button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'deliveryaddress\', 0);">Yeni Giriş</button></td>');
+	items.push('</tr>');
+	items.push('</thead>');
+	if (response.iTotalRecords == 0) {
+		output += '<span class="ui-icon ui-icon-alert fl mr5"></span>';
+		output += '<b>Kayıtlı bir adresiniz yok. Lütfen yeni bir tane oluşturun</b>';
+	}
+	else {
+		items.push('<tbody>');
+		$.each(response.aaData, function(key, val) {
+			items.push('<tr>');
+			items.push('<td>'+val.postaladdressContent + ', ' + val.postaladdressCity + ', ' + val.postaladdressCounty + ', ' + val.postaladdressPostalcode + ', ' + val.postaladdressCountry+'</td>');
+			items.push('<td><button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'deliveryaddress\', ' + val.postaladdressId + ');">Düzenle</button></td>');
+			items.push('</tr>');
 		});
-		return a;
-	};
-	
-	var ___eval___generateDeliveryaddressesTable = function (response)
-	{
-		var output = '';
-		output += '<h2 name="nameDeliveryaddresses">Teslimat Adresi</h2>';
-		var items = [];
-		items.push('<table>');
-		items.push('<thead>');
-		items.push('<tr>');
-		items.push('<td>Adres</td>');
-		items.push('<td style="width: 100px;"><button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'deliveryaddress\', 0);">Yeni Giriş</button></td>');
-		items.push('</tr>');
-		items.push('</thead>');
-		if (response.iTotalRecords == 0) {
-			output += '<span class="ui-icon ui-icon-alert fl mr5"></span>';
-			output += '<b>Kayıtlı bir adresiniz yok. Lütfen yeni bir tane oluşturun</b>';
-		}
-		else {
-			items.push('<tbody>');
-			$.each(response.aaData, function(key, val) {
-				items.push('<tr>');
-				items.push('<td>'+val.postaladdressContent + ', ' + val.postaladdressCity + ', ' + val.postaladdressCounty + ', ' + val.postaladdressPostalcode + ', ' + val.postaladdressCountry+'</td>');
-				items.push('<td><button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'deliveryaddress\', ' + val.postaladdressId + ');">Düzenle</button></td>');
-				items.push('</tr>');
-			});
-			items.push('</tbody>');
-			items.push('</table>');
-			output += items.join('');
-		}
-		return output;
-	};
-	
-	var ___eval___generateDeliveryaddressesTable = function (response)
-	{
-		var output = '';
-		output += '<h2 name="nameInvoiceaddresses">Fatura Adresi</h2>';
-		var items = [];
-		items.push('<table>');
-		items.push('<thead>');
-		items.push('<tr>');
-		items.push('<td style="width: 50px;">&nbsp;</td>');
-		items.push('<td>Adres</td>');
-		items.push('<td style="width: 100px;"><button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'invoiceaddress\', 0);">Yeni Giriş</button></td>');
-		items.push('</tr>');
-		items.push('</thead>');
-		if (response.iTotalRecords == 0) {
-			output += '<span class="ui-icon ui-icon-alert fl mr5"></span>';
-			output += '<b>Kayıtlı bir adresiniz yok. Lütfen yeni bir tane oluşturun</b>';
-		}
-		else {
-			items.push('<tbody>');
-			$.each(response.aaData, function(key, val) {
-				items.push('<tr>');
-				items.push('<td><input type="radio" name="invoiceaddressId" value="' + val.postaladdressId + '" onclick="Transportation.getContinueForCheckout();" /></td>');
-				items.push('<td>'+val.postaladdressContent + ', ' + val.postaladdressCity + ', ' + val.postaladdressCounty + ', ' + val.postaladdressPostalcode + ', ' + val.postaladdressCountry+'</td>');
-				items.push('<td><button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'invoiceaddress\', ' + val.postaladdressId + ');">Düzenle</button></td>');
-				items.push('</tr>');
-			});
-			items.push('</tbody>');
-			items.push('</table>');
-			output += items.join('');
-		}
-		return output;
-	};
+		items.push('</tbody>');
+		items.push('</table>');
+		output += items.join('');
+	}
+	return output;
+};
+
+var ___eval___generateDeliveryaddressesTable = function (response)
+{
+	var output = '';
+	output += '<h2 name="nameInvoiceaddresses">Fatura Adresi</h2>';
+	var items = [];
+	items.push('<table>');
+	items.push('<thead>');
+	items.push('<tr>');
+	items.push('<td style="width: 50px;">&nbsp;</td>');
+	items.push('<td>Adres</td>');
+	items.push('<td style="width: 100px;"><button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'invoiceaddress\', 0);">Yeni Giriş</button></td>');
+	items.push('</tr>');
+	items.push('</thead>');
+	if (response.iTotalRecords == 0) {
+		output += '<span class="ui-icon ui-icon-alert fl mr5"></span>';
+		output += '<b>Kayıtlı bir adresiniz yok. Lütfen yeni bir tane oluşturun</b>';
+	}
+	else {
+		items.push('<tbody>');
+		$.each(response.aaData, function(key, val) {
+			items.push('<tr>');
+			items.push('<td><input type="radio" name="invoiceaddressId" value="' + val.postaladdressId + '" onclick="Transportation.getContinueForCheckout();" /></td>');
+			items.push('<td>'+val.postaladdressContent + ', ' + val.postaladdressCity + ', ' + val.postaladdressCounty + ', ' + val.postaladdressPostalcode + ', ' + val.postaladdressCountry+'</td>');
+			items.push('<td><button type="submit" onclick="Postaladdress.editPostaladdress(\''+url+'\', \'invoiceaddress\', ' + val.postaladdressId + ');">Düzenle</button></td>');
+			items.push('</tr>');
+		});
+		items.push('</tbody>');
+		items.push('</table>');
+		output += items.join('');
+	}
+	return output;
+};

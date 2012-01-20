@@ -80,7 +80,7 @@ $(function() {
 		</p>
 		<form name="productForm" cas-js="formBasket" autocomplete="off" method="post" action="modules/b2c/sales.php">
 			<ul id="productInfoSelectList" class="ulFormBasket productInfoList">
-				<li>
+				<li class="dn">
 					<p class="productTitle">Ürün Adı: {$data.productTitle}</p>
 				</li>
 				<li>

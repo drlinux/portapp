@@ -91,6 +91,8 @@ function startDefault()
 	});
 	
 	fixContentsWidth();
+	
+	
 }
 
 function fixContentsWidth()
@@ -1385,9 +1387,10 @@ function Productattribute()
 						$.each(response.aaData, function(key1, val1) {
 							items.push('<li>');
 							items.push('<label class="name"><span style="color:#f00;">' + val1.productattributebasketQuantity + '&nbsp;x&nbsp;</span><a href="'+CommonItems.getLocation()+'product.php?action=show&productId=' + val1.productattribute.productId + '">' + val1.productattribute.productTitle + '</a>');
-							/*$.each(val1.productattribute.attribute, function(key2, val2) {
-								items.push('<div style="font-size:smaller;">' + val2.attributegroupTitle + ': ' + val2.attributeTitle + '</div>');
-							});*/
+							items.push('<div style="font-size:smaller;">' + val1.productattribute.productattributeCode + '</div>');
+							//$.each(val1.productattribute.attribute, function(key2, val2) {
+								//items.push('<div style="font-size:smaller;">' + val2.attributegroupTitle + ': ' + val2.attributeTitle + '</div>');
+							//});
 							items.push('</label>');
 							
 							items.push('<button class="remove ui-state-default ui-corner-all" onclick="Productattribute.removeProductattributebasket(this.form, ' + val1.productattribute.productattributeId + '); return false;" title="bu ürünü alışveriş sepetimden çıkar"><span class="ui-icon ui-icon-trash"></span></button>');
@@ -3663,11 +3666,22 @@ function CommonItems()
 	
 	$("input.date").each(function() {
 		//$(this).mask("99.99.9999");
-		$(this).mask("99/99/9999");
+		//$(this).mask("99/99/9999");
+		$(this).mask("9999-99-99");
 	});
 	
+	$("input.ccno").each(function() {
+		$(this).mask("9999-9999-9999-9999");
+	});
 
-
+	$("input.cvc").each(function() {
+		$(this).mask("999");
+	});
+	
+	$("input.expDate").each(function() {
+		$(this).mask("99-99");
+	});
+	
 	$("[cas-js=qrcode]").each(function() {
 		$(this).qrcode({
 			text: $(this).attr('text_qrcode'),
