@@ -53,6 +53,18 @@ $(function() {
         // itemVisibleOutCallback: { onAfterAnimation: function(carousel, item, i, state, evt) { carousel.remove(i); } },
         itemLoadCallback: mycarousel_itemLoadCallback
 	});
+	
+	$('.spinnerhide')
+	.spinner({
+		//showOn: 'both',
+		//max: 100,
+		min: 1
+	})
+	.change(function() {
+		//Productattribute.checkProductattribute();
+		return false;
+	});
+
 });
 
 </script>
@@ -112,7 +124,7 @@ $(function() {
 				{/foreach}
 				<li class="productattributeQuantity">
 					<label>{#LABEL_Quantity#}:</label>
-					<input id="productattributebasketQuantity" type="text" name="productattributebasketQuantity" value="1" onkeyup="Productattribute.checkProductattribute();" />
+					<input id="productattributebasketQuantity" type="text" class="spinnerhide" name="productattributebasketQuantity" value="1" readonly="readonly" />
 				</li>
 				<li>
 					<button type="submit" onclick="Productattribute.updateProductattributebasket(this.form);">Sepete Ekle</button>

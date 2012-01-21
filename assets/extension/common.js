@@ -1441,31 +1441,6 @@ function Productattribute()
 					window.setInterval(Productattribute.getShoppingbasket2, 60 * 60 * 1000);//one hour
 					Productattribute.getShoppingbasketMini();
 					
-					/*
-					$("input[name^=productattributebasket]").bind("blur", function() {
-						var a = $(this).attr("name");
-						var b = $(this).val();
-						var formData = [];
-						formData.push({ name: "action", value: "updateProductattributebasket" });
-						formData.push({ name: a, value: b });
-						
-						$.post(url,
-								formData,
-								function(response, textStatus, xhr){
-									//alert("POST returned " + response + ", " + textStatus);
-									if (response.success == true) {
-										Productattribute.getShoppingbasket2();
-									}
-									else {
-										CommonItems.casDialog("Yeterli stok yok");
-										Productattribute.getShoppingbasket2();
-									}
-								},
-								"json"
-						);
-					});
-					*/
-					
 					$('.spinnerhide')
 					.spinner({
 						//showOn: 'both',
