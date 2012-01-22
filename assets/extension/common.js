@@ -4,13 +4,13 @@ var global_settings = {};
 
 function startDefault()
 {
-   var defaults = {
-                   use_jqzoom:true
-           };
-   
-   global_settings = $.extend(defaults, global_settings);
-   
-   //////////////////////////////////////////////////////////////////////////////
+	var defaults = {
+		use_jqzoom: true
+	};
+
+	global_settings = $.extend(defaults, global_settings);
+
+	//////////////////////////////////////////////////////////////////////////////
 	CommonItems = new CommonItems();
 	
 	GMAPHelper = new GMAPHelper();
@@ -92,58 +92,56 @@ function startDefault()
 	
 	fixContentsWidth();
 	
-	
 }
 
 function fixContentsWidth()
 {
-       var leftBar                         =         $("#leftBarOuter");
-       var rightBar                         =         $("#rightBarOuter");
-       var contents                        =        $("#contentsOuter");
-       var wholeContents                =        $("#wholeContentsOuter");
-       var hasLeftBar                         =         leftBar.length > 0 ? true : false;
-       var hasRightBar                 =         rightBar.length > 0 ? true : false;
-       var leftBarWidth                 =         hasLeftBar ? parseInt(leftBar.outerWidth(true)) : 0;
-       var rightBarWidth                 =         hasRightBar ? parseInt(rightBar.outerWidth(true)) : 0;
-       var contentsWidth                 =         parseInt(contents.outerWidth(true)); // margin değerini hesaa katmak istersen outerWidth(true) olarak kullan
-       var wholeContentsWidth        =        parseInt(wholeContents.width());
-       var calculatedWidth                =        0;
-       
-       if(!hasLeftBar || !hasRightBar )
-       {
-               var calculatedWidth = 0;
-               
-               if(!hasLeftBar && !hasRightBar)
-               {
-                       calculatedWidth = wholeContentsWidth - (leftBarWidth + rightBarWidth);
-               }
-               else if(!hasLeftBar)
-               {
-                       calculatedWidth = wholeContentsWidth - rightBarWidth;
-               }
-               else
-               {
-                       calculatedWidth = wholeContentsWidth - leftBarWidth;
-                       //alert("right: " + rightBar.length);
-               }
-               
-               // contents objesinin margin, padding ve border değerlerinin toplamını 
-               // alıp kullanacağın genişlik değerinden çıkarki taşma olmasın
-               var extraWidth = contentsWidth - parseInt(contents.width()); 
-               calculatedWidth -= extraWidth;
-               
-               contents.width(calculatedWidth);
-       }
-       
-       // Fix CasContents
-       contents.find(".casContent").each(function(){
-               var usableArea = $(this).parent();
-               var usableWidth        = parseInt(usableArea.width());
-               var thisWidth = parseInt($(this).width()); 
-               var thisExtraWidth = parseInt($(this).outerWidth()) - thisWidth; // margin değerini hesaa katmak istersen outerWidth(true) olarak kullan
-               var calculatedWidth = usableWidth - thisExtraWidth;
-               $(this).width(calculatedWidth);
-       });
+	var leftBar =$("#leftBarOuter");
+	var rightBar =$("#rightBarOuter");
+	var contents=  $("#contentsOuter");
+	var wholeContents =  $("#wholeContentsOuter");
+	var hasLeftBar =leftBar.length > 0 ? true : false;
+	var hasRightBar  =rightBar.length > 0 ? true : false;
+	var leftBarWidth  =hasLeftBar ? parseInt(leftBar.outerWidth(true)) : 0;
+	var rightBarWidth  =hasRightBar ? parseInt(rightBar.outerWidth(true)) : 0;
+	var contentsWidth  =parseInt(contents.outerWidth(true)); // margin değerini hesaa katmak istersen outerWidth(true) olarak kullan
+	var wholeContentsWidth  =  parseInt(wholeContents.width());
+	var calculatedWidth =  0;
+
+	if(!hasLeftBar || !hasRightBar )
+	{
+		var calculatedWidth = 0;
+		if(!hasLeftBar && !hasRightBar)
+		{
+			calculatedWidth = wholeContentsWidth - (leftBarWidth + rightBarWidth);
+		}
+		else if(!hasLeftBar)
+		{
+			calculatedWidth = wholeContentsWidth - rightBarWidth;
+		}
+		else
+		{
+			calculatedWidth = wholeContentsWidth - leftBarWidth;
+			//alert("right: " + rightBar.length);
+		}
+	
+		// contents objesinin margin, padding ve border değerlerinin toplamını 
+		// alıp kullanacağın genişlik değerinden çıkarki taşma olmasın
+		var extraWidth = contentsWidth - parseInt(contents.width()); 
+		calculatedWidth -= extraWidth;
+	
+		contents.width(calculatedWidth);
+	}
+	 
+	// Fix CasContents
+	contents.find(".casContent").each(function(){
+		var usableArea = $(this).parent();
+		var usableWidth  = parseInt(usableArea.width());
+		var thisWidth = parseInt($(this).width()); 
+		var thisExtraWidth = parseInt($(this).outerWidth()) - thisWidth; // margin değerini hesaa katmak istersen outerWidth(true) olarak kullan
+		var calculatedWidth = usableWidth - thisExtraWidth;
+		$(this).width(calculatedWidth);
+	});
 }
  
 
@@ -159,12 +157,12 @@ jQuery.fn.cleanWhitespace = function() {
 
 $.extend({
 	getCss: function(url, media) {
-	    jQuery(document.createElement('link')).attr({
-	        href	: url,
-	        media	: media || 'screen',
-	        type	: 'text/css',
-	        rel		: 'stylesheet'
-	    }).appendTo('head');
+	 jQuery(document.createElement('link')).attr({
+	  href	: url,
+	  media	: media || 'screen',
+	  type	: 'text/css',
+	  rel		: 'stylesheet'
+	 }).appendTo('head');
 	},
 	getUrlVars: function() {
 		var vars = [], hash;
@@ -611,9 +609,9 @@ function Iso639()
 							}
 						})
 						.menu({
-							crumbDefaultText: 'seçiminizi yapın',
-							backLinkText: 'geri',
-							topLinkText: 'tümü',
+							crumbDefaultText: jQuery.i18n.prop('ALERT_PleaseMakeAChoice'),
+							backLinkText: jQuery.i18n.prop('BUTTON_Back'),
+							topLinkText: jQuery.i18n.prop('LABEL_All'),
 							content: tree4breadcrumbsIso639(response),
 							flyOut: true,
 							backLink: false
@@ -2411,11 +2409,22 @@ function User()
 									}
 								})
 								.menu({
-									crumbDefaultText: 'seçiminizi yapın',
-									backLinkText: 'geri',
-									topLinkText: 'tümü',
+									crumbDefaultText: jQuery.i18n.prop('ALERT_PleaseMakeAChoice'),
+									backLinkText: jQuery.i18n.prop('BUTTON_Back'),
+									topLinkText: jQuery.i18n.prop('LABEL_All'),
 									content: tree4breadcrumbsMenu(response),
-									flyOut: true,
+									flyOut: false,
+									positionOpts: {
+										posX: 'left', 
+										posY: 'bottom',
+										offsetX: 0,
+										offsetY: 0,
+										directionH: 'left',
+										directionV: 'down', 
+										detectH: true, // do horizontal collision detection  
+										detectV: true, // do vertical collision detection
+										linkToFront: false
+									},
 									backLink: false
 								});
 						});
@@ -3717,7 +3726,7 @@ function CommonItems()
 				});
 			},
 			*/
-			checkAllText: "Tümü",
+			checkAllText: jQuery.i18n.prop('LABEL_All'),
 			uncheckAllText: "Hiçbiri",
 			noneSelectedText: "Ürün seçimi",
 			selectedText: '# seçili',
@@ -4068,21 +4077,21 @@ function Advertisement()
 					$.fancybox.showActivity();
 					
 					$(form1).ajaxSubmit({
-				    	url: "modules/advertisement/index.php",
-				    	data: { action: 'save' },
-				    	dataType: 'json',
-				        beforeSubmit: function(a,f,o) {
-				        	//console.log(a);
-				        },
-				        success: function(data) {
+				 	url: "modules/advertisement/index.php",
+				 	data: { action: 'save' },
+				 	dataType: 'json',
+				  beforeSubmit: function(a,f,o) {
+				  	//console.log(a);
+				  },
+				  success: function(data) {
 							$.fancybox({
 								content: 'Completed',
 								onClosed: function() {
 									Obj.callContent('content-myfree');
 								}
 							});
-				        }
-				    });
+				  }
+				 });
 				}
 				else {
 					$.fancybox({
@@ -4178,7 +4187,7 @@ function Advertisement()
 		$form.validate({
 			submitHandler: function(f) {
 				$form.ajaxSubmit({
-			    	data: { action: 'setInappropriate', advertisementId: advertisementId },
+					data: { action: 'setInappropriate', advertisementId: advertisementId },
 					dataType: 'json',
 					beforeSubmit: function(a,f,o) {
 						//console.log(a);

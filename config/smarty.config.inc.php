@@ -22,10 +22,10 @@ if (!isset($_SESSION["PROJECT_LANGUAGE"])) {
 	$_SESSION["PROJECT_LANGUAGE"] = 1;
 }
 
-$sLanguage = ($_SESSION["PROJECT_LANGUAGE"]==1)?"_tr":"";
+$sLanguage = ($_SESSION["PROJECT_LANGUAGE"]==1)?"tr":"en";
 
 $smarty->clearConfig();
-$smarty->configLoad("Messages$sLanguage.properties");
+$smarty->configLoad("Messages_$sLanguage.properties");
 
 
 // Set default currency
