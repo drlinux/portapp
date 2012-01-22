@@ -177,8 +177,9 @@ class User extends CasBase
 		$formvars2["userFirstname"] = $formvars["userFirstname"];
 		$formvars2["userLastname"] = $formvars["userLastname"];
 		$formvars2["userPhone"] = $formvars["userPhone"];
-		$formvars2["userBirthdate"] =  $formvars["userBirthdate"];;//implode("-", array_reverse(explode(".", $formvars["userBirthdate"])));
-
+		//$formvars2["userBirthdate"] = implode("-", array_reverse(explode("/", $formvars["userBirthdate"])));
+		$formvars2["userBirthdate"] = $formvars["userBirthdate"]["Date_Year"] . "-" . $formvars["userBirthdate"]["Date_Month"] . "-" . $formvars["userBirthdate"]["Date_Day"];
+		
 		if ($formvars["userTckn"] != $formvars["userTcknNew"]) {
 			$formvars2["userTckn"] = $formvars["userTcknNew"];
 		}

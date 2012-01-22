@@ -60,7 +60,8 @@
 			</li>
 			<li>
 				<label>{#LABEL_Birthdate#}</label>
-				<input type="date" class="date" name="userBirthdate" value="{$data.model.userBirthdate}" title="Doğum Tarihi YYYY-AA-GG" required="required" />
+				{html_select_date field_array=userBirthdate field_order=DMY month_format='%m' start_year='-90' end_year='-1' reverse_years='true' time=$data.model.userBirthdate }
+				<!-- <input type="date" class="date" name="userBirthdate" value="{$data.model.userBirthdate}" title="Doğum Tarihi YYYY-AA-GG" required="required" /> -->
 			</li>
 			<li>
 				<label>{#LABEL_Phone#}</label>

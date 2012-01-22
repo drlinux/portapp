@@ -11,11 +11,16 @@ ini_set('magic_quotes_runtime', 0);
 //echo get_include_path();exit;
 
 date_default_timezone_set("Europe/Istanbul");
+setlocale(LC_ALL, 'tr_TR.UTF-8', 'tr_TR', 'tr', 'turkish');
 set_time_limit(500);
 //print_r(ini_get_all());exit;
 
 /* Correct Apache charset */
 header('Content-type: text/html; charset=utf-8');
+//header('Content-type: text/html; charset=iso-8859-9');
+//echo strftime("%Y-%B-%d", strtotime("+30 days"));exit;
+//echo date("Y-M-d", strtotime("now"));exit;
+
 
 session_start();
 

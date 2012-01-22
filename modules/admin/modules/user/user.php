@@ -35,7 +35,7 @@ switch($_action)
 			header("Location: " . $_SERVER["PHP_SELF"]);
 		} else {
 			$data["model"] = $_POST;
-			$data["model"]['userBirthdate'] = implode(".", array_reverse(explode("-", $data["model"]['userBirthdate'])));
+			//$data["model"]['userBirthdate'] = implode("/", array_reverse(explode("-", $data["model"]['userBirthdate'])));
 			$model->displayTemplate("admin", $model->sTable.'_form', $data);
 		}
 		break;
@@ -44,7 +44,7 @@ switch($_action)
 		$data["model"]['userTcknNew'] = $data["model"]['userTckn'];
 		$data["model"]['userEmailNew'] = $data["model"]['userEmail'];
 		$data["model"]['userNameNew'] = $data["model"]['userName'];
-		$data["model"]['userBirthdate'] = implode(".", array_reverse(explode("-", $data["model"]['userBirthdate'])));
+		//$data["model"]['userBirthdate'] = implode("/", array_reverse(explode("-", $data["model"]['userBirthdate'])));
 		//print_r($data);exit;
 		
 		$role = new Role;

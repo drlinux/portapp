@@ -3637,10 +3637,9 @@ function CommonItems()
 			background: "#000"
 		});
 	}
-	else
-		{
-		$('a.jqzoom').click(function(){return false;});
-		}
+	else {
+		$('a.jqzoom').click(function() { return false; });
+	}
 	
 	$("input.phone").each(function() {
 		$(this).mask("999-999-9999");
@@ -3648,8 +3647,8 @@ function CommonItems()
 	
 	$("input.date").each(function() {
 		//$(this).mask("99.99.9999");
-		//$(this).mask("99/99/9999");
-		$(this).mask("9999-99-99");
+		$(this).mask("99/99/9999");
+		//$(this).mask("9999-99-99");
 	});
 	
 	$("input.ccno").each(function() {
