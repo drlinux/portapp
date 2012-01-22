@@ -19,7 +19,7 @@ switch($_action)
 		if ($aPayment["paymentgroup"]["paymentgroupType"] == "mt")
 		{
 			$XID = 'MT_00000'.date("ymdHis");
-			$productorderId = $model->saveProductorder($XID, 1);
+			$productorderId = $model->saveProductorder($XID, $smarty->getVariable("_PRODUCTORDER_INITIALSTATUS_MT"));
 			
 			//header("Location: " . $project['url'] . "modules/b2b/productorder.php?action=showProductorder&productorderId=" . $productorderId);
 			echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));exit;
@@ -27,103 +27,136 @@ switch($_action)
 		elseif ($aPayment["paymentgroup"]["paymentgroupType"] == "pd")
 		{
 			$XID = 'PD_00000'.date("ymdHis");
-			$productorderId = $model->saveProductorder($XID, 1);
+			$productorderId = $model->saveProductorder($XID, $smarty->getVariable("_PRODUCTORDER_INITIALSTATUS_PD"));
 			
 			//header("Location: " . $project['url'] . "modules/b2b/productorder.php?action=showProductorder&productorderId=" . $productorderId);
 			echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));exit;
 		}
 		elseif ($aPayment["paymentgroup"]["paymentgroupType"] == "cc")
 		{
+			
 			$XML_SERVICE_URL		= $aPayment["paymentgroup"]["paymentgroupGate1"];
-			$OOS_TDS_SERVICE_URL	= $aPayment["paymentgroup"]["paymentgroupGate2"];
 			
-			$mid			= $aPayment["paymentgroup"]["paymentgroupMid"];
-			$tid			= $aPayment["paymentgroup"]["paymentgroupTid"];
-			$amount			= $_POST["amount"] * 100;//tutar*100 - Alışveriş tutarı (14,8 TL için 1480 giriniz.)
-			$ccno			= $_POST["ccno"];
-			$cvc			= $_POST["cvc"];
-			$expDate		= $_POST["expDate"];
-			$installment	= ($_POST["installment"]==1)?"00":$_POST["installment"];//Taksit sayisi (taksitsiz işlemlerde taksit sayısı "00" gönderilmelidir)
-		
-			$posnetid		= $aPayment["paymentgroup"]["paymentgroupPosnetid"];
-			$XID			= 'CC_00000'.date("ymdHis");//YKB_0000080603143050
-			$cardHolderName	= $_POST["cardHolderName"];
+			$mid					= $aPayment["paymentgroup"]["paymentgroupMid"];
+			$tid					= $aPayment["paymentgroup"]["paymentgroupTid"];
+			$amount					= $_POST["amount"] * 100;//tutar*100 - Alışveriş tutarı (14,8 TL için 1480 giriniz.)
+			$ccno					= $_POST["ccno"];
+			$cvc					= $_POST["cvc"];
+			$expDate				= $_POST["expDate"];
+			$installment			= ($_POST["installment"]==1)?"00":$_POST["installment"];//Taksit sayisi (taksitsiz işlemlerde taksit sayısı "00" gönderilmelidir)
 			
-			$request = "xmldata=".
-						"<posnetRequest>".
-							"<mid>$mid</mid>".
-							"<tid>$tid</tid>".
-							"<oosRequestData>".
-								"<posnetid>$posnetid</posnetid>".
-								"<ccno>$ccno</ccno>".
-								"<expDate>$expDate</expDate>".
-								"<cvc>$cvc</cvc>".
-								"<amount>$amount</amount>".
-								"<currencyCode>YT</currencyCode>".
-								"<installment>$installment</installment>".
-								"<XID>$XID</XID>".
-								"<cardHolderName>$cardHolderName</cardHolderName>".
-								"<tranType>Sale</tranType>".
-							"</oosRequestData>".
-						"</posnetRequest>"
-			;
+			if ( $aPayment["paymentgroup"]["paymentgroupMethod"] == "3dpay" )
+			{
+				$OOS_TDS_SERVICE_URL= $aPayment["paymentgroup"]["paymentgroupGate2"];
+				$posnetid			= $aPayment["paymentgroup"]["paymentgroupPosnetid"];
+				$cardHolderName		= $_POST["cardHolderName"];
+				
+				$XID				= 'CC_00000'.date("ymdHis");//YKB_0000080603143050
+				
+				$ykb = new YKB();
+				$ykb->XML_SERVICE_URL = $XML_SERVICE_URL;
+				$ykb->mid = $mid;
+				$ykb->tid = $tid;
+				$ykb->amount = $amount;
+				$ykb->ccno = $ccno;
+				$ykb->cvc = $cvc;
+				$ykb->expDate = $expDate;
+				$ykb->installment = $installment;
+				$ykb->XID = $XID;
+				
+				$ykb->OOS_TDS_SERVICE_URL = $OOS_TDS_SERVICE_URL;
+				$ykb->posnetid = $posnetid;
+				$ykb->cardHolderName = $cardHolderName;
+				
+				$result = $ykb->init_curl($ykb->tds_xmldata1());
+				
+				// HTML Output
+				//echo(HtmlEntities($result));exit;
+				
+				// XML Parse
+				$Root = new SimpleXMLElement($result);
+				if ( $Root->approved == 1 )
+				{
+					/*
+					$data["response"] = array(
+					"approved"=>$Root->approved,
+					"msg"=>"3D Secure için bankaya yönlendirileceksiniz."
+					);
+					*/
 					
-		
-			$ch = curl_init(); // initialize curl handle
-			
-			curl_setopt($ch, CURLOPT_URL, $XML_SERVICE_URL); // set url to post to
-			curl_setopt($ch, CURLOPT_POST, 1);
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $request); // add POST fields
-			
-			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 1);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // return into a variable
-			curl_setopt($ch, CURLOPT_TIMEOUT, 90); // times out after 90s
-			
-			$result = curl_exec($ch); // run the whole process
-		
-			if (curl_errno($ch)) {
-				print curl_error($ch);
-			} else {
-				curl_close($ch);
-			}
-		
-			// XML Parse
-			$Root = new SimpleXMLElement($result);
-			if ( $Root->approved == 1 ) {
+					$data["OOS_TDS_SERVICE_URL"] = $OOS_TDS_SERVICE_URL;
+					$data["mid"] = $mid;
+					$data["posnetid"] = $posnetid;
+					$data["posnetData"] = $Root->oosRequestDataResponse->data1;
+					$data["posnetData2"] = $Root->oosRequestDataResponse->data2;
+					$data["digest"] = $Root->oosRequestDataResponse->sign;
+					$data["vftCode"] = "";
+					$data["merchantReturnURL"] = $project['url'] . "modules/b2b/productorder_provision-tds.php";
+					
+					$model->displayTemplate("b2b", $model->sTable."_cc_provision", $data);
+				}
+				else
+				{
+					$data["response"] = array(
+						"approved"=>$Root->approved,
+						"respCode"=>$Root->respCode,
+						"respText"=>$Root->respText,
+						"yourIP"=>$Root->yourIP,
+						"msg"=>"Kart bilgileri hatalı"
+					);
+					echo "3D Güvenlik için bankaya yönlendirilemiyorsunuz." . "<br/>";
+					echo "Hata Kodu: " . $Root->respCode . "<br/>";
+					echo "Hata: " . $Root->respText . "<br/>";
+					exit;
+				}
 				
-				/*
-				$data["response"] = array(
-				"approved"=>$Root->approved,
-				"msg"=>"3D Secure için bankaya yönlendirileceksiniz."
-				);
-				*/
-				
-				$data["OOS_TDS_SERVICE_URL"] = $OOS_TDS_SERVICE_URL;
-				$data["mid"] = $mid;
-				$data["posnetid"] = $posnetid;
-				$data["posnetData"] = $Root->oosRequestDataResponse->data1;
-				$data["posnetData2"] = $Root->oosRequestDataResponse->data2;
-				$data["digest"] = $Root->oosRequestDataResponse->sign;
-				$data["vftCode"] = "";
-				$data["merchantReturnURL"] = $project['url'] . "modules/b2b/productorder_provision-tds.php";
-				
-				$model->displayTemplate("b2b", $model->sTable."_cc_provision", $data);
-				break;
 			}
-			else {
-				$data["response"] = array(
-				"approved"=>$Root->approved,
-				"respCode"=>$Root->respCode,
-				"respText"=>$Root->respText,
-				"yourIP"=>$Root->yourIP,
-				"msg"=>"Kart bilgileri hatalı"
-				);
-				echo "Kart bilgileri hatalı";exit;
+			else
+			{
+				$XID				= 'CC_000000000'.date("ymdHis");
+				
+				$ykb = new YKB();
+				$ykb->XML_SERVICE_URL = $XML_SERVICE_URL;
+				$ykb->mid = $mid;
+				$ykb->tid = $tid;
+				$ykb->amount = $amount;
+				$ykb->ccno = $ccno;
+				$ykb->cvc = $cvc;
+				$ykb->expDate = $expDate;
+				$ykb->installment = $installment;
+				$ykb->XID = $XID;
+				
+				$result = $ykb->init_curl($ykb->notds_xmldata1());
+				
+				// HTML Output
+				//echo(HtmlEntities($result));exit;
+					
+				// XML Parse
+				$Root = new SimpleXMLElement($result);
+				if ( $Root->approved == 1 )
+				{
+					$productorderId = $model->saveProductorder($XID, $smarty->getVariable("_PRODUCTORDER_INITIALSTATUS_CC"));
+				
+					header("Location: " . $project['url'] . "modules/b2b/productorder.php?action=showProductorder&productorderId=" . $productorderId);exit;
+					//echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));
+					exit;
+				
+				}
+				else {
+					$data["response"] = array(
+								"approved"=>$Root->approved,
+								"respCode"=>$Root->respCode,
+								"respText"=>$Root->respText,
+								"yourIP"=>$Root->yourIP
+					);
+					echo "Ödeme tamamlanamadı." . "<br/>";
+					echo "Hata Kodu: " . $Root->respCode . "<br/>";
+					echo "Hata: " . $Root->respText . "<br/>";
+					exit;
+				}
 			}
+			
 		}
-		
-		$model->displayTemplate("b2b", $model->sTable."_provision", $data);
 		break;
 	
 	
@@ -240,9 +273,6 @@ switch($_action)
 			*/
 			
 			$data["amount"] = $amount*100;//tutar*100 - Alışveriş tutarı (14,8 TL için 1480 giriniz.)
-			$data["instalment"] = ($period==1)?"00":$period;//Taksit sayisi (taksitsiz işlemlerde taksit sayısı "00" gönderilmelidir)
-			//print_r($data);exit;
-			
 			$model->displayTemplate("b2b", "checkout_cc", $data);
 		}
 		elseif ($data["payment"]["paymentgroupId"] == 5)

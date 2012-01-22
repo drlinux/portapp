@@ -3,10 +3,10 @@ class YKB
 {
 	
 	public $XML_SERVICE_URL;
-	
-	// no-TDS
 	public $mid;
 	public $tid;
+	
+	// no-TDS
 	public $tranDateRequired = 1;
 	public $amount;
 	public $ccno;

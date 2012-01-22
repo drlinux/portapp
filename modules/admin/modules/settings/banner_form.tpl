@@ -1,65 +1,77 @@
-<form action="{$SCRIPT_NAME}" method="post" enctype="multipart/form-data">
+<script type="text/javascript">
+jQuery(function($){
+	// Create variables (in this scope) to hold the API and image size
+	var jcrop_api, boundx, boundy;
+	var aspectRatio = .5;
+	var width = 100;
+	var height = width/aspectRatio;
+	
+	$('#preview').parent().css({
+		width: width,
+		height: height,
+		display: 'block',
+		overflow: 'hidden'
+	});
+	
+	$('#target').Jcrop({
+		onChange	: updatePreview,
+		onSelect	: updatePreview,
+		aspectRatio	: aspectRatio
+	},function(){
+		// Use the API to get the real image size
+		var bounds = this.getBounds();
+		boundx = bounds[0];
+		boundy = bounds[1];
+		// Store the API in the jcrop_api variable
+		jcrop_api = this;
+	});
+
+	function updatePreview(c)
+	{
+		if (parseInt(c.w) > 0)
+		{
+			var rx = width / c.w;
+			var ry = height / c.h;
+
+			$('#preview').css({
+				width		: Math.round(rx * boundx) + 'px',
+				height		: Math.round(ry * boundy) + 'px',
+				marginLeft	: '-' + Math.round(rx * c.x) + 'px',
+				marginTop	: '-' + Math.round(ry * c.y) + 'px'
+			});
+		}
+		
+		jQuery('#x').val(c.x);
+		jQuery('#y').val(c.y);
+		jQuery('#w').val(c.w);
+		jQuery('#h').val(c.h);
+
+	};
+
+});
+</script>
+
 <table>
-{if $msg ne ""}
-<caption class="ui-state-error ui-corner-all">
-	{if $msg eq "bannerTitle_empty"} Lütfen bir başlık girin
-	{elseif $msg eq "bannerDescription_empty"} Lütfen bir açıklama girin
-	{/if}
-</caption>
-{/if}
-<tbody>
-	<tr class="dn">
-		<th>{#LABEL_Id#}</th>
-		<td><input type="text" name="bannerId" value="{$data.bannerId}" readonly="readonly"/></td>
-	</tr>
 	<tr>
-		<th>{#LABEL_Title#}</th>
-		<td><input type="text" name="bannerTitle" value="{$data.bannerTitle}"/></td>
-	</tr>
-	<tr>
-		<th>{#LABEL_Description#}</th>
-		<td><textarea name="bannerDescription">{$data.bannerDescription}</textarea></td>
-	</tr>
-	<tr>
-		<th>{#LABEL_Start#}</th>
-		<td><input type="text" class="datetimepicker" name="bannerStart" value="{$data.bannerStart}"/></td>
-	</tr>
-	<tr>
-		<th>{#LABEL_End#}</th>
-		<td><input type="text" class="datetimepicker" name="bannerEnd" value="{$data.bannerEnd}"/></td>
-	</tr>
-	<tr>
-		<th>Bağlantı</th>
-		<td><input type="text" name="bannerHref" value="{$data.bannerHref}"/></td>
-	</tr>
-	<tr>
-		<td>{#LABEL_Image#}</td>
 		<td>
-			<input type="hidden" name="MAX_FILE_SIZE" value="2048000" readonly="readonly" />
-			<input type="file" name="pictureFile" />
+			<img src="img/banner/pool.jpg" id="target" alt="Flowers" />
+		</td>
+		<td>
+			<div class="dn">
+				<img src="img/banner/pool.jpg" id="preview" alt="Preview" />
+			</div>
 		</td>
 	</tr>
-	{if $data.pictureFile neq null}
-	<tr>
-		<td></td>
-		<td>
-			<img src="img/banner/{$data.pictureFile}" />
-		</td>
-	</tr>
-	{/if}
-</tbody>
-<tfoot>
-	<tr>
-		<th></th>
-		<td>
-			<span class="buttonset">
-				<button name="action" value="save">{#BUTTON_Save#}</button>
-				{if $data.bannerId neq null}
-				<button name="action" value="delete">{#BUTTON_Delete#}</button>
-				{/if}
-			</span>
-		</td>
-	</tr>
-</tfoot>
 </table>
+
+<!-- This is the form that our event handler fills -->
+<div class="jc_coords">
+<form action="{$SCRIPT_NAME}" method="post">
+	<input type="hidden" id="x" name="x" />
+	<input type="hidden" id="y" name="y" />
+	<input type="hidden" id="w" name="w" />
+	<input type="hidden" id="h" name="h" />
+	<input type="hidden" name="action" value="crop" />
+	<button type="submit">Crop Image</button>
 </form>
+</div>

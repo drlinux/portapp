@@ -6,7 +6,7 @@
 	<p><b>Teslimat Adresi:</b> {$data.deliveryaddress.postaladdressContent}, {$data.deliveryaddress.postaladdressCity}, {$data.deliveryaddress.postaladdressCounty}, {$data.deliveryaddress.postaladdressPostalcode}, {$data.deliveryaddress.postaladdressCountry}</p>
 	<p><b>Fatura Adresi:</b> {$data.invoiceaddress.postaladdressContent}, {$data.invoiceaddress.postaladdressCity}, {$data.invoiceaddress.postaladdressCounty}, {$data.invoiceaddress.postaladdressPostalcode}, {$data.invoiceaddress.postaladdressCountry}</p>
 	<p><b>Tutar:</b> {$data.amountRealWC}</p>
-	<p><b>Taksit Sayısı:</b> {$data.payment.paymentPeriod}</p>
+	<p><b>Taksit Sayısı:</b> {$data.payment.paymentTitle}</p>
 </div>
 <div class="casCotent">
 	<h2>Ödeme</h2>

@@ -19,7 +19,7 @@ switch($_action)
 		if ($aPayment["paymentgroup"]["paymentgroupType"] == "mt")
 		{
 			$XID = 'MT_00000'.date("ymdHis");
-			$productorderId = $model->saveProductorder($XID, 1);
+			$productorderId = $model->saveProductorder($XID, $smarty->getVariable("_PRODUCTORDER_INITIALSTATUS_MT"));
 			
 			//header("Location: " . $project['url'] . "modules/b2c/productorder.php?action=showProductorder&productorderId=" . $productorderId);
 			echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));exit;
@@ -27,7 +27,7 @@ switch($_action)
 		elseif ($aPayment["paymentgroup"]["paymentgroupType"] == "pd")
 		{
 			$XID = 'PD_00000'.date("ymdHis");
-			$productorderId = $model->saveProductorder($XID, 1);
+			$productorderId = $model->saveProductorder($XID, $smarty->getVariable("_PRODUCTORDER_INITIALSTATUS_PD"));
 			
 			//header("Location: " . $project['url'] . "modules/b2c/productorder.php?action=showProductorder&productorderId=" . $productorderId);
 			echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));exit;
@@ -135,7 +135,7 @@ switch($_action)
 				$Root = new SimpleXMLElement($result);
 				if ( $Root->approved == 1 )
 				{
-					$productorderId = $model->saveProductorder($XID, 2);
+					$productorderId = $model->saveProductorder($XID, $smarty->getVariable("_PRODUCTORDER_INITIALSTATUS_CC"));
 				
 					header("Location: " . $project['url'] . "modules/b2c/productorder.php?action=showProductorder&productorderId=" . $productorderId);exit;
 					//echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));
@@ -273,9 +273,6 @@ switch($_action)
 			*/
 			
 			$data["amount"] = $amount*100;//tutar*100 - Alışveriş tutarı (14,8 TL için 1480 giriniz.)
-			$data["instalment"] = ($period==1)?"00":$period;//Taksit sayisi (taksitsiz işlemlerde taksit sayısı "00" gönderilmelidir)
-			//print_r($data);exit;
-			
 			$model->displayTemplate("b2c", "checkout_cc", $data);
 		}
 		elseif ($data["payment"]["paymentgroupId"] == 5)

@@ -11,12 +11,9 @@ if (!$aProductattribute) {
 		"success"=>false,
 		"msg"=>"Sepetiniz boş olduğundan işleme devam edilemiyor"
 	);
+	echo "Sepetiniz boş olduğundan işleme devam edilemiyor." . "<br/>";
 	break;
 }
-
-$user = new User();
-$aUser = $user->getEntry($_SESSION["userId"]);
-//print_r($aUser);exit;
 
 $payment = new Payment();
 $aPayment = $payment->getPayment($_SESSION["paymentId"]);
@@ -33,89 +30,28 @@ $merchantData	= $_POST["MerchantPacket"];
 $bankData		= $_POST["BankPacket"];
 $sign			= $_POST["Sign"];
 
-$request = "xmldata=".
-					"<posnetRequest>".
-						"<mid>$mid</mid>".
-						"<tid>$tid</tid>".
-						"<oosResolveMerchantData>".
-							"<bankData>$bankData</bankData>".
-							"<merchantData>$merchantData</merchantData>".
-							"<sign>$sign</sign>".
-						"</oosResolveMerchantData>".
-					"</posnetRequest>"
-;
+$ykb = new YKB();
+$ykb->XML_SERVICE_URL = $XML_SERVICE_URL;
+$ykb->mid = $mid;
+$ykb->tid = $tid;
+$ykb->bankData = $bankData;
+$ykb->merchantData = $merchantData;
+$ykb->sign = $sign;
 
-
-$ch = curl_init(); // initialize curl handle
-
-curl_setopt($ch, CURLOPT_URL, $XML_SERVICE_URL); // set url to post to
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $request); // add POST fields
-
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 1);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // return into a variable
-curl_setopt($ch, CURLOPT_TIMEOUT, 90); // times out after 90s
-
-$result = curl_exec($ch); // run the whole process
-
-if (curl_errno($ch)) {
-	print curl_error($ch);
-} else {
-	curl_close($ch);
-}
+$result = $ykb->init_curl($ykb->tds_xmldata2());
 
 /*
 // HTML Output
 echo(HtmlEntities($result));exit;
 */
 
-
-/*
-// export xml file
-header('Content-type: application/x-www-form-urlencoded');
-header('Content-Disposition: attachment; filename="response.xml"');
-echo $result;exit;
-*/
-
-
 // XML Parse
 $oosResolveMerchantDataResponse = new SimpleXMLElement($result);
 
 //header ('Content-type: text/html; charset=utf-8');
-if ( $oosResolveMerchantDataResponse->approved == 1 ) {
-	//echo "merchantPacket verisi çözümlendi";
-
-
-	$request = "xmldata=".
-						"<posnetRequest>".
-							"<mid>$mid</mid>".
-							"<tid>$tid</tid>".
-							"<oosTranData>".
-								"<bankData>$bankData</bankData>".
-								"<wpAmount>0</wpAmount>".
-							"</oosTranData>".
-						"</posnetRequest>"
-	;
-	
-	$ch = curl_init(); // initialize curl handle
-	
-	curl_setopt($ch, CURLOPT_URL, $XML_SERVICE_URL); // set url to post to
-	curl_setopt($ch, CURLOPT_POST, 1);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, $request); // add POST fields
-	
-	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 1);
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // return into a variable
-	curl_setopt($ch, CURLOPT_TIMEOUT, 90); // times out after 90s
-	
-	$result = curl_exec($ch); // run the whole process
-	
-	if (curl_errno($ch)) {
-		print curl_error($ch);
-	} else {
-		curl_close($ch);
-	}
+if ( $oosResolveMerchantDataResponse->approved == 1 )
+{
+	$result = $ykb->init_curl($ykb->tds_xmldata3());
 
 	/*
 	// HTML Output
@@ -125,27 +61,35 @@ if ( $oosResolveMerchantDataResponse->approved == 1 ) {
 	// XML Parse
 	$Root = new SimpleXMLElement($result);
 	
-	//header ('Content-type: text/html; charset=utf-8');
-	if ( $Root->approved == 1 ) {
+	if ( $Root->approved == 1 )
+	{
 		//echo "Ödeme tamamlandı";exit;
 		
 		$XID = $oosResolveMerchantDataResponse->oosResolveMerchantDataResponse->xid;
 		
 		$productorder = new Productorder();
-		$productorderId = $productorder->saveProductorder($XID, 2);
+		$productorderId = $productorder->saveProductorder($XID, $smarty->getVariable("_PRODUCTORDER_INITIALSTATUS_CC"));
 		
+		//echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));
 		header("Location: " . $project['url'] . "modules/b2b/productorder.php?action=showProductorder&productorderId=" . $productorderId);
 		exit;
 		
 	}
-	else {
-		echo "Ödeme tamamlanamadı";exit;
+	else
+	{
+		header ('Content-type: text/html; charset=utf-8');
+		echo "Ödeme tamamlanamadı" . "<br/>";
+		echo "Hata Kodu: " . $Root->respCode . "<br/>";
+		echo "Hata: " . $Root->respText . "<br/>";
+		exit;
 	}
 
 }
-else {
-	//header ('Content-type: text/html; charset=utf-8');
-	echo "merchantPacket verisi çözümlenemedi";exit;
-	//echo $oosResolveMerchantDataResponse->respCode . PHP_EOL;
-	//echo $oosResolveMerchantDataResponse->respText . PHP_EOL;
+else
+{
+	header ('Content-type: text/html; charset=utf-8');
+	echo "merchantPacket verisi çözümlenemedi." . "<br/>";
+	echo "Hata Kodu: " . $oosResolveMerchantDataResponse->respCode . "<br/>";
+	echo "Hata: " . $oosResolveMerchantDataResponse->respText . "<br/>";
+	exit;
 }

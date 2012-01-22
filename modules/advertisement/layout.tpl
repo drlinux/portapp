@@ -39,9 +39,6 @@
 <script type="text/javascript" src="assets/plugins/form/jquery.form.js"></script>
 <!-- validate -->
 <script type="text/javascript" src="assets/plugins/validate/jquery.validate.min.js"></script>
-<!-- imgareaselect -->
-<link rel="stylesheet" href="assets/plugins/imgareaselect/css/imgareaselect-default.css" />
-<script type="text/javascript" src="assets/plugins/imgareaselect/scripts/jquery.imgareaselect.pack.js"></script>
 <!-- form -->
 <script type="text/javascript" src="assets/plugins/form/jquery.form.js"></script>
 <!-- i18n -->

@@ -41,9 +41,9 @@
 <script type="text/javascript" src="assets/plugins/validate/jquery.validate.min.js"></script>
 <!-- i18n -->
 <script type='text/javascript' src='assets/plugins/i18n/jquery.i18n.properties-min-1.0.9.js'></script>
-<!-- imgareaselect -->
-<link rel="stylesheet" href="assets/plugins/imgareaselect/css/imgareaselect-default.css" />
-<script type="text/javascript" src="assets/plugins/imgareaselect/scripts/jquery.imgareaselect.pack.js"></script>
+<!-- jcrop -->
+<script src="assets/plugins/jcrop/js/jquery.Jcrop.js" type="text/javascript"></script>
+<link rel="stylesheet" href="assets/plugins/jcrop/css/jquery.Jcrop.css" type="text/css" />
 
 <!-- jeditable -->
 <script type="text/javascript" src="assets/plugins/jeditable/jquery.jeditable.mini.js"></script>

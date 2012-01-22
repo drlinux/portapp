@@ -7,7 +7,7 @@
 	<p><b>Sipariş Tutarı:</b> {$data.productattributebasket.productattributebasketTotalCur}</p>
 	<p><b>Taşıma:</b> {$data.transportation.transportationTitle} ({$data.transportation.transportationPriceCur})</p>
 	<p><b>Toplam Tutar:</b> {$data.amountRealWC}</p>
-	<p><b>Taksit Sayısı:</b> {$data.payment.paymentPeriod}</p>
+	<p><b>Taksit Sayısı:</b> {$data.payment.paymentTitle}</p>
 </div>
 
 <div class="casContent">

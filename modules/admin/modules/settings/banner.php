@@ -9,6 +9,22 @@ $model = new Banner;
 
 switch($_action)
 {
+	case 'crop':
+		$aspectRatio = $_POST['w']/$_POST['h'];
+		$targ_w = 100;
+		$targ_h = $targ_w/$aspectRatio;
+		
+		$jpeg_quality = 90;
+	
+		$src = _PS_IMG_DIR_ . 'banner/pool.jpg';
+		$img_r = imagecreatefromjpeg($src);
+		$dst_r = ImageCreateTrueColor($targ_w, $targ_h);
+	
+		imagecopyresampled($dst_r, $img_r, 0, 0, $_POST['x'], $_POST['y'], $targ_w, $targ_h, $_POST['w'], $_POST['h']);
+	
+		header('Content-type: image/jpeg');
+		imagejpeg($dst_r, null, $jpeg_quality);
+		break;
 	case 'dataTables':
 		echo $model->dataTables($model->aAllField, $model->sIndexColumn, $model->sTable, $_GET);
 		break;
