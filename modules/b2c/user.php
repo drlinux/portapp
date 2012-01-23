@@ -14,6 +14,7 @@ switch($_action)
 		$user->mungeFormData($_POST);
 		if ($success = $user->isValidForm($_POST)) {
 			$_POST["userId"] = $_SESSION["userId"];
+			$_POST["userStatus"] = 1;
 			$user->saveEntry($_POST);
 		}
 		echo(json_encode(array("success"=>$success, "msg"=>$user->msg, "field"=>$user->field)));

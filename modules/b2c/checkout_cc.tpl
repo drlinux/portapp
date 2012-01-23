@@ -33,12 +33,8 @@
 			<input type="text" class="cvc" name="cvc" required="required" />
 		</li>
 		<li>
-			<label>Son Kullanma Tarihi (Yıl-Ay)</label>
-			<input type="text" class="expDate" required="required" onkeyup="this.form.expDate.value=this.value.replace(/\-/g, '');" />
-		</li>
-		<li class="dn">
-			<label>Son Kullanma Tarihi (Yıl-Ay)</label>
-			<input type="text" name="expDate" required="required" />
+			<label>Son Kullanma Tarihi</label>
+			{html_select_date field_array=expDate field_order=MY month_format='%m' display_days='0' start_year='+5'}
 		</li>
 		<li class="dn">
 			<label>Toplam Tutar</label>

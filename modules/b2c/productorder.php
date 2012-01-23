@@ -42,7 +42,7 @@ switch($_action)
 			$amount					= $_POST["amount"] * 100;//tutar*100 - Alışveriş tutarı (14,8 TL için 1480 giriniz.)
 			$ccno					= $_POST["ccno"];
 			$cvc					= $_POST["cvc"];
-			$expDate				= $_POST["expDate"];
+			$expDate				= substr($_POST["expDate"]["Date_Year"], -2) . $_POST["expDate"]["Date_Month"];//YYMM
 			$installment			= ($_POST["installment"]==1)?"00":$_POST["installment"];//Taksit sayisi (taksitsiz işlemlerde taksit sayısı "00" gönderilmelidir)
 			
 			if ( $aPayment["paymentgroup"]["paymentgroupMethod"] == "3dpay" )
