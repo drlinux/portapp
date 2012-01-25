@@ -58,7 +58,9 @@ require(dirname(__FILE__) . '/../classes/model/Usertrack.php');
 require(dirname(__FILE__) . '/../classes/model/Warranty.php');
 
 
-require(dirname(__FILE__) . '/../classes/lib/YKB.php');
+require(dirname(__FILE__) . '/../classes/bank/YKB.php');
+require(dirname(__FILE__) . '/../classes/bank/Denizbank.php');
+
 /**/
 
 /*

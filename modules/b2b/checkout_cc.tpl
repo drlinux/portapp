@@ -34,7 +34,7 @@
 		</li>
 		<li>
 			<label>Son Kullanma Tarihi</label>
-			{html_select_date field_array=expDate field_order=MY month_format='%m' display_days='0' start_year='+5'}
+			{html_select_date field_array=expDate field_order=MY month_format='%m' display_days='0' start_year='+5' month_extra='class="month_select"' year_extra='class="year_select"'}
 		</li>
 		<li class="dn">
 			<label>Toplam Tutar</label>

@@ -2,6 +2,10 @@
 
 /*body { font-size: 62.5%; }*/
 
+.day_select { width:50px !important; }
+.month_select { width:50px !important; }
+.year_select { width:65px !important; }
+
 /* FIX: JQuery datepicker on layout */
 #ui-datepicker-div { z-index: 5; }
 
