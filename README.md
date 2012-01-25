@@ -27,7 +27,7 @@ Contributors
 * keremoz
 * tolon
 
-MIT License
+MIT License, http://www.opensource.org/licenses/mit-license.php
 ===========
 
 **Portapp is free software under MIT License.**
