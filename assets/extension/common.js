@@ -2839,7 +2839,10 @@ function Banner()
 					});
 					$target
 						.append(items.join(''))
-						.nivoSlider();
+						.nivoSlider({
+							animSpeed: 800,
+							pauseTime: 5000
+						});
 						// Slider Yüklendikten sonra çalıştırmak istediğimiz bir fonksiyon olduğunda kullanacağımız bir event
 						$(document).trigger("onSliderLoded"); 
 				}
