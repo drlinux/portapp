@@ -126,8 +126,10 @@ class Paymentgroup extends CasBase
 
 		$sql = array();
 		array_push($sql, "select");
-		array_push($sql, "paymentimpact.paymentimpactWeight,");
-		array_push($sql, "paymentimpact.paymentimpactPrice,");
+		array_push($sql, "paymentimpact.paymentimpactWeightRate,");
+		array_push($sql, "paymentimpact.paymentimpactWeightPrice,");
+		array_push($sql, "paymentimpact.paymentimpactDiscountRate,");
+		array_push($sql, "paymentimpact.paymentimpactDiscountPrice,");
 		array_push($sql, "payment_i18n.paymentTitle,");
 		array_push($sql, "payment.*");
 		array_push($sql, "from payment");

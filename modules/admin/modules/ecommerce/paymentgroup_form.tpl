@@ -186,7 +186,7 @@
 					<input type="text" name="paymentPeriod" size="3" />
 				</td>
 				<td>
-					<input type="text" name="paymentimpactWeight" size="3" />
+					<input type="text" name="paymentimpactWeightRate" size="3" />
 				</td>
 				<td>
 					<input type="hidden" name="paymentgroupId" value="{$data.model.paymentgroupId}" readonly="readonly" />
@@ -199,7 +199,7 @@
 			{foreach from=$data.model.payment.aaData item="entry"}
 			<tr>
 				<td>{$entry.paymentPeriod}</td>
-				<td>{$entry.paymentimpactWeight}</td>
+				<td>{$entry.paymentimpactWeightRate}</td>
 				<td><a href="{$SCRIPT_NAME}?action=deletePayment&paymentId={$entry.paymentId}">{#BUTTON_Delete#}</a></td>
 			</tr>
 			{/foreach}

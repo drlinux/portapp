@@ -22,7 +22,7 @@ ini_set('magic_quotes_runtime', 0);
 //echo get_include_path();exit;
 
 date_default_timezone_set("Europe/Istanbul");
-setlocale(LC_ALL, 'tr_TR.UTF-8', 'tr_TR', 'tr', 'turkish');
+//setlocale(LC_ALL, 'tr_TR.UTF-8', 'tr_TR', 'tr', 'turkish');
 set_time_limit(500);
 //print_r(ini_get_all());exit;
 

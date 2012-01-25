@@ -15,7 +15,86 @@ Cross-platform Compatibility
 Feature Overview
 ----------------
 
-* coming soon
+#### Content Management
+* Sınırsız içerik sayfası oluşturma
+* Sayfaları birbirine bağlayarak ağaç yapısı oluşturma
+
+#### Category Management
+* Sınırsız kategori tanımlama ve kategori resmi ekleme
+* Kategorilerle ağaç yapısı oluşturma
+* Her ürün için birden fazla kategori ve varsayılan kategori tanımlama
+
+#### Banner Management
+* Sınırsız banner oluşturma
+* Tarih aralıklarına göre banner yayınlama
+
+#### Brand Management
+* Sınırsız marka tanımlama ve logo ekleme
+
+#### User and Permission Management
+* Kullanıcı Ayarları
+* Rol Ayarları
+* Yetkilendirme
+
+#### Payment Module
+* kredi kartı (taksit seçenekleri ile)
+* havale
+* kapıda ödeme
+* mobil ödeme [soon]
+
+#### Stock Management
+* Sınırsız stok özellikleri tanımlama
+* Sınırsız stok adedi girişi
+
+#### Survey Module
+
+#### Reporting (Basic)
+* Kullanıcı Takibi
+* Kullanıcı Mesajları
+
+#### Reporting (Advanced)
+* [soon]
+
+#### Other Features
+* Opt-in, opt-out (Bilgilendirme sistemi için üyelik yönetimi)
+* Çoklu dil desteği
+* Tedarikçi Yönetimi
+* Stok girişi
+* Karekod desteği
+* Vergi tanımlama
+* Taşıma firması tanımlama
+* Sınırsız ürün özelliği ekleme
+* Ürün özelliklerine göre fiyatlandırma
+
+[soon]
+Cari tanımları 
+ne satın aldı 
+kaç puanı var
+hediye puanı varmı 
+cep telefonu nedir ? 
+twitter adresi nedir 
+feysbuk adresi nedir 
+linkendlink vb  adresi nedir 
+evlilik yıldonumu 
+cocuk varmı
+arabası varmı  ne marka?
+Kampanyalarımızdan haberdar olmak ister misiniz?
+hangi saatlerde sms atalım 
+şikayeti varmı ? 
+ürünler hakkında alışverişi hakkında yorumları neler 
+istek listesi
+en çok gezilen ürünler
+ürün rating
+Ana sayfada gösterilecek ürünleri yönetici panelinden belirleyebilme
+Ürün çeşidi eklemeyi kolaylaştıran 'clone' özelliği
+Müşteri, site yöneticileri ve kargo şirketi için e-mail ile bilgilendirme sistemi
+Müşteri, site yöneticileri ve kargo şirketi için SMS ile  bilgilendirme sistemi
+Duyuru servisi modülü
+Müşteriye özel indirim imkanı
+Bütünleşik kargo ücreti (ürün ağırlığı veya satış fiyatına göre) hesaplama  modülü
+SMS / MMS Modülü
+
+
 
 Contributors
 ============

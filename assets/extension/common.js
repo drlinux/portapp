@@ -1485,6 +1485,7 @@ function Productattribute()
 							items.push('</td>');
 							items.push('<td style="width:103px;">');
 							items.push('<span class="name">'+val1.productattribute.productTitle+'</span>');
+							items.push('<div>'+val1.productattribute.productattributeCode+'</div>');
 							items.push('<span class="note">');
 							if (val1.productattribute.attribute != null) {
 								$.each(val1.productattribute.attribute, function(key2, val2) {
@@ -1663,14 +1664,16 @@ function Productattribute()
 						items.push('</thead>');
 						items.push('<tbody>');
 						
-						var msgImpactWeight = "";
-						var msgImpactPrice = "";
 						$.each(val1.payment.aaData, function(key2, val2) {
 							
+							var msgPaymentimpactWeight = "";
+							var msgPaymentimpactDiscount = "";
 							var period = Number(val2.paymentPeriod);
-							var impactWeight = Number(val2.paymentimpactWeight);
-							var impactPrice = Number(val2.paymentimpactPrice);
-							var total = (((price*(1+impactWeight)+impactPrice))).toFixed(2);
+							var paymentimpactWeightRate = Number(val2.paymentimpactWeightRate);
+							var paymentimpactWeightPrice = Number(val2.paymentimpactWeightPrice);
+							var paymentimpactDiscountRate = Number(val2.paymentimpactDiscountRate);
+							var paymentimpactDiscountPrice = Number(val2.paymentimpactDiscountPrice);
+							var total = (price+price*paymentimpactWeightRate+paymentimpactWeightPrice-price*paymentimpactDiscountRate-paymentimpactDiscountPrice).toFixed(2);
 							var payment = (total/period).toFixed(2);
 							
 							items.push('<tr>');
@@ -1678,53 +1681,46 @@ function Productattribute()
 							items.push('<td width="70px">');
 							items.push(val2.paymentTitle);
 							items.push('</td>');
-							items.push('<td width="120px">');
 							
 							
 							// İNDİRİM		
-							if (impactWeight < 0) {
-								msgImpactWeight = Math.abs(impactWeight*100).toFixed(2) + '% ';
+							items.push('<td width="120px">');
+							if (paymentimpactDiscountRate > 0) {
+								msgPaymentimpactDiscount = Math.abs(paymentimpactDiscountRate*100).toFixed(2) + '% ';
 							}
 							
-							if((impactWeight < 0) && (impactPrice < 0))
-							{
-								msgImpactWeight += " + ";
+							if(paymentimpactDiscountRate > 0 && paymentimpactDiscountPrice > 0) {
+								msgPaymentimpactDiscount += " + ";
 							}
 							
-							if (impactPrice < 0) {
-								msgImpactPrice = Math.abs(impactPrice*1).toFixed(2) + ' TL ';
+							if (paymentimpactDiscountPrice > 0) {
+								msgPaymentimpactDiscount += Math.abs(paymentimpactDiscountPrice*1).toFixed(2) + ' TL ';
 							}
 							
-							items.push(msgImpactWeight + msgImpactPrice + '</td>');
+							items.push(msgPaymentimpactDiscount);
+							items.push('</td>');
 							//////////////////////////////////////////////////////////////////////////////////
 							
 							
 							// EK MALİYET
 							items.push('<td width="120px">');
-							if(impactWeight > 0)
-							{
-								msgImpactWeight = (impactWeight*100).toFixed(2) + '% ';
+							if(paymentimpactWeightRate > 0) {
+								msgPaymentimpactWeight = Math.abs(paymentimpactWeightRate*100).toFixed(2) + '% ';
 							}
 							
-							if((impactWeight > 0) && (impactPrice > 0))
-							{
-								msgImpactWeight += " + ";
+							if((paymentimpactWeightRate > 0) && (paymentimpactWeightPrice > 0)) {
+								msgPaymentimpactWeight += " + ";
 							}
 							
-							if (impactPrice > 0) {								
-								msgImpactPrice = (impactPrice*1).toFixed(2) + ' TL';
+							if (paymentimpactWeightPrice > 0) {								
+								msgPaymentimpactWeight += Math.abs(paymentimpactWeightPrice*1).toFixed(2) + ' TL';
 							}
 							
-							items.push(msgImpactWeight + msgImpactPrice);
-								
-							//////////////////////////////////////////////////////////////////////////////////////////		
-								
-							
-								
-								
-								
-								//items.push(msgImpactWeight + '</td>');
+							items.push(msgPaymentimpactWeight);
 							items.push('</td>');
+							//////////////////////////////////////////////////////////////////////////////////////////		
+							
+							
 							items.push('<td width="110px">' + payment + '</td>');
 							items.push('<td width="120px">' + total + '</td>');
 							items.push('</tr>');
@@ -1914,9 +1910,9 @@ function Productattribute()
 							var clazz = (index1%2==0)?"bgc-c6aec7":"bgc-ebdde2";
 							$.each(value1.payment.aaData, function(index2, value2) {
 								var period = Number(value2.paymentPeriod);
-								var impactWeight = Number(value2.paymentimpactWeight);
-								var impactPrice = Number(value2.paymentimpactPrice);
-								var total = (price*(1+impactWeight)+impactPrice).toFixed(2);
+								var paymentimpactWeightRate = Number(value2.paymentimpactWeightRate);
+								var paymentimpactWeightPrice = Number(value2.paymentimpactWeightPrice);
+								var total = (price*(1+paymentimpactWeightRate)+paymentimpactWeightPrice).toFixed(2);
 								var payment = (total/period).toFixed(2);
 								items.push('<tr class="'+clazz+'">');
 								items.push('<td class="'+value1.paymentgroupClass+'">');

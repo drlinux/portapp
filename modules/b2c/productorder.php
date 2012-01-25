@@ -217,11 +217,13 @@ switch($_action)
 		//print_r($data);exit;
 
 		$productattributebasketTotal = $data["productattributebasket"]["productattributebasketTotal"];
-		$paymentimpactWeight = $data["payment"]["paymentimpactWeight"];
-		$paymentimpactPrice = $data["payment"]["paymentimpactPrice"];
-
+		$paymentimpactWeightRate = $data["payment"]["paymentimpactWeightRate"];
+		$paymentimpactWeightPrice = $data["payment"]["paymentimpactWeightPrice"];
+		$paymentimpactDiscountRate = $data["payment"]["paymentimpactDiscountRate"];
+		$paymentimpactDiscountPrice = $data["payment"]["paymentimpactDiscountPrice"];
+		
 		$paymentPeriod = intval($data["payment"]["paymentPeriod"]);
-		$total = $productattributebasketTotal * (1 + $paymentimpactWeight) + $paymentimpactPrice;
+		$total = $productattributebasketTotal + $productattributebasketTotal * $paymentimpactWeightRate + $paymentimpactWeightPrice - $productattributebasketTotal * $paymentimpactDiscountRate - $paymentimpactDiscountPrice;
 		$installment = ($total/$paymentPeriod);
 
 		//$transportationimpactWeight = $data["transportation"]["transportationimpactWeight"];

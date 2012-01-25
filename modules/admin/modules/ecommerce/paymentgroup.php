@@ -27,7 +27,7 @@ switch($_action) {
 	case 'savePayment':
 		$paymentgroupId = $_POST["paymentgroupId"];
 		$paymentPeriod = $_POST["paymentPeriod"];
-		$paymentimpactWeight = $_POST["paymentimpactWeight"];
+		$paymentimpactWeightRate = $_POST["paymentimpactWeightRate"];
 		$payment = new Payment;
 		if ($p = $payment->isExistByPaymentgroupIdAndPaymentPeriod($paymentgroupId, $paymentPeriod)) {
 			$_POST["paymentId"] = $p["paymentId"];
