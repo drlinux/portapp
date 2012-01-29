@@ -37,7 +37,7 @@ Feature Overview
 * Yetkilendirme
 
 #### Payment Module
-* kredi kartı (taksit seçenekleri ile)
+* kredi kartı (farklı vade farklarına sahip taksit seçenekleri ile)
 * havale
 * kapıda ödeme
 * mobil ödeme [soon]
@@ -65,34 +65,33 @@ Feature Overview
 * Taşıma firması tanımlama
 * Sınırsız ürün özelliği ekleme
 * Ürün özelliklerine göre fiyatlandırma
+* İstek Listesi
+* En çok ziyaret edilen ürünler
 
 [soon]
-Cari tanımları 
-ne satın aldı 
-kaç puanı var
-hediye puanı varmı 
-cep telefonu nedir ? 
-twitter adresi nedir 
-feysbuk adresi nedir 
-linkendlink vb  adresi nedir 
-evlilik yıldonumu 
-cocuk varmı
-arabası varmı  ne marka?
-Kampanyalarımızdan haberdar olmak ister misiniz?
-hangi saatlerde sms atalım 
-şikayeti varmı ? 
-ürünler hakkında alışverişi hakkında yorumları neler 
-istek listesi
-en çok gezilen ürünler
-ürün rating
-Ana sayfada gösterilecek ürünleri yönetici panelinden belirleyebilme
-Ürün çeşidi eklemeyi kolaylaştıran 'clone' özelliği
-Müşteri, site yöneticileri ve kargo şirketi için e-mail ile bilgilendirme sistemi
-Müşteri, site yöneticileri ve kargo şirketi için SMS ile  bilgilendirme sistemi
-Duyuru servisi modülü
-Müşteriye özel indirim imkanı
-Bütünleşik kargo ücreti (ürün ağırlığı veya satış fiyatına göre) hesaplama  modülü
-SMS / MMS Modülü
+* Cari tanımları 
+* ne satın aldı 
+* kaç puanı var
+* hediye puanı varmı 
+* cep telefonu nedir
+* twitter, facebook, linkedin 
+* evlilik yıldonumu 
+* cocuk varmı
+* arabası varmı  ne marka?
+* Kampanyalarımızdan haberdar olmak ister misiniz?
+* hangi saatlerde sms atalım 
+* şikayeti varmı ? 
+* ürünler hakkında alışverişi hakkında yorumları neler
+* 
+* ürün rating
+* Ana sayfada gösterilecek ürünleri yönetici panelinden belirleyebilme
+* Ürün çeşidi eklemeyi kolaylaştıran 'clone' özelliği
+* Müşteri, site yöneticileri ve kargo şirketi için e-mail ile bilgilendirme sistemi
+* Müşteri, site yöneticileri ve kargo şirketi için SMS ile  bilgilendirme sistemi
+* Duyuru servisi modülü
+* Müşteriye özel indirim imkanı
+* Bütünleşik kargo ücreti (ürün ağırlığı veya satış fiyatına göre) hesaplama  modülü
+* SMS / MMS Modülü
 
 
 
@@ -103,8 +102,6 @@ Contributors
 
 * [theramma](mailto:ramazan.ayyildiz@gmail.com)
 * [hazartuner](mailto:hazar.artuner@gmail.com)
-* keremoz
-* tolon
 
 MIT License, http://www.opensource.org/licenses/mit-license.php
 ===========

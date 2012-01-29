@@ -631,6 +631,12 @@ textarea
 	width:650px;
 }
 
+.pageContent
+{
+	width: 100%;
+	float: left;
+}
+
 .last
 {
 	margin-right:0 !important;
@@ -740,3 +746,20 @@ textarea
 {
 	
 }
+
+.day_select
+{
+	width:50px;
+}
+
+.month_select
+{
+	width:50px;
+}
+
+
+.year_select
+{
+	width:65px;
+}
+

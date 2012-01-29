@@ -48,8 +48,8 @@ input[type=text], input[type=password], input[type=email]
 
 #menuOuter a
 {
-	font:bold 19px Trebuchet MS;
-	color: #ccc;
+	font:bold 15px Trebuchet MS;
+	color: #fff;
 	padding:10px 15px;
 	margin:0 5px;
 }
@@ -67,7 +67,7 @@ input[type=text], input[type=password], input[type=email]
 	position:relative;
 	top:-4px;
 	padding-bottom:30px;
-	background: #fff;
+	background: url(../images/repeatBg.png);
 }
 
 #wholeContentsOuter
@@ -144,8 +144,8 @@ input[type=text], input[type=password], input[type=email]
 
 .subMenuOuter .top
 {
-	background: #fff;
-	color: #000;
+	background: #000;
+	color: #fff;
 	border:solid 1px #bbb;
 	font-size: 15px;
 }
@@ -170,9 +170,13 @@ input[type=text], input[type=password], input[type=email]
 
 .productItem .currentCost
 {
-	color: #f00 !important;
-	font-size: 13px;
-	font-weight: bold;
+	color: #fff !important;
+	font-size: 15px;
+}
+
+.ui-tabs-nav, .ui-state-default
+{
+	background-image: none !important;
 }
 
 .bigProductList .productItem
@@ -181,7 +185,7 @@ input[type=text], input[type=password], input[type=email]
 	height:340px;
 	float:left;
 	margin:0 20px 20px 0;
-	background: #fff;
+	background: #000;
 	border: solid 1px #bbb !important;
 }
 
@@ -199,13 +203,13 @@ input[type=text], input[type=password], input[type=email]
 
 .productItem .oldCost
 {
-	color:#000 !important;
+	color:#999 !important;
 	text-decoration: line-through;
 }
 
 .productItem .productName
 {
-	color:#000;
+	color:#fff;
 	font-size: 14px;
 	margin-top:5px;
 	text-decoration: none;
@@ -221,6 +225,13 @@ input[type=text], input[type=password], input[type=email]
 	float:left;
 	font-size: 14px;
 }
+
+h1.subHeader, h3.subHeader
+{
+	width:650px !important;
+}
+
+
 
 .subHeader
 {
@@ -244,4 +255,19 @@ input[type=text], input[type=password], input[type=email]
 {
 	float:left;
 	margin:10px;
+}
+
+.buttonSocial
+{
+	width:110px !important; 
+	margin:50px 0 0 0 !important;
+	float:left !important;
+	clear:none !important;
+}
+
+.buttonWishlist {
+	width: 100%;
+	text-align: center;
+	position:relative;
+	top: 10px;
 }

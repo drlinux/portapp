@@ -9,6 +9,16 @@ $model = new Productattribute;
 
 switch($_action)
 {
+	case 'removeWishlist':
+		$productId = $_REQUEST["productId"];
+		$model->delete("product_user", "productId = :productId AND userId = :userId", array("productId"=>$productId, "userId"=>$_SESSION["userId"]));
+		echo(json_encode(array("success"=>true)));
+		break;
+	case 'saveWishlist':
+		$productId = $_REQUEST["productId"];
+		$model->insert("product_user", array("productId"=>$productId, "userId"=>$_SESSION["userId"]));
+		echo(json_encode(array("success"=>true)));
+		break;
 	case 'jsonProductcommentsByProductId':
 		$productId = $_REQUEST["productId"];
 		$productcomment = new Productcomment();
@@ -34,6 +44,9 @@ switch($_action)
 		if ($productId == null) header("Location: " . $project['url'] . "modules/b2b/");
 		$data = $model->getProductattributeByProductId($productId);
 		//print_r($data);exit;
+		
+		$product = new Product();
+		$product->setProductHit($productId);
 		
 		$usertrack = new Usertrack();
 		$usertrack->addTrack(3, "productId=" . $productId);

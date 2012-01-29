@@ -398,3 +398,19 @@ h1, h2, h3, h4, h5, h6 { color:#b9246a; }
 	float:left;
 	margin:10px;
 }
+
+
+.buttonSocial
+{
+	width:100px !important; 
+	margin:50px 0 0 0 !important;
+	float:left !important;
+	clear:none !important;
+}
+
+.buttonWishlist {
+	width: 100%;
+	text-align: center;
+	position:relative;
+	top: 10px;
+}

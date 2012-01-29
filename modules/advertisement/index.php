@@ -257,6 +257,6 @@ switch($_action)
 		break;
 	case 'view':
 	default:
-		$model->displayTemplate("advertisement", "index");
+		$model->displayTemplate("b2c", "index");
 		break;
 }

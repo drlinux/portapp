@@ -47,6 +47,7 @@ function startDefault()
 	Productattribute.getSearchResults();
 	Productattribute.getSearchResultsSalescampaign();
 	
+	Productattribute.getProductsInWishlist();
 	Productattribute.getProductsByProductgroupId();
 	Productattribute.getProductsSimilar();
 	Productattribute.getProductsByCategoryId();
@@ -577,14 +578,13 @@ function Productattributemovement()
 function Iso639()
 {
 	var $target = $('button[cas-js=getBreadcrumbsIso639]');
-	var url = $target.attr("cas:url");
 	var uri = $target.attr("cas:uri");
 	var var1 = $target.attr("cas:var");
 	
 	var tree4breadcrumbsIso639 = function(json) {
 		var op = '<ul>';
 		$.each(json.aaData, function(key, val) {
-			op += '<li><a href="'+url+'?action=changeLanguage&language=' + val.iso639Id + '&uri='+uri+'">' + val.iso639Title + '</a></li>';
+			op += '<li><a href="' + CommonItems.getLocation() + 'index.php?action=changeLanguage&language=' + val.iso639Id + '&uri='+uri+'">' + val.iso639Title + '</a></li>';
 		});
 		op += '</ul>';
 		return op;
@@ -594,7 +594,7 @@ function Iso639()
 		if ($target.length) {
 			$.ajax( {
 				type: "get", 
-				url: url, 
+				url: CommonItems.getLocation() + 'index.php', 
 				data: [{ name: "action", value: "breadcrumbsIso639" }], 
 				dataType: 'json',
 				success: function (response) {
@@ -900,7 +900,7 @@ function Postaladdress()
 	{
 		var $target = $('[cas-js=getDeliveryaddresses]');
 		if ($target.length) {
-			var url = CommonItems.getLocation() + "address.php";
+			var url = CommonItems.getLocation() + 'address.php';
 			var var1 = $target.attr("cas:var1");
 		
 			$.ajax({
@@ -960,7 +960,7 @@ function Postaladdress()
 	{
 		var $target = $('[cas-js=getInvoiceaddresses]');
 		if ($target.length) {
-			var url = CommonItems.getLocation() + "address.php";
+			var url = CommonItems.getLocation() + 'address.php';
 			var var1 = $target.attr("cas:var1");
 		
 			$.ajax({
@@ -1035,7 +1035,7 @@ function Transportation()
 		var $target = $('#divAlertTransportation');
 		$.ajax({
 			type: "get",
-			url: CommonItems.getLocation() + "sales.php",
+			url: CommonItems.getLocation() + 'sales.php',
 			data: 'action=jsonPaymentgroup&paymentgroupId=' + paymentgroupId,
 			dataType: 'json',
 			beforeSend: function() {
@@ -1105,18 +1105,12 @@ function Transportation()
 		items.push('<tr><td></td><td></td><td>Genel Toplam</td><td>'+total+'</td></tr>');
 		$target.html(items.join(''));
 		
-		$.getJSON( CommonItems.getLocation() + "index.php", {
-			"action" : "checkAuthenticated"
-		}, function (response) {
-			if (response.authenticated == true) {
-				Postaladdress.getDeliveryaddresses();
-			}
-			else {
-				//CommonItems.casDialog("Giriş yapmalısınız");
-				window.location.replace( CommonItems.getLocation() + 'index.php?action=login&uri=' + window.location.href );
-				// TODO: login formunu popup şeklinde göster
-			}
-		});
+		if ( User.checkAuthenticated() ) {
+			Postaladdress.getDeliveryaddresses();
+		}
+		else {
+			CommonItems.casDialog("Giriş yapmalısınız");
+		}
 		
 		return false;
 	};
@@ -1153,7 +1147,7 @@ function Page()
 	{
 		var $target = $('div[cas-js=getPage]');
 		if ($target.length) {
-			var url = CommonItems.getLocation() + "page.php";
+			var url = CommonItems.getLocation() + 'page.php';
 			$.ajax({
 				url: url,
 				dataType: 'json',
@@ -1175,7 +1169,7 @@ function Page()
 	{
 		var $target = $('div[cas-js=getPageProducts]');
 		if ($target.length) {
-			var url = CommonItems.getLocation() + "page.php";
+			var url = CommonItems.getLocation() + 'page.php';
 			$.ajax({
 				url: url,
 				dataType: 'json',
@@ -1627,7 +1621,7 @@ function Productattribute()
 		var $target = $('#divAlertPaymentgroup');
 		$.ajax({
 			type: "get",
-			url: CommonItems.getLocation() + "sales.php",
+			url: CommonItems.getLocation() + 'sales.php',
 			data: 'action=jsonPaymentgroups',
 			dataType: 'json',
 			beforeSend: function() {
@@ -1775,7 +1769,7 @@ function Productattribute()
 		formData.push({ name: "action", value: "updateProductattributebasket" });
 		formData.push({ name: "productattributeId", value: productattributeId });
 		formData.push({ name: "productattributebasketQuantity", value: productattributebasketQuantity });
-		$.post(CommonItems.getLocation() + "sales.php", formData, function(response) {
+		$.post(CommonItems.getLocation() + 'sales.php', formData, function(response) {
 			if (response.success == true) {
 				getShoppingbasket();
 				getShoppingbasket2();
@@ -1856,13 +1850,13 @@ function Productattribute()
 					if (response == null || response.productattributeQuantity <= 0) {
 						$('#productattributeId').val('');
 						$('#productDetailInfoOuterQuantity').html('Stokta yok');
-						$('.productattributePrice, .ulFormBasket .productattributeQuantity, .ulFormBasket button, #paymentPeriodTable').hide();
+						$('.productattributePrice, .ulFormBasket .productattributeQuantity, .ulFormBasket button, #paymentPeriodTable, .buttonWishlist').hide();
 						return false;
 					}
 					else {
 						$('#productattributeId').val(response.productattributeId);
 						$('#productDetailInfoOuterQuantity').html('Stokta Var');//response.productattributeQuantity
-						$('.productattributePrice, .ulFormBasket .productattributeQuantity, .ulFormBasket button, #paymentPeriodTable').show();
+						$('.productattributePrice, .ulFormBasket .productattributeQuantity, .ulFormBasket button, #paymentPeriodTable, .buttonWishlist').show();
 						
 						if (
 								(response.productimpactDiscountRate != null && response.productimpactDiscountRate > 0) ||
@@ -1874,11 +1868,65 @@ function Productattribute()
 							$('#productDetailInfoOuterPrice').html(response.productattributepriceMDVCur);
 						}
 						
+						
+						$("li.buttonWishlist a").unbind("click");
+						if (response.isInWishlist) {
+							$("li.buttonWishlist a").html("Alışveriş listemden çıkar");
+							$("li.buttonWishlist a").bind("click", function() {
+								removeWishlist(this, response.productId);
+								//$(this).html("Alışveriş listeme ekle");
+								return false;
+							});
+						}
+						else {
+							$("li.buttonWishlist a").html("Alışveriş listeme ekle");
+							$("li.buttonWishlist a").bind("click", function() {
+								saveWishlist(this, response.productId);
+								//$(this).html("Alışveriş listemden çıkar");
+								return false;
+							});
+						}
+						
+						
 						updatePayments(response.productattributepriceMDV);
 						
 					}
 				}
 			});
+		}
+	};
+	
+	var saveWishlist = function (e, productId) {
+		if ( User.checkAuthenticated() ) {
+			$.post(CommonItems.getLocation() + 'product.php', "action=saveWishlist&productId="+productId, function(response) {
+				if (response.success == true) {
+					$(e).html("Alışveriş listemden çıkar");
+					CommonItems.casDialog(jQuery.i18n.prop('ALERT_Completed'));
+				}
+				else {
+					CommonItems.casDialog(jQuery.i18n.prop('ALERT_ErrorOccured'));
+				}
+			}, "json");
+		}
+		else {
+			CommonItems.casDialog("Giriş yapmalısınız");
+		}
+	};
+	
+	var removeWishlist = function (e, productId) {
+		if ( User.checkAuthenticated() ) {
+			$.post(CommonItems.getLocation() + 'product.php', "action=removeWishlist&productId="+productId, function(response) {
+				if (response.success == true) {
+					$(e).html("Alışveriş listeme ekle");
+					CommonItems.casDialog(jQuery.i18n.prop('ALERT_Completed'));
+				}
+				else {
+					CommonItems.casDialog(jQuery.i18n.prop('ALERT_ErrorOccured'));
+				}
+			}, "json");
+		}
+		else {
+			CommonItems.casDialog("Giriş yapmalısınız");
 		}
 	};
 	
@@ -2052,6 +2100,56 @@ function Productattribute()
 							items.push($.sprintf(tpl, val.salescampaignTitle, val.salescampaignEnd, val.salescampaignId, val.salescampaignId, val.pictureFile));
 						});
 						$(element).html(items.join(''));
+					}
+				});
+			});
+		}
+	};
+	
+	var getProductsInWishlist = function ()
+	{
+		var $target = $('[cas-js=getProductsInWishlist]');
+		if ($target.length) {
+			$.each($target, function(index, element) {
+				var url = $(this).attr("cas:url");
+				var tpl = $(element).html();
+				$(element).html('');
+				
+				$.ajax({
+					url: url,
+					type: 'get',
+					data: ({ action: 'jsonProductsInWishlist' }),
+					dataType: 'json',
+					success: function(response) {
+						$(element).html('');
+						var items = [];
+						$.each(response.aaData, function(key, val) {
+							var discountPercent = (val.productimpactDiscountRate == null) ? "dn" : "";
+							var discountCount = (val.productimpactDiscountPrice == null) ? "dn" : "";
+							var discountText = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
+							var oldCost = ((val.productimpactDiscountRate == null) && (val.productimpactDiscountPrice == null)) ? "dn" : "";
+							items.push($.sprintf(tpl, discountPercent, val.productimpactDiscountRate*100, discountCount, val.productimpactDiscountPrice, discountText, val.productId, val.pictureFile, val.productTitle, oldCost, val.productattributepriceMVCur, val.productattributepriceMDVCur, val.productattributeId));
+						});
+						$(element).html(items.join(''));
+					},
+					complete: function(){
+						if($(element).has("[cas-break]"))
+						{
+							var limitCount = $(element).attr("cas-break");
+							
+							$(element).find("li").each(function (index, element) {
+									var floatSide = $(this).css("float");
+									index++;
+									if((index % limitCount) === 0)
+									{
+										$(this).addClass("last");
+									}
+									else if((index != 1) &&  ((index % limitCount) == 1))
+									{
+										$(this).css({"clear":floatSide});
+									}
+							});
+						}
 					}
 				});
 			});
@@ -2321,6 +2419,9 @@ function Productattribute()
 
 	var Obj = new Object();
 	
+	Obj.saveWishlist = saveWishlist;
+	Obj.removeWishlist = removeWishlist;
+	
 	Obj.saveProductattribute = saveProductattribute;
 	Obj.deleteProductattribute = deleteProductattribute;
 	
@@ -2335,6 +2436,7 @@ function Productattribute()
 	Obj.getSearchResults = getSearchResults;
 	Obj.getSearchResultsSalescampaign = getSearchResultsSalescampaign;
 	
+	Obj.getProductsInWishlist = getProductsInWishlist;
 	Obj.getProductsByProductgroupId = getProductsByProductgroupId;
 	Obj.getProductsSimilar = getProductsSimilar;
 	Obj.getProductsByCategoryId = getProductsByCategoryId;
@@ -2354,27 +2456,33 @@ function Productattribute()
 
 function User()
 {
-	var Obj = new Object();
+	var checkAuthenticated = function ()
+	{
+		var op = false;
+		$.ajax({
+			url: CommonItems.getLocation() + 'index.php',
+			dataType: 'json',
+			async: false,
+			data: "action=checkAuthenticated",
+			success: function(response) {
+				op = response.authenticated;
+			}
+		});
+		return op;
+	};
 	
 	var getLoginoutFormAndMenu = function ()
 	{
 		var $target = $('[cas-form=getLoginoutFormAndMenu]');
 		if ($target.length) {
 			$.each($target, function(index, element) {
-				var url = $(this).attr("action");
-				$.ajax({
-					url: url,
-					data: ({ action: 'checkAuthenticated' }),
-					dataType: 'json',
-					async: false,
-					success: function(response) {
-						$.getJSON(url, {
-							'action': 'breadcrumbsMenu'
-						}, function(response) {
-							$(element).html(tree4breadcrumbsMenu(response));
-						});
-					}
-				});
+				if ( User.checkAuthenticated() ) {
+					$.getJSON(CommonItems.getLocation() + 'index.php', {
+						'action': 'breadcrumbsMenu'
+					}, function(response) {
+						$(element).html(tree4breadcrumbsMenu(response));
+					});
+				}
 			});
 		}
 	};
@@ -2383,129 +2491,120 @@ function User()
 	{
 		var $target = $('[cas-js=getLoginoutButton]');
 		if ($target.length) {
-			var url = $target.attr("cas:url");
-			$.ajax({
-				url: url,
-				data: ({ action: 'checkAuthenticated' }),
-				dataType: 'json',
-				async: false,
-				success: function(response) {
-					if (response.authenticated == true) {
-						$.getJSON(url, {
-							'action': 'breadcrumbsMenu'
-						}, function(response) {
-							//$('#treeMenu').html(tree4breadcrumbsMenu(response));
-							$target
-								.button({
-									label: jQuery.i18n.prop('LABEL_Menu'),
-									text: true,
-									icons: {
-										primary: "ui-icon-unlocked",
-										secondary: "ui-icon-triangle-1-s"
-									}
-								})
-								.menu({
-									crumbDefaultText: jQuery.i18n.prop('ALERT_PleaseMakeAChoice'),
-									backLinkText: jQuery.i18n.prop('BUTTON_Back'),
-									topLinkText: jQuery.i18n.prop('LABEL_All'),
-									content: tree4breadcrumbsMenu(response),
-									flyOut: false,
-									positionOpts: {
-										posX: 'left', 
-										posY: 'bottom',
-										offsetX: 0,
-										offsetY: 0,
-										directionH: 'left',
-										directionV: 'down', 
-										detectH: true, // do horizontal collision detection  
-										detectV: true, // do vertical collision detection
-										linkToFront: false
-									},
-									backLink: false
-								});
+			if ( User.checkAuthenticated() ) {
+				$.getJSON(CommonItems.getLocation() + 'index.php', {
+					'action': 'breadcrumbsMenu'
+				}, function(response) {
+					//$('#treeMenu').html(tree4breadcrumbsMenu(response));
+					$target
+						.button({
+							label: jQuery.i18n.prop('LABEL_Menu'),
+							text: true,
+							icons: {
+								primary: "ui-icon-unlocked",
+								secondary: "ui-icon-triangle-1-s"
+							}
+						})
+						.menu({
+							crumbDefaultText: jQuery.i18n.prop('ALERT_PleaseMakeAChoice'),
+							backLinkText: jQuery.i18n.prop('BUTTON_Back'),
+							topLinkText: jQuery.i18n.prop('LABEL_All'),
+							content: tree4breadcrumbsMenu(response),
+							flyOut: false,
+							positionOpts: {
+								posX: 'left', 
+								posY: 'bottom',
+								offsetX: 0,
+								offsetY: 0,
+								directionH: 'left',
+								directionV: 'down', 
+								detectH: true, // do horizontal collision detection  
+								detectV: true, // do vertical collision detection
+								linkToFront: false
+							},
+							backLink: false
 						});
-					}
-					else {
-						var type = $target.attr("cas:type");
-						if(type === undefined) {
-							$target.remove();
-						}
-						else if(type == "page") {
-							$target
-							.button({
-								label: 'Giriş yap',
-								text: true
-							})
-							.bind("click", function() {
-								window.location.replace(url + '?action=login');
-								return false;
-							});
-						}
-						else if(type == "popup") {
-							$target
-								.button({
-									label: 'Giriş yap',
-									text: true
-								})
-								.bind("click", function() {
-									// TODO: login form popup olarak yapılacak
-									/*
-									$('<a href="#formUserlogin" title="Giriş">Giriş</a>').fancybox({
-										titlePosition: 'over',
-										autoDimensions: false,
-										width: 400,
-										height: 200,
-										overlayShow: true,
-										transitionIn: 'elastic',
-										transitionOut: 'elastic',
-										easingIn: 'easeOutBack',
-										easingOut: 'easeInBack'
-									}).click();
-									$("#formUserlogin #username").focus();
-									*/
-								})
-								.css({
-									cursor: 'pointer'
-								});
-							
-							// TODO: login form submit ajaxSubmit ile yapılacak
-							/*
-							$("#formUserlogin").bind("submit", function() {
-								var formData = $(this).serializeArray();
-								formData.push({ name: "action", value: "loginUser" });
-						
-								if ($(this).find("#username").val().length < 1 || $(this).find("#passopen").val().length < 1) {
-									$("#errorUserlogin").show();
-									return false;
-								}
-						
-								$.ajax({
-									type	: "POST",
-									cache	: false,
-									url		: CommonItems.getLocation() + "index.php",
-									data	: formData,
-									dataType: 'json',
-									success: function(response) {
-										console.log(response);
-										if (response.authenticated == true) {
-											window.location.replace(response.uri);
-										}
-										else {
-											//CommonItems.casDialog(jQuery.i18n.prop('ALERT_AuthenticationFailed'));
-											$.fancybox({ content: jQuery.i18n.prop('ALERT_AuthenticationFailed') });
-										}
-										//$.fancybox(response);
-										$.fancybox.close();
-									}
-								});
-						
-								return false;
-							});
-							*/
-						}
-					}
+				});
+			}
+			else {
+				var type = $target.attr("cas:type");
+				if(type === undefined) {
+					$target.remove();
 				}
-			});
+				else if(type == "page") {
+					$target
+					.button({
+						label: 'Giriş yap',
+						text: true
+					})
+					.bind("click", function() {
+						window.location.replace(CommonItems.getLocation() + 'index.php?action=login');
+						return false;
+					});
+				}
+				else if(type == "popup") {
+					$target
+						.button({
+							label: 'Giriş yap',
+							text: true
+						})
+						.bind("click", function() {
+							// TODO: login form popup olarak yapılacak
+							/*
+							$('<a href="#formUserlogin" title="Giriş">Giriş</a>').fancybox({
+								titlePosition: 'over',
+								autoDimensions: false,
+								width: 400,
+								height: 200,
+								overlayShow: true,
+								transitionIn: 'elastic',
+								transitionOut: 'elastic',
+								easingIn: 'easeOutBack',
+								easingOut: 'easeInBack'
+							}).click();
+							$("#formUserlogin #username").focus();
+							*/
+						})
+						.css({
+							cursor: 'pointer'
+						});
+					
+					// TODO: login form submit ajaxSubmit ile yapılacak
+					/*
+					$("#formUserlogin").bind("submit", function() {
+						var formData = $(this).serializeArray();
+						formData.push({ name: "action", value: "loginUser" });
+				
+						if ($(this).find("#username").val().length < 1 || $(this).find("#passopen").val().length < 1) {
+							$("#errorUserlogin").show();
+							return false;
+						}
+				
+						$.ajax({
+							type	: "POST",
+							cache	: false,
+							url		: CommonItems.getLocation() + 'index.php',
+							data	: formData,
+							dataType: 'json',
+							success: function(response) {
+								console.log(response);
+								if (response.authenticated == true) {
+									window.location.replace(response.uri);
+								}
+								else {
+									//CommonItems.casDialog(jQuery.i18n.prop('ALERT_AuthenticationFailed'));
+									$.fancybox({ content: jQuery.i18n.prop('ALERT_AuthenticationFailed') });
+								}
+								//$.fancybox(response);
+								$.fancybox.close();
+							}
+						});
+				
+						return false;
+					});
+					*/
+				}
+			}
 		}
 	};
 	
@@ -2770,7 +2869,9 @@ function User()
 		});
 		return false;
 	};
-	
+
+	var Obj = new Object();
+	Obj.checkAuthenticated = checkAuthenticated;
 	Obj.getLoginoutFormAndMenu = getLoginoutFormAndMenu;
 	Obj.getLoginoutButton = getLoginoutButton;
 	Obj.saveUser = saveUser;
@@ -2816,7 +2917,7 @@ function Banner()
 		var $target = $('[cas-js=getBanners]');
 		if ($target.length) {
 			
-			var url = CommonItems.getLocation() + "index.php";
+			var url = CommonItems.getLocation() + 'index.php';
 			
 			var theme = $target.attr("cas:theme");
 			init(theme);
@@ -3920,9 +4021,7 @@ function Advertisement()
 	var getMenu = function ()
 	{
 		var $target = $("[cas-js=getMenu]");
-		$.getJSON("modules/advertisement/index.php", {
-			"action" : "checkAuthenticated"
-		}, function (response) {
+		if ( User.checkAuthenticated() ) {
 			var items = [];
 			items.push('<li><label><a href="javascript:void(0);" onclick="Advertisement.callContent(\'form-search\');">Search Ad</a></label></li>');
 			items.push('<li><label><a href="javascript:void(0);" onclick="Advertisement.callContent(\'form-advertisement\');">Advertise</a></label></li>');
@@ -3936,7 +4035,7 @@ function Advertisement()
 			}
 			$target.html(items.join(''));
 			$target.ulmenuh();
-		});
+		}
 	};
 	
 	var callContent = function (page)
@@ -4049,58 +4148,52 @@ function Advertisement()
 	{
 		var form1 = $("#formAdvertise");
 		
-		if (form1.length) {
-			
-			$.getJSON("modules/advertisement/index.php", {
-				"action" : "checkAuthenticated"
-			}, function (response) {
-				if (response.authenticated == true) {
-					
-					$(".error").hide();
-					var hasError = false;
-					
-					if ($(form1).find("[name=advertisementContent]").val().length < 1) {
-						$(form1).after(showError('Enter your ad content'));
-						$(form1).find("[name=advertisementContent]").focus();
-						hasError = true;
-					}
-					else if ($(form1).find("[name=advertisementgroupId]").val() < 1) {
-						$(form1).after(showError('Choose a category'));
-						$(form1).find("[name=advertisementgroupId]").focus();
-						hasError = true;
-					}
-					
-					if(hasError == true) { return false; }
-					
-					$.fancybox.showActivity();
-					
-					$(form1).ajaxSubmit({
+		if (form1.length)
+		{
+			if ( User.checkAuthenticated() ) {
+				$(".error").hide();
+				var hasError = false;
+				
+				if ($(form1).find("[name=advertisementContent]").val().length < 1) {
+					$(form1).after(showError('Enter your ad content'));
+					$(form1).find("[name=advertisementContent]").focus();
+					hasError = true;
+				}
+				else if ($(form1).find("[name=advertisementgroupId]").val() < 1) {
+					$(form1).after(showError('Choose a category'));
+					$(form1).find("[name=advertisementgroupId]").focus();
+					hasError = true;
+				}
+				
+				if(hasError == true) { return false; }
+				
+				$.fancybox.showActivity();
+				
+				$(form1).ajaxSubmit({
 				 	url: "modules/advertisement/index.php",
 				 	data: { action: 'save' },
 				 	dataType: 'json',
-				  beforeSubmit: function(a,f,o) {
-				  	//console.log(a);
-				  },
-				  success: function(data) {
-							$.fancybox({
-								content: 'Completed',
-								onClosed: function() {
-									Obj.callContent('content-myfree');
-								}
-							});
-				  }
-				 });
-				}
-				else {
-					$.fancybox({
-						content: 'Please login first',
-						onClosed: function() {
-							Obj.callContent('form-login');
-						}
-					});
-				}
-			});
-
+				 	beforeSubmit: function(a,f,o) {
+				 		//console.log(a);
+				 	},
+				 	success: function(data) {
+				 		$.fancybox({
+				 			content: 'Completed',
+				 			onClosed: function() {
+				 				Obj.callContent('content-myfree');
+				 			}
+				 		});
+				 	}
+				});
+			}
+			else {
+				$.fancybox({
+					content: 'Please login first',
+					onClosed: function() {
+						Obj.callContent('form-login');
+					}
+				});
+			}
 		}
 		
 		return false;
@@ -4111,65 +4204,59 @@ function Advertisement()
 	{
 		var $form1 = $("#formMyinfo");
 		
-		if ($form1.length) {
-			
-			$.getJSON("modules/advertisement/index.php", {
-				"action" : "checkAuthenticated"
-			}, function (response) {
-				if (response.authenticated == true) {
-					
-					$form = $(form);
-					$form.validate({
-						submitHandler: function(f) {
-							$form.ajaxSubmit({
-								data: { action: 'saveUser' },
-								dataType: 'json',
-								beforeSubmit: function(a,f,o) {
-									//console.log(a);
-								},
-								success: function(response) {
-									if (response.isExist == true) {
-										CommonItems.casDialog("Existing user");
+		if ($form1.length)
+		{
+			if ( User.checkAuthenticated() ) {
+				$form = $(form);
+				$form.validate({
+					submitHandler: function(f) {
+						$form.ajaxSubmit({
+							data: { action: 'saveUser' },
+							dataType: 'json',
+							beforeSubmit: function(a,f,o) {
+								//console.log(a);
+							},
+							success: function(response) {
+								if (response.isExist == true) {
+									CommonItems.casDialog("Existing user");
+								}
+								else {
+									if (response.success == true) {
+										CommonItems.casDialog({
+											content: jQuery.i18n.prop('ALERT_Completed'),
+											onClosed: function () {
+												Obj.callContent('content-myfree');
+											}
+										});
 									}
 									else {
-										if (response.success == true) {
-											CommonItems.casDialog({
-												content: jQuery.i18n.prop('ALERT_Completed'),
-												onClosed: function () {
-													Obj.callContent('content-myfree');
-												}
-											});
-										}
-										else {
-											CommonItems.casDialog(jQuery.i18n.prop('ALERT_Completed'));
-										}
+										CommonItems.casDialog(jQuery.i18n.prop('ALERT_Completed'));
 									}
 								}
-							});
-						},
-						rules: {
-							productorderstatusId: {
-								required: true
 							}
-						},
-						messages: {
-							productorderstatusId: {
-								required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
-							}
+						});
+					},
+					rules: {
+						productorderstatusId: {
+							required: true
 						}
-					});
-					return false;
-				}
-				else {
-					$.fancybox({
-						content: 'Please login first',
-						onClosed: function() {
-							Obj.callContent('form-login');
+					},
+					messages: {
+						productorderstatusId: {
+							required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
 						}
-					});
-				}
-			});
-
+					}
+				});
+				return false;
+			}
+			else {
+				$.fancybox({
+					content: 'Please login first',
+					onClosed: function() {
+						Obj.callContent('form-login');
+					}
+				});
+			}
 		}
 		
 		return false;

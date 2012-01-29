@@ -3,6 +3,7 @@
 <head>
 <base href="{$project.url}" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta property="fb:app_id" content="{$_APPID_FACEBOOK}"/>
 <link rel="icon" type="image/png" href="img/favicon.png" />
 
 <title>{$_COMPANY_NAME}</title>
@@ -66,14 +67,40 @@
 <link rel="stylesheet" href="{$smarty.const._THEMES_DIR_}b2b/{$_THEME_B2B_NAME}/css/style.css" />
 
 
+		<!-- Social Networks -->		
+		<script>(function(d, s, id) {
+			  var js, fjs = d.getElementsByTagName(s)[0];
+			  if (d.getElementById(id)) return;
+			  js = d.createElement(s); js.id = id;
+			  js.src = "//connect.facebook.net/tr_TR/all.js#xfbml=1&appId={$_APPID_FACEBOOK}";
+			  fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));
+		</script>
+
+		<script>!function(d,s,id){
+			var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){
+				js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);
+			}
+			}(document,"script","twitter-wjs");
+		</script>
+		
+		<script type="text/javascript">
+			window.___gcfg = { lang: 'tr' };
+			(function() {
+				var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+				po.src = 'https://apis.google.com/js/plusone.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+			})();
+		</script>
+
 </head>
 <body>
 
 <div id="container">
 	<div id="navigation">
 		<span class="buttonset fr">
-			<button cas-js="getBreadcrumbsIso639" cas:url="modules/b2b/index.php" cas:uri="{$project.encodedUri}"></button>
-			<button cas-js="getLoginoutButton" cas:url="modules/b2b/index.php"></button>
+			<button cas-js="getBreadcrumbsIso639" cas:uri="{$project.encodedUri}" cas:var="{$project.language}"></button>
+			<button cas-js="getLoginoutButton"></button>
 			<!-- <button type="submit" onclick="location.href='modules/b2b/register.php'">{#BUTTON_Register#}</button> -->
 		</span>
 	</div>

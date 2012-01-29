@@ -54,20 +54,24 @@ function GMAPHelper()
 	{
 		var position = new google.maps.LatLng(lat, lng);
 		
-		var myOptions = {
+		$('[cas-map=latitude]').val(lat);
+		$('[cas-map=longitude]').val(lng);
+		
+		var mapOptions = {
+				streetViewControl: false,
 				center: position,
 				zoom: 16,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
 		
-		//var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-		var map = new google.maps.Map($(element).get(0), myOptions);
+		//var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+		var map = new google.maps.Map($(element).get(0), mapOptions);
 		
 		var marker = new google.maps.Marker({
 			position: position, 
 			map: map,
 			draggable: draggable,
-			title:"Hello World!"
+			title: "Hello World!"
 		});
 		
 		var infowindow = new google.maps.InfoWindow({
@@ -83,8 +87,8 @@ function GMAPHelper()
 		google.maps.event.addListener(marker, 'dragend', function(event) {
 			var point = marker.getPosition();
 			map.panTo(point);
-			$('[cas-map=latitude]').val(event.latLng.Qa);
-			$('[cas-map=longitude]').val(event.latLng.Ra);
+			$('[cas-map=latitude]').val(event.latLng.Oa);
+			$('[cas-map=longitude]').val(event.latLng.Pa);
 		});
 		
 		google.maps.event.addListener(map, 'zoom_changed', function() {

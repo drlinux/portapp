@@ -415,3 +415,19 @@ select
 {
 	
 }
+
+
+.buttonSocial
+{
+	width:110px !important; 
+	margin:50px 0 0 0 !important;
+	float:left !important;
+	clear:none !important;
+}
+
+.buttonWishlist {
+	width: 100%;
+	text-align: center;
+	position:relative;
+	top: 10px;
+}

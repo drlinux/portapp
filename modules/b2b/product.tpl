@@ -129,6 +129,19 @@ $(function() {
 				<li>
 					<button type="submit" onclick="Productattribute.updateProductattributebasket(this.form);">Sepete Ekle</button>
 				</li>
+				<li></li>
+				<li class="buttonSocial facebook">
+					<div class="fb-like" data-href="http://URL.com" data-send="false" data-layout="button_count"  data-width="" data-show-faces="false"></div>
+				</li>
+				<li class="buttonSocial twitter">
+					<a href="https://twitter.com/share" class="twitter-share-button" data-via="twitterapi" data-lang="en">Tweet</a>
+				</li>
+				<li class="buttonSocial gplus">
+					<g:plusone size="medium"></g:plusone>
+				</li>
+				<li class="buttonWishlist">
+					<a href="#"></a>
+				</li>
 			</ul>
 		</form>
 	</div>
@@ -146,8 +159,7 @@ $(function() {
 		</div>
 		<div id="tabs-2">
 			{if $data.productVideo neq null}
-			<!-- https://www.youtube.com/embed/7765e0QcF88?rel=0 -->
-			<iframe width="640" height="360" src="{$data.productVideo}" frameborder="0" allowfullscreen></iframe>
+			{$data.productVideo}
 			{/if}
 		</div>
 		<div id="tabs-3">
@@ -155,14 +167,6 @@ $(function() {
 		</div>
 		<div id="tabs-4">
 			<div id="fb-root"></div>
-			<script>(function(d, s, id) {
-				  var js, fjs = d.getElementsByTagName(s)[0];
-				  if (d.getElementById(id)) return;
-				  js = d.createElement(s); js.id = id;
-				  js.src = "//connect.facebook.net/tr_TR/all.js#xfbml=1&appId=294608807247890";
-				  fjs.parentNode.insertBefore(js, fjs);
-				}(document, 'script', 'facebook-jssdk'));
-			</script>
 			<div class="fb-comments" data-href="{$project.uri}" data-num-posts="10" data-width="630"></div>
 		</div>
 	</div>

@@ -8,7 +8,7 @@ class Product extends CasBase
 
 		$this->sTable		= strtolower(__CLASS__);
 
-		$this->aAllField		= array("productId", "productCode", "productTitle", "productContent", "productVideo", "categoryId", "brandId", "taxonomyId", "warrantyId");
+		$this->aAllField		= array("productId", "productCode", "productTitle", "productContent", "productVideo", "productHit", "categoryId", "brandId", "taxonomyId", "warrantyId");
 		$this->sIndexColumn		= "productId";
 		$this->sIndexColumnFull	= $this->sTable.".".$this->sIndexColumn;
 
@@ -18,6 +18,33 @@ class Product extends CasBase
 		$this->sTitleColumn		= $this->sTable."Title";
 		$this->sTitleColumnFull	= $this->sTable.".".$this->sTitleColumn;
 
+	}
+	
+	
+	function isInWishlist($productId)
+	{
+		return $this->select("product_user", "userId = :userId AND productId = :productId", array("userId"=>$_SESSION["userId"], "productId"=>$productId));
+	}
+	
+	function getProductsInWishlist()
+	{
+		$rows = $this->select("product_user", "userId = :userId", array("userId"=>$_SESSION["userId"]));
+		$arr["iTotalRecords"] = count($rows);
+		if ($arr["iTotalRecords"] > 0) {
+			$i=0;
+			$productattribute = new Productattribute();
+			foreach ($rows as $row) {
+				$arr["aaData"][$i] = $productattribute->getProductattributeByProductId($row["productId"]);
+				$i++;
+			}
+		}
+		return ($arr);
+	}
+	
+	function setProductHit($productId)
+	{
+		$sql = "UPDATE product SET productHit=IF(productHit IS NULL, 1, productHit+1) WHERE productId=$productId";
+		$this->run($sql);
 	}
 	
 	function getProducts()

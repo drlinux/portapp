@@ -287,6 +287,8 @@ class Productattribute extends CasBase
 		$row["attributegroups"] = $this->getAttributegroupsByProductattributeIds(explode(",", $productattributeIds), $attributeIds);
 		//print_r($row);exit;
 		
+		$row["isInWishlist"] = ($product->isInWishlist($row["productId"]))?true:false;
+		
 		//print_r($row);exit;
 		return ($row);
 	}

@@ -90,7 +90,7 @@
 				<tr>
 					<td>video:</td>
 					<td>
-						<input type="text" name="productVideo" value="{$data.product.productVideo}"/>
+						<textarea style="width: 99%;" name="productVideo">{$data.product.productVideo}</textarea>
 					</td>
 				</tr>
 			</tbody>
