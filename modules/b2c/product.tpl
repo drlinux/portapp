@@ -143,6 +143,9 @@ $(function() {
 					<a href="#"></a>
 				</li>
 				<li class="buttonCompare"></li>
+				<li>
+					<a href="modules/b2c/productcompare.php">Karşılaştırma Listesi</a>
+				</li>
 			</ul>
 		</form>
 	</div>
