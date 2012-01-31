@@ -103,9 +103,6 @@ profil resmini sildiğinde ürünün gösterilmeyeceği uyarısını düş.
 Havale Transfer numarasını girsin takip için
 Şu kadar fiyatın üstü ücretsiz taşıma???
 style.css.php - dynamic css
-
-istek listesi
-en çok gezilen ürünler
 ürün rating
 Ürün çeşidi eklemeyi kolaylaştıran 'clone' özelliği
 Müşteri, site yöneticileri ve kargo şirketi için e-mail ile bilgilendirme sistemi

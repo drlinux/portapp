@@ -94,6 +94,13 @@ Feature Overview
 * SMS / MMS Modülü
 
 
+Installation
+----------------
+
+* Download the repository as a zip file
+* Extract and place portapp directory under htdocs
+* Find and install database under phpdoc directory
+* Find and run sql command inside todo.txt to create view.
 
 Contributors
 ============
