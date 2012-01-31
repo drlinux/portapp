@@ -142,6 +142,7 @@ $(function() {
 				<li class="buttonWishlist">
 					<a href="#"></a>
 				</li>
+				<li class="buttonCompare"></li>
 			</ul>
 		</form>
 	</div>

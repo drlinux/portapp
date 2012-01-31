@@ -431,3 +431,10 @@ select
 	position:relative;
 	top: 10px;
 }
+
+.buttonCompare {
+	width: 100%;
+	text-align: center;
+	position:relative;
+	top: 10px;
+}

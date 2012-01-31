@@ -271,3 +271,10 @@ h1.subHeader, h3.subHeader
 	position:relative;
 	top: 10px;
 }
+
+.buttonCompare {
+	width: 100%;
+	text-align: center;
+	position:relative;
+	top: 10px;
+}

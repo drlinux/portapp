@@ -1874,7 +1874,6 @@ function Productattribute()
 							$("li.buttonWishlist a").html("Alışveriş listemden çıkar");
 							$("li.buttonWishlist a").bind("click", function() {
 								removeWishlist(this, response.productId);
-								//$(this).html("Alışveriş listeme ekle");
 								return false;
 							});
 						}
@@ -1882,11 +1881,11 @@ function Productattribute()
 							$("li.buttonWishlist a").html("Alışveriş listeme ekle");
 							$("li.buttonWishlist a").bind("click", function() {
 								saveWishlist(this, response.productId);
-								//$(this).html("Alışveriş listemden çıkar");
 								return false;
 							});
 						}
 						
+						checkProductcompare(response.productId);
 						
 						updatePayments(response.productattributepriceMDV);
 						
@@ -1894,6 +1893,133 @@ function Productattribute()
 				}
 			});
 		}
+	};
+	
+	var checkProductcompare = function (productId)
+	{
+		var target = ".buttonCompare";
+		var compareMax = 2;
+		var cookienameProductcompare = "productcompare";
+		var compare = $.cookie(cookienameProductcompare);
+		var items = compare ? compare.split(',') : new Array();
+		if ($.inArray(productId, items) == -1)
+		{
+			$("<a/>", {
+				'href': '#',
+				'html': 'Karşılaştırma listeme ekle'
+			})
+				.bind("click", function() {
+					if (items.length < compareMax) {
+						saveProductcompare(cookienameProductcompare, target, items, productId);
+						return false;
+					}
+					else {
+						CommonItems.casDialog("Sadece " + compareMax + " adet ürün karşılaştırabilirsiniz");
+						return false;
+					}
+				})
+				.appendTo(target);
+		}
+		else {
+			$("<a/>", {
+				'href': '#',
+				'html': 'Karşılaştırma listemden çıkar'
+			})
+				.bind("click", function() {
+					removeProductcompare(cookienameProductcompare, target, items, productId);
+					return false;
+				})
+				.appendTo(target);
+		}
+	};
+	
+	var saveProductcompare = function (cookienameProductcompare, target, items, productId)
+	{
+		items.push(productId);
+		$.cookie(cookienameProductcompare, items.join(','));
+		
+		var link = $("<a/>", {
+				'href': '#',
+				'html': 'Karşılaştırma listemden çıkar'
+			})
+			.unbind("click")
+			.bind("click", function() {
+				removeProductcompare(cookienameProductcompare, target, items, productId);
+				return false;
+			});
+		$(target).html(link);
+		CommonItems.casDialog("Ürün karşılaştırma listenize eklendi");
+	};
+	
+	var removeProductcompare = function (cookienameProductcompare, target, items, productId)
+	{
+		var idx = items.indexOf(productId);
+		if(idx!=-1) items.splice(idx, 1);
+		if (items.length > 0) {
+			$.cookie(cookienameProductcompare, items.join(','));
+		}
+		else {
+			$.cookie(cookienameProductcompare, null, {expires: -1});
+		}
+		
+		var link = $("<a/>", {
+				'href': '#',
+				'html': 'Karşılaştırma listeme ekle'
+			})
+			.unbind("click")
+			.bind("click", function() {
+				saveProductcompare(cookienameProductcompare, target, items, productId);
+				return false;
+			});
+		$(target).html(link);
+		CommonItems.casDialog("Ürün karşılaştırma listenizden çıkarıldı");
+	};
+	
+	var sendEmailToUsersinWishlist = function (form)
+	{
+		$form = $(form);
+		$form.validate({
+			submitHandler: function(f) {
+				$form.ajaxSubmit({
+					data: { action: 'sendEmailToUsersinWishlist' },
+					dataType: 'json',
+					beforeSubmit: function(a,f,o) {
+						//console.log(a);
+						CommonItems.casLoaderShow();
+					},
+					success: function(response) {
+						//console.log(response);
+						if (response.success == true) {
+							CommonItems.casDialog({
+								content: jQuery.i18n.prop('ALERT_Completed')
+							});
+						}
+						else {
+							CommonItems.casDialog({
+								content: response.msg//jQuery.i18n.prop('ALERT_ErrorOccured')
+							});
+						}
+					}
+				});
+			},
+			rules: {
+				messageSubject: {
+					required: true
+				},
+				messageBody: {
+					required: true
+				}
+			},
+			messages: {
+				messageSubject: {
+					required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
+				},
+				messageBody: {
+					required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
+				}
+			}
+		});
+		return false;
 	};
 	
 	var saveWishlist = function (e, productId) {
@@ -2419,6 +2545,11 @@ function Productattribute()
 
 	var Obj = new Object();
 	
+	Obj.checkProductcompare = checkProductcompare;
+	Obj.saveProductcompare = saveProductcompare;
+	Obj.removeProductcompare = removeProductcompare;
+	
+	Obj.sendEmailToUsersinWishlist = sendEmailToUsersinWishlist;
 	Obj.saveWishlist = saveWishlist;
 	Obj.removeWishlist = removeWishlist;
 	
@@ -3688,12 +3819,14 @@ function CommonItems()
 		});
 	}
 	
-	var wysiwyg = $('textarea.wysiwyg');
-	if (wysiwyg.length) {
-		$(wysiwyg).ckeditor({
-			//toolbar		: 'Basic',
-			language	: 'tr',
-			skin		: 'kama'
+	var $wysiwyg = $('textarea.wysiwyg');
+	if ($wysiwyg.length) {
+		$wysiwyg.ckeditor({
+			//toolbar				: 'Basic',
+			toolbarStartupExpanded	: false,
+			uiColor					: 'transparent',
+			language				: 'tr',
+			skin					: 'kama'
 		});
 	}
 	
@@ -3976,6 +4109,8 @@ function CommonItems()
 
 	var getLocation = function ()
 	{
+		return (window.location.pathname.split("/",4).concat("").join("/"));
+		/*
 		var location = window.location;
 		var path = location.pathname;
 		if (document.all) {
@@ -3983,6 +4118,7 @@ function CommonItems()
 		}
 		path = path.substr(0, path.lastIndexOf("/")+1);
 		return location.protocol + '//' + location.hostname + path;
+		*/
 	};
 	
 	var Obj = new Object();

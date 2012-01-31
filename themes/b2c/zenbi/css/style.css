@@ -414,3 +414,10 @@ h1, h2, h3, h4, h5, h6 { color:#b9246a; }
 	position:relative;
 	top: 10px;
 }
+
+.buttonCompare {
+	width: 100%;
+	text-align: center;
+	position:relative;
+	top: 10px;
+}

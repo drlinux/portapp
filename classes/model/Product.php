@@ -20,7 +20,37 @@ class Product extends CasBase
 
 	}
 	
+	function getNumberOfUsersinWishlistByProductgroupId($productgroupId)
+	{
+		$sql = "SELECT ";
+		$sql .= "COUNT(product_user.userId) AS numberOfUsers, ";
+		$sql .= "product.productCode, ";
+		$sql .= "product.productTitle, ";
+		$sql .= "product.productId ";
+		$sql .= "FROM productgroup_product ";
+		$sql .= "LEFT JOIN product_user ON product_user.productId = productgroup_product.productId ";
+		$sql .= "LEFT JOIN product ON product.productId = productgroup_product.productId ";
+		$sql .= "WHERE productgroup_product.productgroupId = :productgroupId ";
+		$sql .= "GROUP BY productgroup_product.productId ";
+
+		return $this->run($sql, array("productgroupId"=>$productgroupId));
+		
+	}	
 	
+	function getUsersinWishlistByProductId($productId)
+	{
+		$sql = "SELECT ";
+		$sql .= "user.userFirstname, ";
+		$sql .= "user.userLastname, ";
+		$sql .= "user.userEmail ";
+		$sql .= "FROM product_user ";
+		$sql .= "LEFT JOIN user ON user.userId = product_user.userId ";
+		$sql .= "WHERE product_user.productId = :productId ";
+
+		return $this->run($sql, array("productId"=>$productId));
+		
+	}
+		
 	function isInWishlist($productId)
 	{
 		return $this->select("product_user", "userId = :userId AND productId = :productId", array("userId"=>$_SESSION["userId"], "productId"=>$productId));

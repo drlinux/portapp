@@ -601,7 +601,7 @@ class User extends CasBase
 					"roleId"=>$roleId
 				)
 			);
-				
+			
 			$mailer = new CasMailer();
 			$mailer->Subject = $smarty->getConfigVariable("MAIL_SUBJECT_USERREGISTER");
 			$mailer->MsgHTML(sprintf($smarty->getConfigVariable("MAIL_BODY_USERREGISTER"), $formvars["userEmail"], $userPass));

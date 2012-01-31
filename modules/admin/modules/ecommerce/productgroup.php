@@ -8,6 +8,40 @@ $_action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'view';
 $model = new Productgroup();
 
 switch($_action) {
+	case 'sendEmailToUsersinWishlist':
+		$productId = $_POST["productId"];
+		$subject = $_POST["messageSubject"];
+		$body = $_POST["messageBody"];
+		
+		$product = new Product();
+		$recipients = $product->getUsersinWishlistByProductId($productId);
+		
+		$mailer = new CasMailer();
+		$mailer->Subject = $subject;
+		$mailer->MsgHTML($body);
+		
+		foreach ($recipients as $recipient) {
+			$mailer->AddAddress($recipient["userEmail"], $recipient["userFirstname"] . ' ' . $recipient["userLastname"]);
+			$mailer->Send();
+		}
+		
+		echo(json_encode(array("success"=>true)));
+		break;
+	case 'inform':
+		$productId = $_GET["productId"];
+		$product = new Product();
+		$data["product"] = $product->getProductByProductId($productId);
+		//print_r($data);exit;
+		
+		$productLink = $project["url"] . "modules/b2c/product.php?action=show&productId=" . $productId;
+		
+		$data["message"]["to"] = $product->getUsersinWishlistByProductId($productId); 
+		$data["message"]["subject"] = $smarty->getConfigVariable("MAIL_SUBJECT_WISHLIST");
+		$data["message"]["body"] = sprintf($smarty->getConfigVariable("MAIL_BODY_WISHLIST"), $data["product"]["productTitle"], $data["product"]["productCode"], $productLink, $productLink);
+		//print_r($data);exit;
+		
+		$model->displayTemplate("admin", $model->sTable.'_email', $data);
+		break;
 	case 'dataTables':
 		$aColumns = array("productgroupId", "productgroupTitle");
 		echo $model->dataTables($aColumns, $model->sIndexColumn, $model->sTable, $_GET);
@@ -31,6 +65,9 @@ switch($_action) {
 		$product = new Product();
 		$data["product"] = $product->getProducts();
 		//print_r($data["product"]);exit;
+		
+		$data["productgroup_product"] = $product->getNumberOfUsersinWishlistByProductgroupId($_REQUEST[$model->sIndexColumn]);
+		//print_r($data);exit;
 		
 		$model->displayTemplate("admin", $model->sTable.'_form', $data);
 		break;
