@@ -2,7 +2,7 @@
 Deny from all
 </Files>
 
-<Files ~ "\.(php|js|css|properties|swf|png|gif|jpg)$">
+<Files ~ "\.(html|php|js|css|properties|swf|png|gif|jpg)$">
 Satisfy any
 Allow from all
 </Files>

@@ -282,6 +282,15 @@ switch($_action)
 			/*
 			 * bonus - 0062 - paymentypeId=4
 			*/
+			
+			$data["amount"] = $amount*100;//tutar*100 - Alışveriş tutarı (14,8 TL için 1480 giriniz.)
+			$model->displayTemplate("b2c", "checkout_cc", $data);
+		}
+		elseif ($data["payment"]["paymentgroupId"] == 51)
+		{
+			/*
+			 * bonus - 0062 - paymentypeId=4
+			*/
 
 			$data["secure3dsecuritylevel"] = "3D_PAY";//3D_PAY, 3D_FULL, 3D_HALF
 			$data["strMode"] = "PROD"; //PROD, TEST

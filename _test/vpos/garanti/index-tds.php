@@ -5,7 +5,7 @@ switch($_action)
 {
 	case 'submit':
 		
-		$XML_SERVICE_URL = "https://www.posnet.ykb.com/PosnetWebService/XML"; //PROD
+		$XML_SERVICE_URL = "https://ccpos.garanti.com.tr/servlet/cc5ApiServer"; //PROD
 		//$XML_SERVICE_URL = "http://setmpos.ykb.com/PosnetWebService/XML"; //TEST
  
 		$mid			= "6783406546";
@@ -34,12 +34,71 @@ switch($_action)
 					"</posnetRequest>"
 		;
 		
+		$Name		= "7VHTRYM0";//İş yeri kullanıcı adı
+		$Password	= "";//İş yeri şifresi
+		$ClientId	= "9258469";//İş yeri no
+		
+		$IPAddress	= GetHostByName($REMOTE_ADDR);//Son kullanıcı IP adresi
+		$Email		= "";//Son kullanıcı e-posta adresi
+		$Mode		= "P";//P olursa gerçek islem, T olursa test islemi yapar
+		$OrderId	= "";//Sipariş numarası. Boş gönderilirse sistem bir sipariş numarası üretir.
+		$Type		= "Auth";//Auth: Satış, PreAuth: Ön Otorizasyon
+		
+		
+		$request= "DATA=<?xml version=\"1.0\" encoding=\"ISO-8859-9\"?>".
+					"<CC5Request>".
+						"<Name>$Name</Name>".
+						"<Password>$Password</Password>".
+						"<ClientId>$ClientId</ClientId>".
+						"<IPAddress>$IPAddress</IPAddress>".
+						"<Email>$Email</Email>".
+						"<Mode>$Mode</Mode>".
+						"<OrderId>$OrderId</OrderId>".
+						"<GroupId></GroupId>".
+						"<TransId></TransId>".
+						"<UserId></UserId>".
+						"<Type>$Type</Type>".
+						"<Number>{MD}</Number>".
+						"<Expires></Expires>".
+						"<Cvv2Val></Cvv2Val>".
+						"<Total>{TUTAR}</Total>".
+						"<Currency>949</Currency>".
+						"<Taksit>{TAKSIT}</Taksit>".
+						"<PayerTxnId>{XID}</PayerTxnId>".
+						"<PayerSecurityLevel>{ECI}</PayerSecurityLevel>".
+						"<PayerAuthenticationCode>{CAVV}</PayerAuthenticationCode>".
+						"<CardholderPresentCode>13</CardholderPresentCode>".
+						"<BillTo>".
+							"<Name></Name>".
+							"<Street1></Street1>".
+							"<Street2></Street2>".
+							"<Street3></Street3>".
+							"<City></City>".
+							"<StateProv></StateProv>".
+							"<PostalCode></PostalCode>".
+							"<Country></Country>".
+							"<Company></Company>".
+							"<TelVoice></TelVoice>".
+						"</BillTo>".
+						"<ShipTo>".
+							"<Name></Name>".
+							"<Street1></Street1>".
+							"<Street2></Street2>".
+							"<Street3></Street3>".
+							"<City></City>".
+							"<StateProv></StateProv>".
+							"<PostalCode></PostalCode>".
+							"<Country></Country>".
+						"</ShipTo>".
+						"<Extra></Extra>".
+					"</CC5Request>";
+		
 		
 		$ch = curl_init(); // initialize curl handle
 		
 		curl_setopt($ch, CURLOPT_URL, $XML_SERVICE_URL); // set url to post to
 		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $request); // add POST fields
+		curl_setopt($ch, CURLOPT_POSTFIELDS, urlencode($request)); // add POST fields
 
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 1);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);

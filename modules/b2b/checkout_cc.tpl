@@ -14,7 +14,7 @@
 	<h2 class="mb5">Ödeme</h2>
 	<p class="mb10" style="font-style: italic;">{$data.payment.paymentgroup.paymentgroupContent}</p>
 	
-	<form method="post" action="">
+	<form method="post" action="{$SCRIPT_NAME}">
 	<ul class="ulform">
 		<li>
 			<label>Kart Sahibinin Adı Soyadı</label>

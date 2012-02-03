@@ -1,4 +1,14 @@
 <% 
+Mağaza kodu (store ID)
+İşyeri Anahtarı (İşyeri Ayıracı)
+Kullanıcı Adı
+Şifre
+3D secure sorgulaması için sunucu adresi
+3D secure işleminin api sunucusunun adresi
+s
+Sunucu Adresi : https://ccpos.garanti.com.tr/servlet/gar3Dgate
+Api sunucusunun adresi : https://ccpos.garanti.com.tr/servlet/cc5ApiServer
+
 
 Number        = Trim(Number) 
 Ay              = Trim(Right(Ay,2)) 

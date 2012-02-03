@@ -1,0 +1,15 @@
+<CC5Response>
+	<OrderId/>
+	<GroupId/>
+	<AuthCode/>
+	<Response>Error</Response>
+	<HostRefNum/>
+	<ProcReturnCode>99</ProcReturnCode>
+	<TransId/>
+	<ErrMsg>ApiServer Error: XML Yapisinda Hata var</ErrMsg>
+	<Extra>
+		<HOSTMSG>ApiServer Error: XML Yapisinda Hata var</HOSTMSG>
+		<NUMCODE>99809900239999</NUMCODE>
+	</Extra>
+</CC5Response>
+

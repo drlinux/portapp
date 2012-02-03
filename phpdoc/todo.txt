@@ -120,6 +120,7 @@ eklenen reklam ve resimlere tiklandiginda url ye gitsin ve bunlarin kaydi tutuls
 
 ----- Importance: Low -----
 http://www.etid.org.tr/
+http://www.eticad.org.tr/
 nebim: ODBC localhost veritabani sa
 
 

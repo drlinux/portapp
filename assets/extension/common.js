@@ -3820,14 +3820,51 @@ function CommonItems()
 	}
 	
 	var $wysiwyg = $('textarea.wysiwyg');
+	var wysiwyg_editor = "ckeditor";//ckeditor, elrte
+	var language = "tr";
 	if ($wysiwyg.length) {
-		$wysiwyg.ckeditor({
-			//toolbar				: 'Basic',
-			toolbarStartupExpanded	: false,
-			uiColor					: 'transparent',
-			language				: 'tr',
-			skin					: 'kama'
-		});
+		if (wysiwyg_editor == "ckeditor") {
+			$wysiwyg.ckeditor({
+				//toolbar				: 'Basic',
+				toolbarStartupExpanded	: false,
+				uiColor					: 'transparent',
+				language				: language,
+				skin					: 'kama'
+			});
+		}
+		else if (wysiwyg_editor == "elrte") {
+			var jsHost = (("https:" == document.location.protocol) ? "https://" : "http://");
+			jQuery.getCss(jsHost + document.location.hostname + "/portapp/assets/plugins/elrte/css/elrte.min.css");
+			jQuery.getCss(jsHost + document.location.hostname + "/portapp/assets/plugins/elfinder/css/elfinder.css");
+			if (language == "tr") {
+				jQuery.getScript(jsHost + document.location.hostname + "/portapp/assets/plugins/elrte/js/i18n/elrte.tr.js");
+				jQuery.getScript(jsHost + document.location.hostname + "/portapp/assets/plugins/elfinder/js/i18n/elfinder.tr.js");
+			}
+			jQuery.getScript(jsHost + document.location.hostname + "/portapp/assets/plugins/elfinder/js/elfinder.min.js");
+			jQuery.getScript(jsHost + document.location.hostname + "/portapp/assets/plugins/elrte/js/elrte.min.js", function() {
+				try {
+					var opts = {
+							cssClass : 'el-rte',
+							lang     : language,
+							height   : 450,
+							toolbar  : 'complete',
+							//cssfiles : ['css/elrte-inner.css'],
+							fmOpen   : function(callback) {
+								$('<div id="myelfinder"></div>').elfinder({
+									url : jsHost + document.location.hostname + "/portapp/assets/plugins/elfinder/connectors/php/connector.php",
+									lang : language	,
+									dialog : { width : 900, modal : true, title : 'Files' }, // open in dialog
+									closeOnEditorCallback : true, // close elFinder after file select
+									editorCallback : callback // pass callback to editor
+								});
+							}
+						};
+					$wysiwyg.elrte(opts);
+				} catch (err) {
+					console.log(err);
+				}
+			});
+		}
 	}
 	
 	var editable = $('.editable');

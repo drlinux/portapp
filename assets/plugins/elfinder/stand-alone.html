@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>elFinder</title>
+
+<!-- jQuery -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<!-- jQuery UI -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/jquery-ui.min.js"></script>
+<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/base/jquery-ui.css" rel="stylesheet"/>
+<!-- <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/smoothness/jquery-ui.css" rel="stylesheet"/> -->	
+
+<!--
+<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>
+-->
+<link rel="stylesheet" href="css/elfinder.css" type="text/css" media="screen" title="no title" charset="utf-8">
+<script src="js/elfinder.min.js" type="text/javascript" charset="utf-8"></script>
+<!--
+<script src="js/i18n/elfinder.ru.js" type="text/javascript" charset="utf-8"></script>
+-->
+
+
+<script type="text/javascript" charset="utf-8">
+$().ready(function() {
+    var count = 0;
+
+    $('#addmore').click(function() {
+        count += 1;
+        $('#fields').append('img#'+count+'<input id="img_'+count+'" type="text" value="" > <a class="browse">Browse</a><br>');
+    });
+
+    $('.browse').live('click', function() {
+        var input = $(this).prev('input');
+        window.console.log(input);
+
+        $('<div/>').elfinder({
+            url : 'connectors/php/connector.php',
+            lang : 'ru',
+            docked : false,
+            editorCallback : function(url) {
+                window.console.log(url);
+                input.val(url);
+            },
+            closeOnEditorCallback : true,
+            dialog : {
+                title : 'File manager',
+                height : 500,
+                modal: true
+            }
+        });
+    });
+
+});
+</script>
+
+</head>
+<body>
+
+
+<div id="fields"></div>
+<input type="button" id="addmore" value="Add more" />
+
+
+</body>
+</html>
