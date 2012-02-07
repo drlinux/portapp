@@ -34,128 +34,202 @@ switch($_action)
 		}
 		elseif ($aPayment["paymentgroup"]["paymentgroupType"] == "cc")
 		{
-			
-			$XML_SERVICE_URL		= $aPayment["paymentgroup"]["paymentgroupGate1"];
-			
-			$mid					= $aPayment["paymentgroup"]["paymentgroupMid"];
-			$tid					= $aPayment["paymentgroup"]["paymentgroupTid"];
-			$amount					= $_POST["amount"] * 100;//tutar*100 - Alışveriş tutarı (14,8 TL için 1480 giriniz.)
-			$ccno					= $_POST["ccno"];
-			$cvc					= $_POST["cvc"];
-			$expDate				= substr($_POST["expDate"]["Date_Year"], -2) . $_POST["expDate"]["Date_Month"];//YYMM
-			$installment			= ($_POST["installment"]==1)?"00":$_POST["installment"];//Taksit sayisi (taksitsiz işlemlerde taksit sayısı "00" gönderilmelidir)
-			
-			if ( $aPayment["paymentgroup"]["paymentgroupMethod"] == "3dpay" )
+			// Yapı Kredi Bankası
+			if ($aPayment["paymentgroup"]["bankCode"] == "0067")
 			{
-				$OOS_TDS_SERVICE_URL= $aPayment["paymentgroup"]["paymentgroupGate2"];
-				$posnetid			= $aPayment["paymentgroup"]["paymentgroupPosnetid"];
-				$cardHolderName		= $_POST["cardHolderName"];
+				$XML_SERVICE_URL		= $aPayment["paymentgroup"]["paymentgroupGate1"];
+					
+				$mid					= $aPayment["paymentgroup"]["paymentgroupMid"];
+				$tid					= $aPayment["paymentgroup"]["paymentgroupTid"];
 				
-				$XID				= 'CC_00000'.date("ymdHis");//YKB_0000080603143050
-				
-				$ykb = new YKB();
-				$ykb->XML_SERVICE_URL = $XML_SERVICE_URL;
-				$ykb->mid = $mid;
-				$ykb->tid = $tid;
-				$ykb->amount = $amount;
-				$ykb->ccno = $ccno;
-				$ykb->cvc = $cvc;
-				$ykb->expDate = $expDate;
-				$ykb->installment = $installment;
-				$ykb->XID = $XID;
-				
-				$ykb->OOS_TDS_SERVICE_URL = $OOS_TDS_SERVICE_URL;
-				$ykb->posnetid = $posnetid;
-				$ykb->cardHolderName = $cardHolderName;
-				
-				$result = $ykb->init_curl($ykb->tds_xmldata1());
-				
-				// HTML Output
-				//echo(HtmlEntities($result));exit;
-				
-				// XML Parse
-				$Root = new SimpleXMLElement($result);
-				if ( $Root->approved == 1 )
+				$amount					= $_POST["amount"] * 100;//tutar*100 - Alışveriş tutarı (14,8 TL için 1480 giriniz.)
+				$ccno					= $_POST["ccno"];
+				$cvc					= $_POST["cvc"];
+				$expDateYear			= substr($_POST["expDate"]["Date_Year"], -2);
+				$expDateMonth			= $_POST["expDate"]["Date_Month"];
+				$expDate				= $expDateYear.$expDateMonth;//YYMM
+				$installment			= ($_POST["installment"]==1)?"00":$_POST["installment"];//Taksit sayisi (taksitsiz işlemlerde taksit sayısı "00" gönderilmelidir)
+					
+				if ( $aPayment["paymentgroup"]["paymentgroupMethod"] == "3dpay" )
 				{
-					/*
-					$data["response"] = array(
-					"approved"=>$Root->approved,
-					"msg"=>"3D Secure için bankaya yönlendirileceksiniz."
-					);
-					*/
-					
-					$data["OOS_TDS_SERVICE_URL"] = $OOS_TDS_SERVICE_URL;
-					$data["mid"] = $mid;
-					$data["posnetid"] = $posnetid;
-					$data["posnetData"] = $Root->oosRequestDataResponse->data1;
-					$data["posnetData2"] = $Root->oosRequestDataResponse->data2;
-					$data["digest"] = $Root->oosRequestDataResponse->sign;
-					$data["vftCode"] = "";
-					$data["merchantReturnURL"] = $project['url'] . "modules/b2c/productorder_provision-tds.php";
-					
-					$model->displayTemplate("b2c", $model->sTable."_cc_provision", $data);
+					$OOS_TDS_SERVICE_URL= $aPayment["paymentgroup"]["paymentgroupGate2"];
+					$posnetid			= $aPayment["paymentgroup"]["paymentgroupPosnetid"];
+					$cardHolderName		= $_POST["cardHolderName"];
+				
+					$XID				= 'CC_00000'.date("ymdHis");//YKB_0000080603143050
+				
+					$ykb = new YKB();
+					$ykb->XML_SERVICE_URL = $XML_SERVICE_URL;
+					$ykb->mid = $mid;
+					$ykb->tid = $tid;
+					$ykb->amount = $amount;
+					$ykb->ccno = $ccno;
+					$ykb->cvc = $cvc;
+					$ykb->expDate = $expDate;
+					$ykb->installment = $installment;
+					$ykb->XID = $XID;
+				
+					$ykb->OOS_TDS_SERVICE_URL = $OOS_TDS_SERVICE_URL;
+					$ykb->posnetid = $posnetid;
+					$ykb->cardHolderName = $cardHolderName;
+				
+					$result = $ykb->init_curl($ykb->tds_xmldata1());
+				
+					// HTML Output
+					//echo(HtmlEntities($result));exit;
+				
+					// XML Parse
+					$Root = new SimpleXMLElement($result);
+					if ( $Root->approved == 1 )
+					{
+						/*
+						 $data["response"] = array(
+						"approved"=>$Root->approved,
+						"msg"=>"3D Secure için bankaya yönlendirileceksiniz."
+						);
+						*/
+							
+						$data["OOS_TDS_SERVICE_URL"] = $OOS_TDS_SERVICE_URL;
+						$data["mid"] = $mid;
+						$data["posnetid"] = $posnetid;
+						$data["posnetData"] = $Root->oosRequestDataResponse->data1;
+						$data["posnetData2"] = $Root->oosRequestDataResponse->data2;
+						$data["digest"] = $Root->oosRequestDataResponse->sign;
+						$data["vftCode"] = "";
+						$data["merchantReturnURL"] = $project['url'] . "modules/b2c/productorder_provision-tds.php";
+							
+						$model->displayTemplate("b2c", $model->sTable."_cc_provision", $data);
+					}
+					else
+					{
+						$data["response"] = array(
+							"approved"=>$Root->approved,
+							"respCode"=>$Root->respCode,
+							"respText"=>$Root->respText,
+							"yourIP"=>$Root->yourIP,
+							"msg"=>"Kart bilgileri hatalı"
+						);
+						echo "3D Güvenlik için bankaya yönlendirilemiyorsunuz." . "<br/>";
+						echo "Hata Kodu: " . $Root->respCode . "<br/>";
+						echo "Hata: " . $Root->respText . "<br/>";
+						exit;
+					}
+				
 				}
 				else
 				{
-					$data["response"] = array(
-						"approved"=>$Root->approved,
-						"respCode"=>$Root->respCode,
-						"respText"=>$Root->respText,
-						"yourIP"=>$Root->yourIP,
-						"msg"=>"Kart bilgileri hatalı"
-					);
-					echo "3D Güvenlik için bankaya yönlendirilemiyorsunuz." . "<br/>";
-					echo "Hata Kodu: " . $Root->respCode . "<br/>";
-					echo "Hata: " . $Root->respText . "<br/>";
-					exit;
-				}
+					$XID				= 'CC_000000000'.date("ymdHis");
 				
+					$ykb = new YKB();
+					$ykb->XML_SERVICE_URL = $XML_SERVICE_URL;
+					$ykb->mid = $mid;
+					$ykb->tid = $tid;
+					$ykb->amount = $amount;
+					$ykb->ccno = $ccno;
+					$ykb->cvc = $cvc;
+					$ykb->expDate = $expDate;
+					$ykb->installment = $installment;
+					$ykb->XID = $XID;
+				
+					$result = $ykb->init_curl($ykb->notds_xmldata1());
+				
+					// HTML Output
+					//echo(HtmlEntities($result));exit;
+						
+					// XML Parse
+					$Root = new SimpleXMLElement($result);
+					if ( $Root->approved == 1 )
+					{
+						$productorderId = $model->saveProductorder($XID, $smarty->getVariable("_PRODUCTORDER_INITIALSTATUS_CC"));
+				
+						header("Location: " . $project['url'] . "modules/b2c/productorder.php?action=showProductorder&productorderId=" . $productorderId);exit;
+						//echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));
+						exit;
+				
+					}
+					else {
+						$data["response"] = array(
+							"approved"=>$Root->approved,
+							"respCode"=>$Root->respCode,
+							"respText"=>$Root->respText,
+							"yourIP"=>$Root->yourIP
+						);
+						echo "Ödeme tamamlanamadı." . "<br/>";
+						echo "Hata Kodu: " . $Root->respCode . "<br/>";
+						echo "Hata: " . $Root->respText . "<br/>";
+						exit;
+					}
+				}
 			}
-			else
+			// Garanti Bankası
+			elseif ($aPayment["paymentgroup"]["bankCode"] == "0062")
 			{
-				$XID				= 'CC_000000000'.date("ymdHis");
+				$mid					= $aPayment["paymentgroup"]["paymentgroupMid"];
+				$tid					= $aPayment["paymentgroup"]["paymentgroupTid"];
 				
-				$ykb = new YKB();
-				$ykb->XML_SERVICE_URL = $XML_SERVICE_URL;
-				$ykb->mid = $mid;
-				$ykb->tid = $tid;
-				$ykb->amount = $amount;
-				$ykb->ccno = $ccno;
-				$ykb->cvc = $cvc;
-				$ykb->expDate = $expDate;
-				$ykb->installment = $installment;
-				$ykb->XID = $XID;
+				$amount					= $_POST["amount"] * 100;//tutar*100 - Alışveriş tutarı (14,8 TL için 1480 giriniz.)
+				$ccno					= $_POST["ccno"];
+				$cvc					= $_POST["cvc"];
+				$expDateYear			= substr($_POST["expDate"]["Date_Year"], -2);
+				$expDateMonth			= $_POST["expDate"]["Date_Month"];
+				$installment			= ($_POST["installment"]==1)?"":$_POST["installment"];//Taksit sayisi (taksitsiz işlemlerde taksit sayısı boş gönderilmelidir)
 				
-				$result = $ykb->init_curl($ykb->notds_xmldata1());
 				
-				// HTML Output
-				//echo(HtmlEntities($result));exit;
-					
-				// XML Parse
-				$Root = new SimpleXMLElement($result);
-				if ( $Root->approved == 1 )
+				
+				if ( $aPayment["paymentgroup"]["paymentgroupMethod"] == "3dpay" )
 				{
-					$productorderId = $model->saveProductorder($XID, $smarty->getVariable("_PRODUCTORDER_INITIALSTATUS_CC"));
-				
-					header("Location: " . $project['url'] . "modules/b2c/productorder.php?action=showProductorder&productorderId=" . $productorderId);exit;
-					//echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));
-					exit;
-				
-				}
-				else {
-					$data["response"] = array(
-								"approved"=>$Root->approved,
-								"respCode"=>$Root->respCode,
-								"respText"=>$Root->respText,
-								"yourIP"=>$Root->yourIP
-					);
-					echo "Ödeme tamamlanamadı." . "<br/>";
-					echo "Hata Kodu: " . $Root->respCode . "<br/>";
-					echo "Hata: " . $Root->respText . "<br/>";
-					exit;
+					
+					$OOS_TDS_SERVICE_URL= $aPayment["paymentgroup"]["paymentgroupGate2"];
+					
+					$XID				= 'CC_00000'.date("ymdHis");
+					
+					
+					$garanti = new Garanti();
+					$garanti->OOS_TDS_SERVICE_URL = $OOS_TDS_SERVICE_URL;
+					$garanti->cardnumber = $ccno;
+					$garanti->cardexpiredatemonth = $expDateMonth;
+					$garanti->cardexpiredateyear = $expDateYear;
+					$garanti->cardcvv2 = $cvc;
+					
+					$garanti->terminalmerchantid = $mid;
+					$garanti->txnamount = $amount;
+					$garanti->txninstallmentcount = $installment;
+					$garanti->orderid = $XID;
+					$garanti->setTerminalid($tid);
+					
+					$garanti->successurl = "https://www.bedenozgurlugu.com/portapp/_test/vpos/garanti/3DPayResults.php";
+					$garanti->errorurl = "https://www.bedenozgurlugu.com/portapp/_test/vpos/garanti/3DPayResults.php";
+					
+					$garanti->customeripaddress = $_SERVER['REMOTE_ADDR'];
+					$garanti->customeremailaddress = "cem@casict.com";
+					
+					$garanti->storeKey = "Z1q2w3e4r";
+					$garanti->provisionPassword = "BO1q2w3e4r";
+					
+					//$result = $garanti->test();exit;
+					//$result = $garanti->init_curl();
+					$result = $garanti->init_curl($garanti->tds_data());
+					
+					// HTML Output
+					//echo(HtmlEntities($result));exit;
+					
 				}
 			}
-			
+			// Akbank
+			elseif ($aPayment["paymentgroup"]["bankCode"] == "0046")
+			{
+				if ( $aPayment["paymentgroup"]["paymentgroupMethod"] == "3dpay" )
+				{
+					$OOS_TDS_SERVICE_URL= $aPayment["paymentgroup"]["paymentgroupGate2"];
+					
+					
+					$akbank = new Akbank();
+					$akbank->OOS_TDS_SERVICE_URL = $OOS_TDS_SERVICE_URL;
+					
+					
+					
+				}
+			}
 		}
 		break;
 	
