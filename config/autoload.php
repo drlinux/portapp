@@ -55,6 +55,7 @@ require(dirname(__FILE__) . '/../classes/model/Transportation.php');
 require(dirname(__FILE__) . '/../classes/model/User.php');
 require(dirname(__FILE__) . '/../classes/model/Userticket.php');
 require(dirname(__FILE__) . '/../classes/model/Usertrack.php');
+require(dirname(__FILE__) . '/../classes/model/Voucher.php');
 require(dirname(__FILE__) . '/../classes/model/Warranty.php');
 
 

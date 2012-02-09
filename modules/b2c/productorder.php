@@ -260,10 +260,12 @@ switch($_action)
 		break;
 		
 	case 'setParameters':
+		$voucherCode = $_REQUEST["voucherCode"];
 		$paymentId = $_REQUEST["paymentId"];
 		$transportationId = $_REQUEST["transportationId"];
 		$deliveryaddressId = $_REQUEST["deliveryaddressId"];
 		$invoiceaddressId = $_REQUEST["invoiceaddressId"];
+		$_SESSION["voucherCode"] = $voucherCode;
 		$_SESSION["paymentId"] = $paymentId;
 		$_SESSION["transportationId"] = $transportationId;
 		$_SESSION["deliveryaddressId"] = $deliveryaddressId;
@@ -273,19 +275,26 @@ switch($_action)
 		
 	case 'view':
 	default:
+		$voucherCode = $_SESSION["voucherCode"];
 		$paymentId = $_SESSION["paymentId"];
 		$transportationId = $_SESSION["transportationId"];
 		$deliveryaddressId = $_SESSION["deliveryaddressId"];
 		$invoiceaddressId = $_SESSION["invoiceaddressId"];
 		
-		$payment = new Payment;
+		$voucher = new Voucher();
+		$data["voucher"] = $voucher->getVoucherByVoucherCode($voucherCode);
+		$voucherDiscountRate = $data["voucher"]["voucherDiscountRate"];
+		$voucherDiscountPrice = $data["voucher"]["voucherDiscountPrice"];
+		//print_r($data);exit;
+		
+		$payment = new Payment();
 		$data["payment"] = $payment->getPayment($paymentId);
 		//print_r($data);exit;
 		
-		$transportation = new Transportation;
+		$transportation = new Transportation();
 		$data["transportation"] = $transportation->getTransportation($transportationId);
 
-		$productattribute = new Productattribute;
+		$productattribute = new Productattribute();
 		$data["productattributebasket"] = $productattribute->getProductattributesFromBasket();
 		if (!$data["productattributebasket"]) header("Location: " . _MODULE_DIR_ . "b2c/");
 		//print_r($data);exit;
@@ -296,8 +305,22 @@ switch($_action)
 		$paymentimpactDiscountRate = $data["payment"]["paymentimpactDiscountRate"];
 		$paymentimpactDiscountPrice = $data["payment"]["paymentimpactDiscountPrice"];
 		
+		$total = $productattributebasketTotal;
+		
+		$currency = new Currency;
+		
+		//voucher
+		$voucherDiscount = number_format(- $total * $voucherDiscountRate + $voucherDiscountPrice, 2);
+		$data["voucherDiscountCur"] = $currency->formatWithCurrency($voucherDiscount);
+		$total = $total + $voucherDiscount;
+		
+		//paymentimpact
+		$paymentimpact = number_format($total * $paymentimpactWeightRate + $paymentimpactWeightPrice - $total * $paymentimpactDiscountRate - $paymentimpactDiscountPrice, 2);
+		$data["paymentimpactCur"] = $currency->formatWithCurrency($paymentimpact);
+		$total = $total + $paymentimpact;
+		
+		//installment
 		$paymentPeriod = intval($data["payment"]["paymentPeriod"]);
-		$total = $productattributebasketTotal + $productattributebasketTotal * $paymentimpactWeightRate + $paymentimpactWeightPrice - $productattributebasketTotal * $paymentimpactDiscountRate - $paymentimpactDiscountPrice;
 		$installment = ($total/$paymentPeriod);
 
 		//$transportationimpactWeight = $data["transportation"]["transportationimpactWeight"];
@@ -306,7 +329,6 @@ switch($_action)
 		$amount = number_format($total + $data["transportation"]["transportationPrice"], 2);
 		
 		$data["amountReal"] = $amount;
-		$currency = new Currency;
 		$data["amountRealWC"] = $currency->formatWithCurrency($amount);
 
 		$postaladdress = new Postaladdress;

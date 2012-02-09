@@ -1,8 +1,11 @@
 <?php
 class CasString
 {
-
-	function randomStringGenerator($length=10){
+	function randomUniqueString($length=10) {
+		return strtoupper(substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $length));
+	}
+	
+	function randomStringGenerator($length=10) {
 		$pattern = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 		for($i=0; $i<$length; $i++){
 			$s .= $pattern{rand(0,strlen($pattern)-1)};
@@ -10,7 +13,7 @@ class CasString
 		return $s;
 	}
 
-	function randomColorGenerator(){
+	function randomColorGenerator() {
 		global $red, $green, $blue, $color;
 		$color = array(rand(50,255), rand(50,255), rand(50,255)); //generates random RGB color;
 		$red = $color[1]; //red value;

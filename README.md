@@ -18,6 +18,7 @@ Feature Overview
 #### Content Management
 * Sınırsız içerik sayfası oluşturma
 * Sayfaları birbirine bağlayarak ağaç yapısı oluşturma
+* HTML Düzenleyici
 
 #### Category Management
 * Sınırsız kategori tanımlama ve kategori resmi ekleme
@@ -67,6 +68,7 @@ Feature Overview
 * Ürün özelliklerine göre fiyatlandırma
 * İstek Listesi
 * En çok ziyaret edilen ürünler
+* Hediye Çeki
 
 [soon]
 * Cari tanımları 
@@ -135,4 +137,3 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-

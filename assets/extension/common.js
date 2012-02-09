@@ -79,6 +79,8 @@ function startDefault()
 	Attributeimpact = new Attributeimpact();
 	Attributeimpact.getAttributeimpactByProductId();
 	
+	Voucher = new Voucher(); 
+	
 	$(document).bind("onMenuLoaded",function(){
 		var currentLink = window.location.href;
 		
@@ -1110,6 +1112,8 @@ function Transportation()
 		}
 		else {
 			CommonItems.casDialog("Giriş yapmalısınız");
+			//window.location.replace( CommonItems.getLocation() + 'index.php?action=login&uri=' + window.location.href );
+			// TODO: login formunu popup şeklinde göster
 		}
 		
 		return false;
@@ -1190,6 +1194,43 @@ function Page()
 	var Obj = new Object();
 	Obj.getPage = getPage;
 	Obj.getPageProducts = getPageProducts;
+	return Obj;
+}
+
+function Voucher()
+{
+	var getVoucherByVoucherCode = function (voucherCode)
+	{
+		var op = '';
+		$.ajax({
+			url: CommonItems.getLocation() + 'sales.php',
+			dataType: 'json',
+			async: false,
+			type: 'get',
+			data: ({ action: 'jsonVoucherByVoucherCode', voucherCode: voucherCode }),
+			success: function(response) {
+				//console.log(response);
+				op = response;
+			}
+		});
+		return op;
+	};
+	
+	var setVoucherDiscount = function (voucherCode, target, productattributebasketTotal)
+	{
+		var voucher = getVoucherByVoucherCode(voucherCode);
+		if (voucher == null) {
+			$(target).html(productattributebasketTotal);
+		}
+		else {
+			var priceAfterVoucherDiscount = (productattributebasketTotal - productattributebasketTotal * voucher.voucherDiscountRate - voucher.voucherDiscountPrice).toFixed(2);
+			$(target).html(priceAfterVoucherDiscount);
+			//Productattribute.getPaymentgroups(priceAfterVoucherDiscount);
+		}
+	};
+
+	var Obj = new Object();
+	Obj.setVoucherDiscount = setVoucherDiscount;
 	return Obj;
 }
 
@@ -1502,29 +1543,48 @@ function Productattribute()
 							items.push('</td>');
 							items.push('</tr>');
 						});
+						
 						items.push('</tbody>');
 						items.push('<tfoot>');
+						
 						items.push('<tr>');
 						items.push('<td style="width:95px;"></td>');
 						items.push('<td style="width:103px;"><span>Sepet Toplamı</span></td>');
 						items.push('<td style="width:218px;">'+response.productattributebasketQuantityTotal+'</td>');
 						items.push('<td style="width:85px; "></td>');
 						items.push('<td style="width:48px; ">');
-						
 						items.push('</td>');
 						items.push('<td style="width:91px; ">');
 						items.push('<div class="totalCostInfo">');
-						items.push('<label>'+response.productattributebasketTotalCur+'</label>');
+						items.push('<label>'+response.productattributebasketTotal+'</label>');
 						items.push('</div>');
 						items.push('</td>');
 						items.push('</tr>');
+						
+						items.push('<tr>');
+						items.push('<td style="width:95px;"></td>');
+						items.push('<td style="width:103px;"><span>Hediye Çeki</span></td>');
+						items.push('<td style="width:218px;">');
+						items.push('<input type="text" name="voucherCode" onkeyup="Voucher.setVoucherDiscount(this.value, \'#productattributebasketTotalCur_afterVoucherCode\', '+response.productattributebasketTotal+');" />');
+						items.push('</td>');
+						items.push('<td style="width:85px; "></td>');
+						items.push('<td style="width:48px; "></td>');
+						items.push('<td style="width:91px; ">');
+						items.push('<div class="totalCostInfo">');
+						items.push('<label id="productattributebasketTotalCur_afterVoucherCode">'+response.productattributebasketTotal+'</label>');
+						items.push('</div>');
+						items.push('</td>');
+						items.push('</tr>');
+						
 						items.push('<tr>');
 						items.push('<td colspan="6">');
 						items.push('<span class="buttonset fr">');
-						items.push('<a href="javascript:void(0);" onclick="Productattribute.getPaymentgroups('+response.productattributebasketTotal+');">Sonraki Adım &raquo;</a>');
+						//items.push('<a href="javascript:void(0);" onclick="Productattribute.getPaymentgroups('+response.productattributebasketTotal+');">Sonraki Adım &raquo;</a>');
+						items.push('<a href="javascript:void(0);" onclick="Productattribute.getPaymentgroups($(\'#productattributebasketTotalCur_afterVoucherCode\').html());">Sonraki Adım &raquo;</a>');
 						items.push('</span>');
 						items.push('</td>');
 						items.push('</tr>');
+						
 						items.push('</tfoot>');
 						$('<table/>', {
 							'id' : 'productBigBasketOuter',
@@ -1617,6 +1677,7 @@ function Productattribute()
 	
 	var getPaymentgroups = function (price)
 	{
+		price = Number(price);
 		$('#divTotalCostInfo').hide();
 		var $target = $('#divAlertPaymentgroup');
 		$.ajax({

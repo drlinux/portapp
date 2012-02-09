@@ -5,9 +5,10 @@
 	<p><b>Teslimat Adresi:</b> {$data.deliveryaddress.postaladdressContent}, {$data.deliveryaddress.postaladdressCity}, {$data.deliveryaddress.postaladdressCounty}, {$data.deliveryaddress.postaladdressPostalcode}, {$data.deliveryaddress.postaladdressCountry}</p>
 	<p><b>Fatura Adresi:</b> {$data.invoiceaddress.postaladdressContent}, {$data.invoiceaddress.postaladdressCity}, {$data.invoiceaddress.postaladdressCounty}, {$data.invoiceaddress.postaladdressPostalcode}, {$data.invoiceaddress.postaladdressCountry}</p>
 	<p><b>Sipariş Tutarı:</b> {$data.productattributebasket.productattributebasketTotalCur}</p>
+	<p><b>Hediye Çeki:</b> {$data.voucher.voucherCode} ({$data.voucherDiscountCur})</p>
+	<p><b>Taksit Sayısı:</b> {$data.payment.paymentTitle} ({$data.paymentimpactCur})</p>
 	<p><b>Taşıma:</b> {$data.transportation.transportationTitle} ({$data.transportation.transportationPriceCur})</p>
 	<p><b>Toplam Tutar:</b> {$data.amountRealWC}</p>
-	<p><b>Taksit Sayısı:</b> {$data.payment.paymentTitle}</p>
 </div>
 
 <div class="casContent">

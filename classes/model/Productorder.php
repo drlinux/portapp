@@ -21,10 +21,11 @@ class Productorder extends CasBase
 	{
 		global $smarty;
 		
-		$paymentId = $_SESSION["paymentId"];
-		$transportationId = $_SESSION["transportationId"];
-		$deliveryaddressId = $_SESSION["deliveryaddressId"];
-		$invoiceaddressId = $_SESSION["invoiceaddressId"];
+		$voucherCode		= $_SESSION["voucherCode"];
+		$paymentId			= $_SESSION["paymentId"];
+		$transportationId	= $_SESSION["transportationId"];
+		$deliveryaddressId	= $_SESSION["deliveryaddressId"];
+		$invoiceaddressId	= $_SESSION["invoiceaddressId"];
 		
 		$productattribute = new Productattribute;
 		$aProductattribute = $productattribute->getProductattributesFromBasket();
@@ -47,9 +48,11 @@ class Productorder extends CasBase
 				"paymentId"=>$paymentId,
 				"transportationId"=>$transportationId,
 				"deliveryaddressId"=>$deliveryaddressId,
-				"invoiceaddressId"=>$invoiceaddressId
+				"invoiceaddressId"=>$invoiceaddressId,
+				"voucherCode"=>$voucherCode
 			)
 		);
+		unset($_SESSION["voucherCode"]);
 		unset($_SESSION["paymentId"]);
 		unset($_SESSION["transportationId"]);
 		unset($_SESSION["deliveryaddressId"]);

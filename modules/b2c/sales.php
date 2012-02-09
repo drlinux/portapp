@@ -7,6 +7,12 @@ $model = new Productsalesmovement;
 
 switch($_action)
 {
+	case 'jsonVoucherByVoucherCode':
+		$voucherCode = $_GET["voucherCode"];
+		$voucher = new Voucher();
+		$data = $voucher->getVoucherByVoucherCode($voucherCode);
+		echo(json_encode($data));
+		break;
 	case 'jsonPaymentgroup':
 		$paymentgroup = new Paymentgroup;
 		echo(json_encode($paymentgroup->getPaymentgroup($_GET[$paymentgroup->sIndexColumn])));
