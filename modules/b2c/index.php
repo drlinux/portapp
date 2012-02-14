@@ -57,18 +57,21 @@ switch($_action)
 		
 
 	case 'jsonBanners':
-		$banner = new Banner;
+		$banner = new Banner();
 		echo(json_encode($banner->getBanners()));
 		break;
 	case 'jsonBrandsFromProductHavingPicture':
-		$brand = new Brand;
+		$brand = new Brand();
 		echo(json_encode($brand->getBrandsFromProductHavingPicture()));
 		break;
 	case 'jsonCategoriesFromProductHavingPicture':
-		$category = new Category;
+		$category = new Category();
 		echo(json_encode($category->getCategoriesFromProductHavingPicture()));
 		break;
-		
+	case 'jsonAttributegroupsWithAttributes':
+		$attributegroup = new Attributegroup();
+		echo(json_encode($attributegroup->getAttributegroupsWithAttributes()));
+		break;
 		
 		
 		

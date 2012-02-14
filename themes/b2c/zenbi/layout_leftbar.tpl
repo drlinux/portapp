@@ -62,6 +62,16 @@
 	</div>
 	
 	<div class="subMenuOuter">
+		<h2 class="top">DETAYLI ARAMA</h2>
+		<div class="center">
+			<ul class="linkList" cas-js="getAttributegroupsWithAttributes" cas:url="modules/b2c/index.php?action=jsonAttributegroupsWithAttributes">
+				<li><a href="modules/b2c/category.php?action=show&categoryId=%s">%s</a></li>
+			</ul>		
+		</div>
+		<div class="bottom"></div>
+	</div>
+	
+	<div class="subMenuOuter">
 		<h2 class="top">KATEGORİLER</h2>
 		<div class="center">
 			<ul class="linkList" cas-js="getCategoriesFromProductHavingPicture" cas:url="modules/b2c/index.php?action=jsonCategoriesFromProductHavingPicture">

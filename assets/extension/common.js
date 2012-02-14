@@ -76,6 +76,9 @@ function startDefault()
 	Productimpact = new Productimpact();
 	Productimpact.getProductimpactByProductId();
 	
+	Attributegroup = new Attributegroup();
+	Attributegroup.getAttributegroupsWithAttributes();
+	
 	Attributeimpact = new Attributeimpact();
 	Attributeimpact.getAttributeimpactByProductId();
 	
@@ -3150,8 +3153,6 @@ function Banner()
 
 function Brand()
 {
-	var Obj = new Object();
-	
 	var getBrandsFromProductHavingPicture = function ()
 	{
 		var $target = $('ul[cas-js=getBrandsFromProductHavingPicture]');
@@ -3170,14 +3171,13 @@ function Brand()
 		}
 	};
 
+	var Obj = new Object();
 	Obj.getBrandsFromProductHavingPicture = getBrandsFromProductHavingPicture;
 	return Obj;
 }
 
 function Category()
 {
-	var Obj = new Object();
-	
 	var getCategoriesFromProductHavingPicture = function ()
 	{
 		var $target = $('ul[cas-js=getCategoriesFromProductHavingPicture]');
@@ -3196,10 +3196,43 @@ function Category()
 		}
 	};
 
+	var Obj = new Object();
 	Obj.getCategoriesFromProductHavingPicture = getCategoriesFromProductHavingPicture;
 	return Obj;
 }
 
+function Attributegroup()
+{
+	var getAttributegroupsWithAttributes = function ()
+	{
+		var $target = $('ul[cas-js=getAttributegroupsWithAttributes]');
+		if ($target.length) {
+			var url = $target.attr("cas:url");
+			$target.html('');
+			
+			$.getJSON(url, function(response) {
+				var items = [];
+				$.each(response.aaData, function(key1, attributegroup) {
+					items.push('<li>');
+					items.push('<strong>'+attributegroup.attributegroupTitle+'</strong>');
+					items.push('<ul>');
+					$.each(attributegroup.attribute.aaData, function(key2, attribute) {
+						items.push('<li>');
+						items.push('<a href="'+CommonItems.getLocation()+'search.php?attribute='+attribute.attributeId+'">'+attribute.attributeTitle+'</a>');
+						items.push('</li>');
+					});
+					items.push('</ul>');
+					items.push('</li>');
+				});
+				$target.html(items.join(''));
+			});
+		}
+	};
+
+	var Obj = new Object();
+	Obj.getAttributegroupsWithAttributes = getAttributegroupsWithAttributes;
+	return Obj;
+}
 
 function Survey()
 {
