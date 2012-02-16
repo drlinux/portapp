@@ -3091,20 +3091,18 @@ function Banner()
 		jQuery.getCss(jsHost + document.location.hostname + "/portapp/assets/plugins/nivo-slider/nivo-slider.css");
 		jQuery.getScript(jsHost + document.location.hostname + "/portapp/assets/plugins/nivo-slider/jquery.nivo.slider.pack.js", function() {
 			try {
-				//var pageTracker = _gat._getTracker(code);
-				//pageTracker._trackPageview();
+				if (theme == "theme-default") {
+					jQuery.getCss(jsHost + document.location.hostname + "/portapp/assets/plugins/nivo-slider/themes/default/default.css");
+				}
+				else if (theme == "theme-pascal") {
+					jQuery.getCss(jsHost + document.location.hostname + "/portapp/assets/plugins/nivo-slider/themes/pascal/pascal.css");
+				}
+				else if (theme == "theme-orman") {
+					jQuery.getCss(jsHost + document.location.hostname + "/portapp/assets/plugins/nivo-slider/themes/orman/orman.css");
+				}
 			} catch (err) {
 			}
 		});
-		if (theme == "theme-default") {
-			jQuery.getCss(jsHost + document.location.hostname + "/portapp/assets/plugins/nivo-slider/themes/default/default.css");
-		}
-		else if (theme == "theme-pascal") {
-			jQuery.getCss(jsHost + document.location.hostname + "/portapp/assets/plugins/nivo-slider/themes/pascal/pascal.css");
-		}
-		else if (theme == "theme-orman") {
-			jQuery.getCss(jsHost + document.location.hostname + "/portapp/assets/plugins/nivo-slider/themes/orman/orman.css");
-		}
 	};
 	
 	var getBanners = function ()

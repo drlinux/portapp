@@ -87,8 +87,8 @@ function GMAPHelper()
 		google.maps.event.addListener(marker, 'dragend', function(event) {
 			var point = marker.getPosition();
 			map.panTo(point);
-			$('[cas-map=latitude]').val(event.latLng.Oa);
-			$('[cas-map=longitude]').val(event.latLng.Pa);
+			$('[cas-map=latitude]').val(point.lat());
+			$('[cas-map=longitude]').val(point.lng());
 		});
 		
 		google.maps.event.addListener(map, 'zoom_changed', function() {
