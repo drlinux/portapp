@@ -15,7 +15,7 @@ class User extends CasBase
 		$this->sSortingColumn		= $this->sIndexColumn;
 		$this->sSortingColumnFull	= $this->sTable.".".$this->sSortingColumn;
 
-		$this->sTitleColumn		= $this->sTable."Title";
+		$this->sTitleColumn		= $this->sTable."Name";
 		$this->sTitleColumnFull	= $this->sTable.".".$this->sTitleColumn;
 
 	}
@@ -28,6 +28,21 @@ class User extends CasBase
 		return ($row);
 	}
 
+	function getUsers()
+	{
+		$rows = $this->select($this->sTable);
+		$arr["iTotalRecords"] = count($rows);
+		if ($arr["iTotalRecords"] > 0) {
+			$i=0;
+			foreach ($rows as $row) {
+				$arr["aaData"][$i] = $row;
+				$arr["options"][$row[$this->sIndexColumn]] = $row[$this->sTitleColumn];
+				$i++;
+			}
+		}
+		return ($arr);
+	}
+	
 	function getRoles($userId=null)
 	{
 		if ($userId == null) return null;
@@ -42,7 +57,8 @@ class User extends CasBase
 		$sql = implode(" ", $sql);
 		//echo($sql);exit;
 
-		$rows = $this->run($sql, array("iso639"=>$_SESSION["PROJECT_LANGUAGE"]));
+		//$rows = $this->run($sql, array("iso639"=>$_SESSION["PROJECT_LANGUAGE"]));
+		$rows = $this->run($sql);
 		$arr["iTotalRecords"] = count($rows);
 		$i=0;
 		foreach ($rows as $row) {

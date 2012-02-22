@@ -4089,7 +4089,7 @@ function CommonItems()
 			*/
 			checkAllText: jQuery.i18n.prop('LABEL_All'),
 			uncheckAllText: "Hiçbiri",
-			noneSelectedText: "Ürün seçimi",
+			noneSelectedText: "Seçiniz",
 			selectedText: '# seçili',
 			selectedList: 3 // 0-based index
 		}).multiselectfilter({

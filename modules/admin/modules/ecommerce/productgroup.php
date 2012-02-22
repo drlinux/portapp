@@ -47,11 +47,11 @@ switch($_action) {
 		echo $model->dataTables($aColumns, $model->sIndexColumn, $model->sTable, $_GET);
 		break;
 	case 'save':
-		$model->saveEntry($_POST, array("i18n"=>true));
-		$model->delete("productgroup_product", "productgroupId = :productgroupId", array("productgroupId"=>$_POST[$model->sIndexColumn]));
+		$productgroupId = $model->saveEntry($_POST, array("i18n"=>true));
+		$model->delete("productgroup_product", "productgroupId = :productgroupId", array("productgroupId"=>$productgroupId));
 		if (isset($_POST["productId"])) {
 			foreach ($_POST["productId"] as $productId) {
-				$model->insert("productgroup_product", array("productgroupId"=>$_POST[$model->sIndexColumn], "productId"=>$productId));
+				$model->insert("productgroup_product", array("productgroupId"=>$productgroupId, "productId"=>$productId));
 			}
 		}
 		header("Location: " . $_SERVER["PHP_SELF"]);
