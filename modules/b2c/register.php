@@ -23,6 +23,6 @@ switch($_action)
 		break;
 	case 'view':
 	default:
-		$model->displayTemplate("b2c", "register", null);
+		$model->displayTemplate("b2c", "register", $_GET);
 		break;
 }

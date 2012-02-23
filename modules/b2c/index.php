@@ -7,6 +7,15 @@ $model = new User();
 
 switch($_action)
 {
+	case 'sendRecommendation':
+		if ($model->isValidRecommendationForm($_POST)) {
+			echo(json_encode(array("success"=>$model->sendRecommendationForm($_POST), "msg"=>$model->msg, "field"=>$model->field)));
+		}
+		else {
+			echo(json_encode(array("success"=>false, "msg"=>$model->msg, "field"=>$model->field)));
+		}
+		break;
+		
 	case 'changeLanguage':
 		if(isset($_GET['language'])) {
 			$_SESSION["PROJECT_LANGUAGE"] = $_GET['language'];

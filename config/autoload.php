@@ -54,6 +54,8 @@ require(dirname(__FILE__) . '/../classes/model/Taxonomy.php');
 require(dirname(__FILE__) . '/../classes/model/Transportation.php');
 require(dirname(__FILE__) . '/../classes/model/User.php');
 require(dirname(__FILE__) . '/../classes/model/Usergroup.php');
+require(dirname(__FILE__) . '/../classes/model/Userpoint.php');
+require(dirname(__FILE__) . '/../classes/model/Userpointtype.php');
 require(dirname(__FILE__) . '/../classes/model/Userticket.php');
 require(dirname(__FILE__) . '/../classes/model/Usertrack.php');
 require(dirname(__FILE__) . '/../classes/model/Voucher.php');

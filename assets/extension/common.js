@@ -3065,6 +3065,50 @@ function User()
 		return false;
 	};
 
+	var sendRecommendation = function (form)
+	{
+		if ( User.checkAuthenticated() ) {
+			$form = $(form);
+			$form.validate({
+				submitHandler: function(f) {
+					$form.ajaxSubmit({
+						data: { action: 'sendRecommendation' },
+						dataType: 'json',
+						beforeSubmit: function(a,f,o) {
+							//console.log(a);
+							CommonItems.casLoaderShow();
+						},
+						success: function(response) {
+							//console.log(response);
+							if (response.success == true) {
+								CommonItems.casDialog(response.msg);
+							}
+							else {
+								CommonItems.casDialog(response.msg);
+							}
+						}
+					});
+				},
+				rules: {
+					userEmail: {
+						email: true,
+						required: true
+					}
+				},
+				messages: {
+					userEmail: {
+						email: jQuery.i18n.prop('ALERT_PleaseEnterAValidEmailAddress'),
+						required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
+					}
+				}
+			});
+		}
+		else {
+			CommonItems.casDialog("Giriş yapmalısınız");
+		}
+		return false;
+	};
+
 	var Obj = new Object();
 	Obj.checkAuthenticated = checkAuthenticated;
 	Obj.getLoginoutFormAndMenu = getLoginoutFormAndMenu;
@@ -3073,6 +3117,7 @@ function User()
 	Obj.updateUser = updateUser;
 	Obj.loginUser = loginUser;
 	Obj.resetUserPass = resetUserPass;
+	Obj.sendRecommendation = sendRecommendation;
 	return Obj;
 }
 

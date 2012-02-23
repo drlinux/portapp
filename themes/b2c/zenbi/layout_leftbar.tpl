@@ -62,6 +62,25 @@
 	</div>
 	
 	<div class="subMenuOuter">
+		<h2 class="top">TAVSİYE ET</h2>
+		<div class="center">
+			<form method="post" action="modules/b2c/index.php" onsubmit="return false;">
+			<ul class="ulform">
+				<li>
+					<label>Arkadaşınıza tavsiye edin, hediye puan kazanın</label>
+					<input type="text" name="userEmail" />
+				</li>
+				<li class="buttonset">
+					<button type="submit" onclick="User.sendRecommendation(this.form);">Tavsiye et</button>
+					<!-- <button type="submit" name="action" value="sendRecommendation">Tavsiye et</button> -->
+				</li>
+			</ul>
+			</form>
+		</div>
+		<div class="bottom"></div>
+	</div>
+	
+	<div class="subMenuOuter">
 		<h2 class="top">DETAYLI ARAMA</h2>
 		<div class="center">
 			<ul class="linkList" cas-js="getAttributegroupsWithAttributes" cas:url="modules/b2c/index.php?action=jsonAttributegroupsWithAttributes">

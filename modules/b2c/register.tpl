@@ -3,6 +3,10 @@
 	
 	<form method="post" action="{$SCRIPT_NAME}">
 	<ul class="ulform">
+		<li class="dn">
+			<label>friendId</label>
+			<input type="text" name="friendId" value="{$data.friendId}" />
+		</li>
 		<li>
 			<label>Adınız</label>
 			<input type="text" name="userFirstname" title="Adınızı girin" required="required" />
@@ -13,7 +17,7 @@
 		</li>
 		<li>
 			<label>E-mail Adresiniz</label>
-			<input type="email" name="userEmail" title="E-posta adresinizi girin" required="required" />
+			<input type="email" name="userEmail" title="E-posta adresinizi girin" required="required" value="{$data.userEmail}" />
 		</li>
 		<li>
 			<label>&nbsp;</label>

@@ -550,6 +550,49 @@ class User extends CasBase
 	}
 
 
+	function isValidRecommendationForm($formvars)
+	{
+		global $smarty;
+		
+		if (!CasMailer::ValidateAddress($formvars["userEmail"])) {
+			$this->msg = $smarty->getConfigVariable("ALERT_PleaseEnterAValidEmailAddress");
+			return false;
+		}
+
+		if ( $this->isExistByEmail($formvars["userEmail"]) ) {
+			$this->msg = $smarty->getConfigVariable("ALERT_ExistEmail");
+			return false;
+		}
+		
+		return true;
+
+	}
+	
+	function sendRecommendationForm($formvars)
+	{
+		global $smarty;
+		global $project;
+		
+		$u = $this->getEntry($_SESSION["userId"]);
+		$userFullname = $u["userFirstname"] . " " . $u["userLastname"];
+		
+		$link = $project['url'] . "modules/b2c/register.php?action=view&friendId=".$u["userId"]."&userEmail=" . $formvars["userEmail"];
+		
+		$mailer = new CasMailer();
+		$mailer->Subject = sprintf($smarty->getConfigVariable("MAIL_SUBJECT_USERRECOMMENDATION"), $userFullname);
+		$mailer->MsgHTML(sprintf($smarty->getConfigVariable("MAIL_BODY_USERRECOMMENDATION"), $userFullname, $link));
+		$mailer->AddAddress($formvars["userEmail"]);
+		if(!$mailer->Send()) {
+			$this->msg = $smarty->getConfigVariable("ALERT_MailerSendError");//$mailer->ErrorInfo
+			return false;
+		}
+		else {
+			$this->msg = $smarty->getConfigVariable("ALERT_MailerSendSuccessfully");
+			return true;
+		}
+		
+	}
+		
 	function isValidRegisterForm($formvars)
 	{
 		global $smarty;
@@ -609,7 +652,7 @@ class User extends CasBase
 				
 			$usertrack = new Usertrack();
 			$usertrack->addTrack(5, "userId=" . $userId);
-				
+			
 			$this->insert(
 				"user_role",
 				array(
@@ -617,6 +660,29 @@ class User extends CasBase
 					"roleId"=>$roleId
 				)
 			);
+			
+			if ( isset($formvars["friendId"]) && !empty($formvars["friendId"]) ) {
+				$this->insert(
+					"user_friends",
+					array(
+						"userId"=>$userId,
+						"friendId"=>$formvars["friendId"]
+					)
+				);
+				$this->insert(
+					"user_friends",
+					array(
+						"userId"=>$formvars["friendId"],
+						"friendId"=>$userId
+					)
+				);
+				
+				$userpoint = new Userpoint();
+				$userpoint->addUserpoint($formvars["friendId"], 4); //TODO: Tavsiye puanı
+			}
+			
+			$userpoint = new Userpoint();
+			$userpoint->addUserpoint($userId, 1); //TODO: Üyelik puanı
 			
 			$mailer = new CasMailer();
 			$mailer->Subject = $smarty->getConfigVariable("MAIL_SUBJECT_USERREGISTER");
