@@ -17,10 +17,6 @@ ini_set('upload_max_filesize', '100M');
 ini_set('default_charset', 'utf-8');
 ini_set('magic_quotes_runtime', 0);
 
-//$path = 'E:\sdk\xampp\htdocs\portapp\assets\piwik\libs\Zend';
-//set_include_path(get_include_path() . PATH_SEPARATOR . $path);
-//echo get_include_path();exit;
-
 date_default_timezone_set("Europe/Istanbul");
 //setlocale(LC_ALL, 'tr_TR.UTF-8', 'tr_TR', 'tr', 'turkish');
 set_time_limit(500);

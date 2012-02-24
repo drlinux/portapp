@@ -2,7 +2,7 @@ $(startAnalytics);
 
 function startAnalytics() {
 	setupGoogleAnalytics("UA-xxxxxx-x");
-	setupPiwikAnalytics(1);
+	//setupPiwikAnalytics(1);
 	setupSitetrack(window.location.hostname);//window.location.hostname, window.location.host, document.domain
 }
 

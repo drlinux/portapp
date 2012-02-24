@@ -1,6 +1,4 @@
 <?php
-//require(dirname(__FILE__) . '/../../assets/Piwik/libs/Zend/Db.php');
-
 /*
  * PHP PDO Wrapper Class
  * http://www.imavex.com/php-pdo-wrapper-class/
@@ -32,28 +30,6 @@ class CasDatabase
 		$port			= $smarty->getConfigVariable("port");
 		$charset		= $smarty->getConfigVariable("charset");
 		
-		/*
-		require_once dirname(__FILE__) . '/../../assets/piwik/libs/Zend/Db.php';
-		try {
-			$options = array(Zend_Db::ALLOW_SERIALIZATION => false);
-			$this->db = Zend_Db::factory($adapter, array(
-			    'host'		=> $host,
-			    'username'	=> $username,
-			    'password'	=> $password,
-			    'dbname'	=> $dbname,
-			    'options'	=> $options
-			));
-			$this->db->getConnection();
-		}
-		catch (Zend_Db_Adapter_Exception $e) {
-			// perhaps a failed login credential, or perhaps the RDBMS is
-		}
-		catch (Zend_Exception $e) {
-			// perhaps factory() failed to load the specified Adapter class
-		}
-		*/
-		
-		/**/
 		if(empty($this->pdo) || !is_a($this->pdo, 'PDO'))
 		{
 			if ($adapter == "PDO_MYSQL") {
@@ -83,7 +59,6 @@ class CasDatabase
 				trigger_error($e->getMessage(), E_USER_ERROR);
 			}
 		}
-		/**/
 		
 	}
 
