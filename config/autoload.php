@@ -10,8 +10,6 @@ require(dirname(__FILE__) . '/../classes/lib/SimpleImage.php');
 // PEAR
 //require_once('Pager.php');
 
-require(dirname(__FILE__) . '/../classes/model/Advertisement.php');
-require(dirname(__FILE__) . '/../classes/model/Advertisementgroup.php');
 require(dirname(__FILE__) . '/../classes/model/Attribute.php');
 require(dirname(__FILE__) . '/../classes/model/Attributegroup.php');
 require(dirname(__FILE__) . '/../classes/model/Attributeimpact.php');

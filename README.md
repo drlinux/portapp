@@ -1,9 +1,7 @@
 Portapp E-Commerce
 ===========================
 
-Portapp is the powerfull e-commerce solution for b2c and b2b. It is easy to add a new template
-according to your requirements. The most powerfull part of it is totally seperated html, javascript 
-and php codes from each other that makes implementations and adaptations easier.
+Portapp is the powerfull e-commerce solution for both b2c and b2b.
 
 Cross-platform Compatibility
 ----------------------------

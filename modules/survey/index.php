@@ -25,6 +25,6 @@ switch($_action)
 	case 'view':
 	default:
 		$data["surveyId"] = 2;
-		$model->displayTemplate("casict", "index", $data);
+		$model->displayTemplate("b2c", "index", $data);
 		break;
 }

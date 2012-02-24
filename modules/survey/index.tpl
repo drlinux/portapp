@@ -72,4 +72,3 @@
 			error('not supported');
 		}
 	</script>
-
