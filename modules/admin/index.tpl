@@ -1,4 +1,0 @@
-<h2>Ziyaret Bilgileri</h2>
-<div class="fl"><iframe width="500" height="291" src="assets/piwik/index.php?module=Widgetize&action=iframe&moduleToWidgetize=UserCountryMap&actionToWidgetize=worldMap&idSite=1&period=day&date=today&disableLink=1&widget=1&language=tr" scrolling="no" frameborder="0" marginheight="0" marginwidth="0"></iframe></div>
-<div class="fr"><iframe width="500" height="664" src="assets/piwik/index.php?module=Widgetize&action=iframe&moduleToWidgetize=VisitsSummary&actionToWidgetize=index&idSite=1&period=day&date=today&disableLink=1&widget=1&language=tr" scrolling="no" frameborder="0" marginheight="0" marginwidth="0"></iframe></div>
-<div class="fl"><iframe width="500" height="189" src="assets/piwik/index.php?module=Widgetize&action=iframe&moduleToWidgetize=UserCountry&actionToWidgetize=getCountry&idSite=1&period=day&date=today&disableLink=1&widget=1&language=tr" scrolling="no" frameborder="0" marginheight="0" marginwidth="0"></iframe></div>
