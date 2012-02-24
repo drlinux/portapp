@@ -8,7 +8,7 @@ class Productorder extends CasBase
 		
 		$this->sTable		= strtolower(__CLASS__);
 
-		$this->aAllField		= array("productorderId", "userId", "productorderDatetime", "paymentId", "transportationId", "deliveryaddressId", "invoiceaddressId", "creditcardId");
+		$this->aAllField		= array("productorderId", "userId", "productorderDatetime", "paymentId", "transportationId", "deliveryaddressId", "invoiceaddressId");
 		$this->sIndexColumn		= "productorderId";
 		$this->sIndexColumnFull	= $this->sTable.".".$this->sIndexColumn;
 
