@@ -1,3 +1,8 @@
 <Files "*">
 Deny from all
 </Files>
+
+<Files ~ "\.(properties)$">
+Satisfy any
+Allow from all
+</Files>
