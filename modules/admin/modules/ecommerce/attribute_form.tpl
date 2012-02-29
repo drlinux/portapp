@@ -29,7 +29,6 @@
 				<td>Renk değeri</td>
 				<td>
 					<input type="text" name="color" value="{$data.attribute.color}" />
-					<div id="farbtastic"></div>
 				</td>
 			</tr>
 			{/if}
@@ -61,9 +60,3 @@
 	</div>
 	{/if}
 </div>
-
-<script>
-$(document).ready(function() {
-	//$('#farbtastic').farbtastic('input[name=color]');
-});
-</script>

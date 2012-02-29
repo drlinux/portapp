@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__FILE__) . '/../../config/config.inc.php';
+require_once dirname(__FILE__) . '/../../classes/config.inc.php';
 
 Permission::checkPermissionRedirect("b2b");
 
@@ -197,8 +197,8 @@ switch($_action)
 					$garanti->orderid = $XID;
 					$garanti->setTerminalid($tid);
 					
-					$garanti->successurl = "https://www.bedenozgurlugu.com/portapp/_test/vpos/garanti/3DPayResults.php";
-					$garanti->errorurl = "https://www.bedenozgurlugu.com/portapp/_test/vpos/garanti/3DPayResults.php";
+					$garanti->successurl = "https://www.bedenozgurlugu.com/_test/vpos/garanti/3DPayResults.php";
+					$garanti->errorurl = "https://www.bedenozgurlugu.com/_test/vpos/garanti/3DPayResults.php";
 					
 					$garanti->customeripaddress = $_SERVER['REMOTE_ADDR'];
 					$garanti->customeremailaddress = "cem@casict.com";

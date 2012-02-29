@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 24, 2012 at 01:56 PM
+-- Generation Time: Feb 29, 2012 at 12:08 PM
 -- Server version: 5.5.16
 -- PHP Version: 5.3.8
 
@@ -1060,63 +1060,63 @@ CREATE TABLE IF NOT EXISTS `permission` (
 --
 
 INSERT INTO `permission` (`permissionId`, `permissionParent`, `permissionHref`, `permissionSorting`) VALUES
-(1, 38, '/portapp/modules/admin/index.php?action=logout', NULL),
+(1, 38, '/modules/admin/index.php?action=logout', NULL),
 (2, 38, '#', NULL),
 (3, 38, '#', NULL),
 (4, 38, '#', NULL),
 (5, 38, '#', NULL),
 (6, 38, '#', NULL),
-(7, 2, '/portapp/modules/admin/modules/page/page.php', NULL),
-(8, 3, '/portapp/modules/admin/modules/ecommerce/category.php', NULL),
-(9, 3, '/portapp/modules/admin/modules/ecommerce/brand.php', NULL),
-(10, 3, '/portapp/modules/admin/modules/ecommerce/product.php', NULL),
-(11, 3, '/portapp/modules/admin/modules/ecommerce/attributegroup.php', NULL),
-(12, 3, '/portapp/modules/admin/modules/ecommerce/productorder.php', NULL),
-(13, 3, '/portapp/modules/admin/modules/ecommerce/transportation.php', NULL),
-(14, 3, '/portapp/modules/admin/modules/ecommerce/paymentgroup.php', NULL),
-(15, 3, '/portapp/modules/admin/modules/ecommerce/currency.php', NULL),
-(16, 3, '/portapp/modules/admin/modules/ecommerce/taxonomy.php', NULL),
-(17, 4, '/portapp/modules/admin/modules/settings/iso639.php', NULL),
-(18, 4, '/portapp/modules/admin/modules/settings/banner.php', NULL),
-(19, 4, '/portapp/modules/admin/modules/settings/company.php', NULL),
-(20, 5, '/portapp/modules/admin/modules/user/user.php', NULL),
-(21, 5, '/portapp/modules/admin/modules/user/role.php', NULL),
-(22, 5, '/portapp/modules/admin/modules/user/permission.php', NULL),
-(23, 6, '/portapp/modules/admin/modules/report/usertrack.php', NULL),
-(24, 6, '/portapp/modules/admin/modules/report/userticket.php', NULL),
-(26, 3, '/portapp/modules/admin/modules/ecommerce/supplier.php', NULL),
-(27, 3, '/portapp/modules/admin/modules/ecommerce/productattribute.php', NULL),
-(28, 3, '/portapp/modules/admin/modules/ecommerce/import.php', NULL),
+(7, 2, '/modules/admin/modules/page/page.php', NULL),
+(8, 3, '/modules/admin/modules/ecommerce/category.php', NULL),
+(9, 3, '/modules/admin/modules/ecommerce/brand.php', NULL),
+(10, 3, '/modules/admin/modules/ecommerce/product.php', NULL),
+(11, 3, '/modules/admin/modules/ecommerce/attributegroup.php', NULL),
+(12, 3, '/modules/admin/modules/ecommerce/productorder.php', NULL),
+(13, 3, '/modules/admin/modules/ecommerce/transportation.php', NULL),
+(14, 3, '/modules/admin/modules/ecommerce/paymentgroup.php', NULL),
+(15, 3, '/modules/admin/modules/ecommerce/currency.php', NULL),
+(16, 3, '/modules/admin/modules/ecommerce/taxonomy.php', NULL),
+(17, 4, '/modules/admin/modules/settings/iso639.php', NULL),
+(18, 4, '/modules/admin/modules/settings/banner.php', NULL),
+(19, 4, '/modules/admin/modules/settings/company.php', NULL),
+(20, 5, '/modules/admin/modules/user/user.php', NULL),
+(21, 5, '/modules/admin/modules/user/role.php', NULL),
+(22, 5, '/modules/admin/modules/user/permission.php', NULL),
+(23, 6, '/modules/admin/modules/report/usertrack.php', NULL),
+(24, 6, '/modules/admin/modules/report/userticket.php', NULL),
+(26, 3, '/modules/admin/modules/ecommerce/supplier.php', NULL),
+(27, 3, '/modules/admin/modules/ecommerce/productattribute.php', NULL),
+(28, 3, '/modules/admin/modules/ecommerce/import.php', NULL),
 (30, NULL, '#', NULL),
-(31, 30, '/portapp/modules/b2b/index.php?action=logout', 1),
+(31, 30, '/modules/b2b/index.php?action=logout', 1),
 (32, NULL, '#', NULL),
-(33, 32, '/portapp/modules/b2c/index.php?action=logout', 1),
-(34, 32, '/portapp/modules/b2c/user.php', 2),
-(35, 32, '/portapp/modules/b2c/address.php', 3),
-(36, 32, '/portapp/modules/b2c/sales.php', 5),
-(37, 32, '/portapp/modules/b2c/productorder.php?action=listProductorder', 4),
+(33, 32, '/modules/b2c/index.php?action=logout', 1),
+(34, 32, '/modules/b2c/user.php', 2),
+(35, 32, '/modules/b2c/address.php', 3),
+(36, 32, '/modules/b2c/sales.php', 5),
+(37, 32, '/modules/b2c/productorder.php?action=listProductorder', 4),
 (38, NULL, '#', NULL),
-(39, 30, '/portapp/modules/b2b/retailer.php', 2),
-(40, 30, '/portapp/modules/b2b/user.php', 3),
-(41, 30, '/portapp/modules/b2b/salescampaign.php', 9),
-(42, 3, '/portapp/modules/admin/modules/ecommerce/salescampaign.php', NULL),
-(43, 30, '/portapp/modules/b2b/product.php', 10),
-(51, 30, '/portapp/modules/b2b/sales.php', 6),
-(52, 30, '/portapp/modules/b2b/address.php', 4),
+(39, 30, '/modules/b2b/retailer.php', 2),
+(40, 30, '/modules/b2b/user.php', 3),
+(41, 30, '/modules/b2b/salescampaign.php', 9),
+(42, 3, '/modules/admin/modules/ecommerce/salescampaign.php', NULL),
+(43, 30, '/modules/b2b/product.php', 10),
+(51, 30, '/modules/b2b/sales.php', 6),
+(52, 30, '/modules/b2b/address.php', 4),
 (61, 38, '#', NULL),
-(62, 61, '/portapp/modules/admin/modules/survey/survey.php', NULL),
-(63, 3, '/portapp/modules/admin/modules/ecommerce/productgroup.php', NULL),
-(66, 4, '/portapp/modules/admin/modules/settings/template.php', NULL),
-(67, 4, '/portapp/modules/admin/modules/settings/email.php', NULL),
-(68, 30, '/portapp/modules/b2b/productorder.php?action=listProductorder', 5),
-(69, 30, '/portapp/modules/b2b/category.php', 11),
-(70, 30, '/portapp/modules/b2b/brand.php', 12),
-(71, 32, '/portapp/modules/b2c/wishlist.php', 6),
-(72, 30, '/portapp/modules/b2b/wishlist.php', 8),
-(73, 30, '/portapp/modules/b2b/productcompare.php', 7),
-(74, 3, '/portapp/modules/admin/modules/ecommerce/voucher.php', NULL),
-(75, 5, '/portapp/modules/admin/modules/user/usergroup.php', NULL),
-(76, 32, '/portapp/modules/b2c/userpoint.php', 7);
+(62, 61, '/modules/admin/modules/survey/survey.php', NULL),
+(63, 3, '/modules/admin/modules/ecommerce/productgroup.php', NULL),
+(66, 4, '/modules/admin/modules/settings/template.php', NULL),
+(67, 4, '/modules/admin/modules/settings/email.php', NULL),
+(68, 30, '/modules/b2b/productorder.php?action=listProductorder', 5),
+(69, 30, '/modules/b2b/category.php', 11),
+(70, 30, '/modules/b2b/brand.php', 12),
+(71, 32, '/modules/b2c/wishlist.php', 6),
+(72, 30, '/modules/b2b/wishlist.php', 8),
+(73, 30, '/modules/b2b/productcompare.php', 7),
+(74, 3, '/modules/admin/modules/ecommerce/voucher.php', NULL),
+(75, 5, '/modules/admin/modules/user/usergroup.php', NULL),
+(76, 32, '/modules/b2c/userpoint.php', 7);
 
 -- --------------------------------------------------------
 
@@ -1305,7 +1305,7 @@ CREATE TABLE IF NOT EXISTS `postaladdress` (
   `postaladdressCountry` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`postaladdressId`),
   KEY `userId` (`userId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=97 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=99 ;
 
 --
 -- Dumping data for table `postaladdress`
@@ -1323,7 +1323,8 @@ INSERT INTO `postaladdress` (`postaladdressId`, `userId`, `postaladdressContent`
 (74, 3, '12222', 'dqwe', 'qdwed', 'qwdwedqwd', 'ad'),
 (80, 2, 'fatura adresi 1', 'İstanbul', 'Ataşehir', '34758', 'Türkiye'),
 (86, 2, 'teslimat adresi 1', 'istanbul', 'ataşehir', '34758', 'Türkiye'),
-(96, 3, '1', '1', '1', '1', '1');
+(96, 3, '1', '1', '1', '1', '1'),
+(98, 2, '1', '1', '1', '1', '1');
 
 -- --------------------------------------------------------
 
@@ -1361,7 +1362,7 @@ INSERT INTO `product` (`productId`, `productCode`, `productTitle`, `productConte
 (5, '11116', 'Tül Elbise', '<p>\r\n	G&ouml;ğ&uuml;s altı g&uuml;l s&uuml;slemeli saten ve işlemeli t&uuml;l elbise</p>\r\n', '<iframe src="http://player.vimeo.com/video/35663673?title=0&byline=0&portrait=0" width="600" height="337" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>', 5, 25, 1, 1, 1),
 (6, '11119', 'Tafta Elbise', '<p>\r\n	G&ouml;ğ&uuml;s altı taş s&uuml;sl&uuml; bolerolu tafta elbise</p>\r\n', NULL, NULL, 25, 1, 1, 1),
 (7, '11120', 'Saten Elbise', '<p>\r\n	G&ouml;ğ&uuml;s ve kal&ccedil;ası nakış boncuk işlemeli saten elbise</p>\r\n', NULL, 18, 26, 1, 1, 1),
-(8, '11121', 'Bolerolu Elbise', '<p>\r\n	Boyu kısmı boncuk işlemeli bolerolu tafta elbise</p>\r\n', NULL, 55, 26, 1, 1, 1);
+(8, '11121', 'Bolerolu Elbise', '<p>\r\n	Boyu kısmı boncuk işlemeli bolerolu tafta elbise</p>\r\n', NULL, 59, 26, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -2441,7 +2442,7 @@ INSERT INTO `setting` (`settingId`, `settingParameter`, `settingValue`) VALUES
 (89, '_USER_INITIALSTATUS_B2B', '0'),
 (90, '_USER_INITIALSTATUS_B2C', '1'),
 (91, '_SITE_TRACKING', '0'),
-(92, '_SITE_CODEPACKING', '0'),
+(92, '_SITE_CODEPACKING', '1'),
 (93, '_USER_ROLE_B2B', '4'),
 (94, '_USER_ROLE_B2C', '3'),
 (95, '_USER_ROLE_ADMIN_LEVEL2', '2'),
@@ -2958,7 +2959,8 @@ INSERT INTO `user_deliveryaddress` (`userId`, `postaladdressId`) VALUES
 (3, 54),
 (3, 73),
 (2, 86),
-(3, 96);
+(3, 96),
+(2, 98);
 
 -- --------------------------------------------------------
 

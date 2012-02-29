@@ -1,0 +1,6 @@
+.buildpath
+.project
+.settings/*
+assets/smarty/cache
+assets/smarty/compile
+configs/*.dist

@@ -80,6 +80,7 @@
 		<div class="bottom"></div>
 	</div>
 	
+	<!--
 	<div class="subMenuOuter">
 		<h2 class="top">DETAYLI ARAMA</h2>
 		<div class="center">
@@ -89,6 +90,7 @@
 		</div>
 		<div class="bottom"></div>
 	</div>
+	-->
 	
 	<div class="subMenuOuter">
 		<h2 class="top">KATEGORİLER</h2>

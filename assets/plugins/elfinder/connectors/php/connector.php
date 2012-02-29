@@ -29,7 +29,7 @@ class elFinderLogger implements elFinderILogger {
 
 $opts = array(
 	'root'            => '../../../../../img',                       // path to root directory
-	'URL'             => 'http://localhost/portapp/img/', // root directory URL
+	'URL'             => 'http://localhost/img/', // root directory URL
 	'rootAlias'       => 'Home',       // display this instead of root directory name
 	//'uploadAllow'   => array('images/*'),
 	//'uploadDeny'    => array('all'),

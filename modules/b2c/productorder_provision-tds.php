@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__FILE__) . '/../../config/config.inc.php';
+require_once dirname(__FILE__) . '/../../classes/config.inc.php';
 
 // TODO: Bankadan data geldiği için burada sorun çıkarıyor
 //Permission::checkPermissionRedirect("b2c");

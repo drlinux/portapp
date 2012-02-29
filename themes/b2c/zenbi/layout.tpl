@@ -55,6 +55,13 @@
 		<link rel="stylesheet" href="assets/plugins/ui.spinner/ui.spinner.css" />
 		<script type="text/javascript" src="assets/plugins/ui.spinner/ui.spinner.min.js"></script>
 		
+
+		<!-- nivoslider -->
+		<!--
+		<link rel="stylesheet" href="assets/plugins/nivo-slider/nivo-slider.css" />
+		<link rel="stylesheet" href="assets/plugins/nivo-slider/themes/default/default.css" />
+		<script type="text/javascript" src="assets/plugins/nivo-slider/jquery.nivo.slider.pack.js"></script>
+		-->
 		
 		<!-- 3rd party scripts -->
 		<script type="text/javascript" src="assets/extension/analytics.js"></script>

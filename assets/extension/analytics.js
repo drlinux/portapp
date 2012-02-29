@@ -1,9 +1,9 @@
 $(startAnalytics);
 
 function startAnalytics() {
-	setupGoogleAnalytics("UA-xxxxxx-x");
+	//setupGoogleAnalytics("UA-xxxxxx-x");
 	//setupPiwikAnalytics(1);
-	setupSitetrack(window.location.hostname);//window.location.hostname, window.location.host, document.domain
+	//setupSitetrack(window.location.hostname);//window.location.hostname, window.location.host, document.domain
 }
 
 function setupGoogleAnalytics(code) {

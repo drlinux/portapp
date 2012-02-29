@@ -50,9 +50,6 @@
 
 <!-- jeditable -->
 <script type="text/javascript" src="assets/plugins/jeditable/jquery.jeditable.mini.js"></script>
-<!-- farbtastic -->
-<link rel="stylesheet" href="assets/plugins/farbtastic/farbtastic.css" />
-<script type="text/javascript" src="assets/plugins/farbtastic/farbtastic.js"></script>
 <!-- timepicker -->
 <script type="text/javascript" src="assets/plugins/timepicker/jquery-ui-timepicker-addon.js"></script>
 <!-- ckeditor -->

@@ -1709,9 +1709,9 @@ function Productattribute()
 					$target.append('<h2 name="namePaymentgroup">Ödeme Şekli</h2>');
 					var items = [];
 					$.each(response.aaData, function(key1, val1) {
-						if (val1.pictureFile != null) {
+						//if (val1.pictureFile != null) {
 							//items.push('<div class="' + val1.paymentgroupClass + '">&nbsp;</div>');
-						}
+						//}
 						items.push('<h3><a href="#">'+val1.paymentgroupTitle+'</a></h3>');
 						items.push('<div style="overflow:hidden !important;">');
 						items.push('<table style="width:100% !important;">');
@@ -2745,20 +2745,6 @@ function User()
 						})
 						.bind("click", function() {
 							// TODO: login form popup olarak yapılacak
-							/*
-							$('<a href="#formUserlogin" title="Giriş">Giriş</a>').fancybox({
-								titlePosition: 'over',
-								autoDimensions: false,
-								width: 400,
-								height: 200,
-								overlayShow: true,
-								transitionIn: 'elastic',
-								transitionOut: 'elastic',
-								easingIn: 'easeOutBack',
-								easingOut: 'easeInBack'
-							}).click();
-							$("#formUserlogin #username").focus();
-							*/
 						})
 						.css({
 							cursor: 'pointer'
@@ -2788,10 +2774,7 @@ function User()
 								}
 								else {
 									//CommonItems.casDialog(jQuery.i18n.prop('ALERT_AuthenticationFailed'));
-									$.fancybox({ content: jQuery.i18n.prop('ALERT_AuthenticationFailed') });
 								}
-								//$.fancybox(response);
-								$.fancybox.close();
 							}
 						});
 				
@@ -3123,33 +3106,6 @@ function User()
 
 function Banner()
 {
-	var init = function (theme)
-	{
-		var jsHost = (("https:" == document.location.protocol) ? "https://" : "http://");
-		//alert(window.location.hash);
-		//alert(window.location.host);
-		//alert(window.location.hostname);
-		//alert(window.location.href);
-		//alert(window.location.pathname);
-		//alert(window.location.search);
-
-		jQuery.getCss(jsHost + document.location.hostname + "/portapp/assets/plugins/nivo-slider/nivo-slider.css");
-		jQuery.getScript(jsHost + document.location.hostname + "/portapp/assets/plugins/nivo-slider/jquery.nivo.slider.pack.js", function() {
-			try {
-				if (theme == "theme-default") {
-					jQuery.getCss(jsHost + document.location.hostname + "/portapp/assets/plugins/nivo-slider/themes/default/default.css");
-				}
-				else if (theme == "theme-pascal") {
-					jQuery.getCss(jsHost + document.location.hostname + "/portapp/assets/plugins/nivo-slider/themes/pascal/pascal.css");
-				}
-				else if (theme == "theme-orman") {
-					jQuery.getCss(jsHost + document.location.hostname + "/portapp/assets/plugins/nivo-slider/themes/orman/orman.css");
-				}
-			} catch (err) {
-			}
-		});
-	};
-	
 	var getBanners = function ()
 	{
 		var $target = $('[cas-js=getBanners]');
@@ -3158,13 +3114,30 @@ function Banner()
 			var url = CommonItems.getLocation() + 'index.php';
 			
 			var theme = $target.attr("cas:theme");
-			init(theme);
 			
 			$.ajax({
 				url: url,
 				type: 'get',
 				data: { action: 'jsonBanners' },
 				dataType: 'json',
+				beforeSend: function() {
+					var jsHost = (("https:" == document.location.protocol) ? "https://" : "http://");
+					jQuery.getCss(jsHost + document.location.hostname + "/assets/plugins/nivo-slider/nivo-slider.css");
+					jQuery.getScript(jsHost + document.location.hostname + "/assets/plugins/nivo-slider/jquery.nivo.slider.pack.js", function() {
+						try {
+							if (theme == "theme-default") {
+								jQuery.getCss(jsHost + document.location.hostname + "/assets/plugins/nivo-slider/themes/default/default.css");
+							}
+							else if (theme == "theme-pascal") {
+								jQuery.getCss(jsHost + document.location.hostname + "/assets/plugins/nivo-slider/themes/pascal/pascal.css");
+							}
+							else if (theme == "theme-orman") {
+								jQuery.getCss(jsHost + document.location.hostname + "/assets/plugins/nivo-slider/themes/orman/orman.css");
+							}
+						} catch (err) {
+						}
+					});
+				},
 				success: function(response) {
 					$target.html('');
 					var items = [];
@@ -3182,8 +3155,6 @@ function Banner()
 							animSpeed: 800,
 							pauseTime: 5000
 						});
-						// Slider Yüklendikten sonra çalıştırmak istediğimiz bir fonksiyon olduğunda kullanacağımız bir event
-						$(document).trigger("onSliderLoded"); 
 				}
 			});
 		}
@@ -3353,7 +3324,6 @@ function Survey()
 			console.log("id_survey: " + $(this).attr("id_survey"));
 			*/
 			
-			/**/
 			$.ajax({
 				url: url,
 				type: 'post',
@@ -3366,7 +3336,6 @@ function Survey()
 					console.log(response);
 				}
 			});
-			/**/
 
 		}, {
 			id: 'id',
@@ -3891,7 +3860,7 @@ function CommonItems()
 	// En tepede olmalı
 	jQuery.i18n.properties({
 		name		: 'Messages', 
-		path		: 'assets/smarty/configs/', 
+		path		: 'configs/', 
 		mode		: 'both',
 		language	: 'tr',
 		callback	: function() {
@@ -3971,14 +3940,14 @@ function CommonItems()
 		}
 		else if (wysiwyg_editor == "elrte") {
 			var jsHost = (("https:" == document.location.protocol) ? "https://" : "http://");
-			jQuery.getCss(jsHost + document.location.hostname + "/portapp/assets/plugins/elrte/css/elrte.min.css");
-			jQuery.getCss(jsHost + document.location.hostname + "/portapp/assets/plugins/elfinder/css/elfinder.css");
+			jQuery.getCss(jsHost + document.location.hostname + "/assets/plugins/elrte/css/elrte.min.css");
+			jQuery.getCss(jsHost + document.location.hostname + "/assets/plugins/elfinder/css/elfinder.css");
 			if (language == "tr") {
-				jQuery.getScript(jsHost + document.location.hostname + "/portapp/assets/plugins/elrte/js/i18n/elrte.tr.js");
-				jQuery.getScript(jsHost + document.location.hostname + "/portapp/assets/plugins/elfinder/js/i18n/elfinder.tr.js");
+				jQuery.getScript(jsHost + document.location.hostname + "/assets/plugins/elrte/js/i18n/elrte.tr.js");
+				jQuery.getScript(jsHost + document.location.hostname + "/assets/plugins/elfinder/js/i18n/elfinder.tr.js");
 			}
-			jQuery.getScript(jsHost + document.location.hostname + "/portapp/assets/plugins/elfinder/js/elfinder.min.js");
-			jQuery.getScript(jsHost + document.location.hostname + "/portapp/assets/plugins/elrte/js/elrte.min.js", function() {
+			jQuery.getScript(jsHost + document.location.hostname + "/assets/plugins/elfinder/js/elfinder.min.js");
+			jQuery.getScript(jsHost + document.location.hostname + "/assets/plugins/elrte/js/elrte.min.js", function() {
 				try {
 					var opts = {
 							cssClass : 'el-rte',
@@ -3988,7 +3957,7 @@ function CommonItems()
 							//cssfiles : ['css/elrte-inner.css'],
 							fmOpen   : function(callback) {
 								$('<div id="myelfinder"></div>').elfinder({
-									url : jsHost + document.location.hostname + "/portapp/assets/plugins/elfinder/connectors/php/connector.php",
+									url : jsHost + document.location.hostname + "/assets/plugins/elfinder/connectors/php/connector.php",
 									lang : language	,
 									dialog : { width : 900, modal : true, title : 'Files' }, // open in dialog
 									closeOnEditorCallback : true, // close elFinder after file select
@@ -4038,11 +4007,11 @@ function CommonItems()
 			preloadText: jQuery.i18n.prop('ALERT_Loading'),
 			zoomType: "reverse",
 			position: "right"
-		}).find("img").css({
+		}).find("img")/*.css({
 			float: "left",
 			marginRight: "20px",
 			background: "#000"
-		});
+		})*/;
 	}
 	else {
 		$('a.jqzoom').click(function() { return false; });
@@ -4076,9 +4045,9 @@ function CommonItems()
 			width: $(this).attr('width_qrcode'),
 			height: $(this).attr('height_qrcode')
 		});
-	}).css({
+	})/*.css({
 		float: 'right'
-	});
+	})*/;
 	
 	$("input[cas-js=generateQrcode]").each(function() {
 		if ($(this).val().length > 0) {
@@ -4101,14 +4070,6 @@ function CommonItems()
 		'font-size': '3em'
 	});
 	
-	// TODO: farbtastic eklenecek
-	$("input[cas-js=generateFarbtastic]").each(function() {
-		//console.log($(this));
-		//$('<span/>').farbtastic($(this));
-		//console.log($(this).val())
-	});
-
-
 	$(".multiselect").each(function() {
 		$(this).multiselect({
 			/*
@@ -4283,7 +4244,7 @@ function CommonItems()
 
 	var getLocation = function ()
 	{
-		return (window.location.pathname.split("/",4).concat("").join("/"));
+		return (window.location.pathname.split("/",3).concat("").join("/"));
 		/*
 		var location = window.location;
 		var path = location.pathname;

@@ -1,4 +1,6 @@
 <?php
+ob_start("ob_gzhandler");
+
 //error_reporting (E_ALL ^ E_NOTICE);
 if (false) {//DEVELOPMENT_ENVIRONMENT == true
 	error_reporting(E_ALL);

@@ -1,11 +1,10 @@
 <?php
-/**/
-require(dirname(__FILE__) . '/../classes/lib/cas.database.php');
-require(dirname(__FILE__) . '/../classes/lib/cas.base.php');
-require(dirname(__FILE__) . '/../classes/lib/cas.filesystem.php');
-require(dirname(__FILE__) . '/../classes/lib/cas.string.php');
-require(dirname(__FILE__) . '/../classes/lib/cas.mailer.php');
-require(dirname(__FILE__) . '/../classes/lib/SimpleImage.php');
+require(dirname(__FILE__) . '/../classes/cas/cas.database.php');
+require(dirname(__FILE__) . '/../classes/cas/cas.base.php');
+require(dirname(__FILE__) . '/../classes/cas/cas.filesystem.php');
+require(dirname(__FILE__) . '/../classes/cas/cas.string.php');
+require(dirname(__FILE__) . '/../classes/cas/cas.mailer.php');
+require(dirname(__FILE__) . '/../classes/cas/SimpleImage.php');
 
 // PEAR
 //require_once('Pager.php');
@@ -60,37 +59,3 @@ require(dirname(__FILE__) . '/../classes/bank/Akbank.php');
 require(dirname(__FILE__) . '/../classes/bank/Denizbank.php');
 require(dirname(__FILE__) . '/../classes/bank/Garanti.php');
 require(dirname(__FILE__) . '/../classes/bank/YKB.php');
-
-/**/
-
-/*
-require_once(dirname(__FILE__) . '/../classes/lib/AutoLoader.php');
-$autoLoader = new AutoLoader();
-$autoLoader->register();
-*/
-/*
-function __autoload($className)
-{
-	if (!class_exists($className, false))
-	{
-		if (function_exists('smartyAutoload') AND smartyAutoload($className)) 
-			return true;
-		if (file_exists(dirname(__FILE__).'/../classes/'.$className.'.php'))
-		{
-			require_once(dirname(__FILE__).'/../classes/'.str_replace(chr(0), '', $className).'.php');
-			if (file_exists(dirname(__FILE__).'/../override/classes/'.$className.'.php'))
-				require_once(dirname(__FILE__).'/../override/classes/'.$className.'.php');
-			else
-			{
-				$coreClass = new ReflectionClass($className.'Core');
-				if ($coreClass->isAbstract())
-					eval('abstract class '.$className.' extends '.$className.'Core {}');
-				else
-					eval('class '.$className.' extends '.$className.'Core {}');
-			}
-		}
-		else
-			return ;
-	}
-}
-*/
