@@ -15,7 +15,7 @@ class CasDatabase
 	
 	private $pdo;
 	
-	public function __construct()
+	public function __construct($dbname)
 	{
 		global $smarty;
 		
@@ -24,7 +24,7 @@ class CasDatabase
 		$host			= $smarty->getConfigVariable("host");
 		$username		= $smarty->getConfigVariable("username");
 		$password		= $smarty->getConfigVariable("password");
-		$dbname			= $smarty->getConfigVariable("dbname");
+		//$dbname			= $smarty->getConfigVariable("dbname");
 		$tables_prefix	= $smarty->getConfigVariable("tables_prefix");
 		$adapter		= $smarty->getConfigVariable("adapter");
 		$port			= $smarty->getConfigVariable("port");

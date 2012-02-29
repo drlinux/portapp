@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 29, 2012 at 12:08 PM
+-- Generation Time: Feb 29, 2012 at 08:38 PM
 -- Server version: 5.5.16
 -- PHP Version: 5.3.8
 
@@ -1361,7 +1361,7 @@ INSERT INTO `product` (`productId`, `productCode`, `productTitle`, `productConte
 (4, '11115', 'Bustiyer', '<p>\r\n	Tek omuz ve eteği kendi kumaşından g&uuml;l s&uuml;slemeli tafta bustiyer -etek ikili takım</p>\r\n', NULL, NULL, 25, 1, 1, 1),
 (5, '11116', 'Tül Elbise', '<p>\r\n	G&ouml;ğ&uuml;s altı g&uuml;l s&uuml;slemeli saten ve işlemeli t&uuml;l elbise</p>\r\n', '<iframe src="http://player.vimeo.com/video/35663673?title=0&byline=0&portrait=0" width="600" height="337" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>', 5, 25, 1, 1, 1),
 (6, '11119', 'Tafta Elbise', '<p>\r\n	G&ouml;ğ&uuml;s altı taş s&uuml;sl&uuml; bolerolu tafta elbise</p>\r\n', NULL, NULL, 25, 1, 1, 1),
-(7, '11120', 'Saten Elbise', '<p>\r\n	G&ouml;ğ&uuml;s ve kal&ccedil;ası nakış boncuk işlemeli saten elbise</p>\r\n', NULL, 18, 26, 1, 1, 1),
+(7, '11120', 'Saten Elbise', '<p>\r\n	G&ouml;ğ&uuml;s ve kal&ccedil;ası nakış boncuk işlemeli saten elbise</p>\r\n', NULL, 22, 26, 1, 1, 1),
 (8, '11121', 'Bolerolu Elbise', '<p>\r\n	Boyu kısmı boncuk işlemeli bolerolu tafta elbise</p>\r\n', NULL, 59, 26, 1, 1, 1);
 
 -- --------------------------------------------------------
@@ -2425,7 +2425,7 @@ INSERT INTO `setting` (`settingId`, `settingParameter`, `settingValue`) VALUES
 (66, '_THEME_B2C_NIVOSLIDER', 'theme-default'),
 (67, '_THEME_ADMIN_NAME', 'default'),
 (68, '_THEME_B2B_NAME', 'kupa'),
-(69, '_THEME_B2C_NAME', 'zenbi'),
+(69, '_THEME_B2C_NAME', 'default'),
 (73, '_EMAIL_SERVER', 'smtp.gmail.com'),
 (74, '_EMAIL_PORT', '465'),
 (75, '_EMAIL_USERNAME', 'casict@casict.com'),

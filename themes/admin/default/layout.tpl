@@ -58,8 +58,6 @@
 <!-- dynatree -->
 <link rel="stylesheet" href="assets/plugins/dynatree/skin/ui.dynatree.css" />
 <script type="text/javascript" src="assets/plugins/dynatree/jquery.dynatree.min.js"></script>
-<!-- qrcode -->
-<script type="text/javascript" src="assets/plugins/qrcode/jquery.qrcode.min.js"></script>
 <!-- multiselect -->
 <link rel="stylesheet" href="assets/plugins/multiselect/jquery.multiselect.css" />
 <script type="text/javascript" src="assets/plugins/multiselect/jquery.multiselect.min.js"></script>

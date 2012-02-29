@@ -28,13 +28,7 @@
 				<tr>
 					<td>ürün kodu:</td>
 					<td>
-						<!-- <input type="text" name="productCode" value="{$data.product.productCode}" cas-js="generateQrcode" width_qrcode="64" height_qrcode="64" /> -->
 						<input type="text" name="productCode" value="{$data.product.productCode}" />
-						<!--
-						{if $data.product.productId neq null}
-						<span cas-js="qrcode" text_qrcode="{$data.product.productCode}" width_qrcode="64" height_qrcode="64"></span>
-						{/if}
-						-->
 					</td>
 				</tr>
 				<tr>
@@ -159,7 +153,6 @@
 			</li>
 			<li>
 				<label>Ürün Kodu</label>
-				<!-- <input type="text" name="productattributeCode" required="required" cas-js="generateQrcode" width_qrcode="64" height_qrcode="64" /> -->
 				<input type="text" name="productattributeCode" required="required" />
 			</li>
 			{foreach from=$data.attributegroup.aaData item="attributegroup"}

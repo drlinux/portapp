@@ -72,7 +72,7 @@ $op = ($_SERVER['QUERY_STRING']=="") ? $_SERVER['PHP_SELF'] : $_SERVER['PHP_SELF
 //$op = str_replace("&","&#38;",$op);
 $uri = $url_scheme . $_SERVER['SERVER_NAME'] . $op;
 
-global $project;
+
 $project['url'] = $url_scheme . $_SERVER["SERVER_NAME"] . __PS_BASE_URI__;
 $project['uri'] = $uri;
 $project['encodedUri'] = urlencode($uri);

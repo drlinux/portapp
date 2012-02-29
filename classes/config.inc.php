@@ -1,6 +1,10 @@
 <?php
 ob_start("ob_gzhandler");
 
+global $project;
+$aHost = explode(".", $_SERVER["SERVER_NAME"]);
+$project['dbname'] = $aHost[0];
+
 //error_reporting (E_ALL ^ E_NOTICE);
 if (false) {//DEVELOPMENT_ENVIRONMENT == true
 	error_reporting(E_ALL);
@@ -10,7 +14,7 @@ else {
 	error_reporting(E_ALL);
 	ini_set('display_errors','Off');
 	ini_set('log_errors', 'On');
-	ini_set('error_log', dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'error.log');
+	ini_set('error_log', dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR . $project['dbname'] . '.error.log');
 }
 
 

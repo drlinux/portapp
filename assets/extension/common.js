@@ -4039,37 +4039,6 @@ function CommonItems()
 		$(this).mask("99-99");
 	});
 	
-	$("[cas-js=qrcode]").each(function() {
-		$(this).qrcode({
-			text: $(this).attr('text_qrcode'),
-			width: $(this).attr('width_qrcode'),
-			height: $(this).attr('height_qrcode')
-		});
-	})/*.css({
-		float: 'right'
-	})*/;
-	
-	$("input[cas-js=generateQrcode]").each(function() {
-		if ($(this).val().length > 0) {
-			$('<span/>').qrcode({
-				text: $(this).val(),
-				width: $(this).attr('width_qrcode'),
-				height: $(this).attr('height_qrcode')
-			}).insertAfter($(this));
-		}
-	}).keyup(function() {
-		$(this).next().remove();
-		if ($(this).val().length > 0) {
-			$('<span/>').qrcode({
-				text: $(this).val(),
-				width: $(this).attr('width_qrcode'),
-				height: $(this).attr('height_qrcode')
-			}).insertAfter($(this));
-		}
-	}).css({
-		'font-size': '3em'
-	});
-	
 	$(".multiselect").each(function() {
 		$(this).multiselect({
 			/*

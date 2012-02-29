@@ -28,8 +28,9 @@ class CasBase extends CasDatabase
 
 	function __construct()
 	{
-
-		parent::__construct();
+		
+		global $project;
+		parent::__construct($project['dbname']);
 
 	}
 
