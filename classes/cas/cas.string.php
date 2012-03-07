@@ -5,8 +5,9 @@ class CasString
 		return strtoupper(substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $length));
 	}
 	
-	function randomStringGenerator($length=10) {
-		$pattern = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+	function randomStringGenerator($length=10, $alphanumeric=false) {
+		$pattern = "1234567890";
+		if ($alphanumeric) $pattern .= "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		for($i=0; $i<$length; $i++){
 			$s .= $pattern{rand(0,strlen($pattern)-1)};
 		}

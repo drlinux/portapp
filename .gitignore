@@ -4,3 +4,4 @@
 assets/smarty/cache
 assets/smarty/compile
 configs/*.dist
+logs/*
