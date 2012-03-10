@@ -2450,7 +2450,8 @@ INSERT INTO `setting` (`settingId`, `settingParameter`, `settingValue`) VALUES
 (97, '_PRODUCTORDER_INITIALSTATUS_MT', '1'),
 (98, '_PRODUCTORDER_INITIALSTATUS_PD', '3'),
 (99, '_PRODUCTORDER_INITIALSTATUS_CC', '2'),
-(100, '_APPID_FACEBOOK', '294608807247890');
+(100, '_APPID_FACEBOOK', '294608807247890'),
+(101, 'PREDEFINED_PICTURE_RESOLUTIONS', '[[50,50],[113,150],[190,190],[225,300]]');
 
 -- --------------------------------------------------------
 

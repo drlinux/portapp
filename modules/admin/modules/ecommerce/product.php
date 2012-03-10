@@ -150,11 +150,10 @@ switch($_action)
 		header("Location: " . $_SERVER["HTTP_REFERER"]);
 		break;
 	case 'deletePicture':
-		$params = array("scale"=>array(
-			array(2.5),
-			array(7.5),
-			array(15)
-		));
+		$params = array("scale"=>json_decode($smarty->getVariable("PREDEFINED_PICTURE_RESOLUTIONS"), true));
+		$model->unlinkPicture($_REQUEST["pictureId"], $params); // CHANGE
+		header("Location: " . $_SERVER["HTTP_REFERER"]);
+		break;
 		$model->unlinkPicture($_REQUEST["pictureId"], $params);
 		header("Location: " . $_SERVER["HTTP_REFERER"]);
 		break;
@@ -167,15 +166,12 @@ switch($_action)
 		$formvars = array_merge($_POST, $_FILES);
 		$params = array(
 			"picture"=>array(
-				"resize"=>array(2000,2000),
-				"scale"=>array(
-					array(2.5),
-					array(7.5),
-					array(15)
-				),
+				"resize"=>  array(2000,2000),
+				"scale"=> json_decode($smarty->getVariable("PREDEFINED_PICTURE_RESOLUTIONS"), true),
 				"isDefault"=>true
 			)
 		);
+		
 		$model->saveFiles($formvars, $params);
 		header("Location: " . $_SERVER["HTTP_REFERER"]);
 		break;
@@ -204,6 +200,13 @@ switch($_action)
 		//$data["product"] = $productattribute->getProductattributeByProductId($productId);
 		//$data["product"] = $model->getEntry($productId);
 		$data["product"] = $model->getProductByProductId($productId);
+		$resolutions = json_decode($smarty->getVariable("PREDEFINED_PICTURE_RESOLUTIONS"), true);
+		foreach($resolutions as $r)
+		{
+			$predef_res[] = array("res_width"=>$r[0], "res_height"=>$r[1], "crop_left"=>0, "crop_top"=>0, "crop_width"=>133, "crop_height"=>100);	
+		}
+		
+		$data["resolutions"] = json_encode($predef_res);
 		//print_r($data);exit;
 
 		$attributegroup = new Attributegroup();

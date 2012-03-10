@@ -107,6 +107,15 @@
 	</div>
 	{if $data.product.productId neq null}
 	<div id="tabs-2">
+		<link rel="stylesheet" href="modules/admin/modules/ecommerce/image_process/jcrop/jquery.Jcrop.css" />
+		<link rel="stylesheet" href="modules/admin/modules/ecommerce/image_process/jcrop/crop.css" />
+		<link rel="stylesheet" href="modules/admin/modules/ecommerce/image_process/css/style.css" />
+		<script type="text/javascript" src="modules/admin/modules/ecommerce/image_process/js/jquery.color.js"></script>
+		<script type="text/javascript" src="modules/admin/modules/ecommerce/image_process/jcrop/jquery.Jcrop.min.js"></script>
+		<script type="text/javascript" src="modules/admin/modules/ecommerce/image_process/jcrop/crop.js"></script>
+		<script type="text/javascript">var resolutions = {$data.resolutions};</script>
+		<script type="text/javascript" src="modules/admin/modules/ecommerce/image_process/js/product.js"></script>
+	
 		<form action="{$SCRIPT_NAME}" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="MAX_FILE_SIZE" value="2048000" readonly="readonly"/>
 			<input type="hidden" name="productId" value="{$data.product.productId}" readonly="readonly"/>
@@ -115,26 +124,36 @@
 			<button name="action" value="uploadPictures">{#BUTTON_Upload#}</button>
 		</form>
 		<hr/>
-		<table style="border-spacing: 0px;">
+		<table id="imagesTable" style="border-spacing: 0px;">
 			<tr bgcolor="#cccccc">
-				<th style="width: 50px;">Vitrin Resmi</th>
-				<th style="width: 50px;"></th>
+				<th style="width: 70px;">Vitrin Resmi</th>
+				<th style="width: 170px; padding-left:20px;"></th>
 				<th style="width: 50px;">
 					{if $data.product.picture.iTotalRecords gt 1}
 					<a onclick="if(confirm('{#ALERT_AreYouSureToDeleteAll#}')){ return true; } return false;" href="{$SCRIPT_NAME}?action=deletePictures&productId={$data.product.productId}">{#BUTTON_DeleteAll#}</a>
 					{/if}
 				</th>
+				<th style="width:400px;">
+					Küçük Resimler
+				</th>
 			</tr>
 			{foreach from=$data.product.picture.aaData item="entry"}
 			<tr bgcolor="{cycle values="#dedede,#eeeeee" advance=true}">
 				<td>
-					<input type="radio" name="isDefault" onclick="location.href='{$SCRIPT_NAME}?action=setDefaultPicture&productId={$data.product.productId}&pictureId={$entry.pictureId}';" {if $entry.pictureId eq $data.product.picture.defaultx.pictureId}checked="checked"{/if}/>
+					<input style="margin-left:30px;" type="radio" name="isDefault" onclick="location.href='{$SCRIPT_NAME}?action=setDefaultPicture&productId={$data.product.productId}&pictureId={$entry.pictureId}';" {if $entry.pictureId eq $data.product.picture.defaultx.pictureId}checked="checked"{/if}/>
 				</td>
-				<td>
-					<img src="img/product/1_{$entry.pictureFile}" />
+				<td style="width: 170px; padding-left:20px;">
+					<img src="img/product/2_{$entry.pictureFile}" />
 				</td>
-				<td>
+				<td style="text-align: center;">
 					<a onclick="if(confirm('{#ALERT_AreYouSureToDelete#}')){ return true; } return false;" href="{$SCRIPT_NAME}?action=deletePicture&pictureId={$entry.pictureId}">{#BUTTON_Delete#}</a>
+				</td>
+				<td style="width:650px;">
+					<div class="thumbsListOuter">
+						<ul>
+						</ul>
+					</div>
+					<span class="btnCropImage" base_image="img/product/{$entry.pictureFile}">Düzenle</span>
 				</td>
 			</tr>
 			{foreachelse}

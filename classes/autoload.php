@@ -5,6 +5,7 @@ require(dirname(__FILE__) . '/../classes/cas/cas.filesystem.php');
 require(dirname(__FILE__) . '/../classes/cas/cas.string.php');
 require(dirname(__FILE__) . '/../classes/cas/cas.mailer.php');
 require(dirname(__FILE__) . '/../classes/cas/SimpleImage.php');
+require(dirname(__FILE__) . '/../classes/cas/IMAGE_PROCESSOR.php');
 
 // PEAR
 //require_once('Pager.php');

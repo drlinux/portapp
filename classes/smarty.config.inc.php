@@ -56,8 +56,8 @@ else
 	$url_scheme = "http://";
 
 	// FIXME: Always use https
-	$url_scheme = "https://";
-	header("Location: " . $url_scheme . $_SERVER["SERVER_NAME"] . __PS_BASE_URI__);
+	//$url_scheme = "https://";
+	//header("Location: " . $url_scheme . $_SERVER["SERVER_NAME"] . __PS_BASE_URI__);
 }
 
 
