@@ -237,18 +237,10 @@ function cropImage() {
                 else {
                     alert(JSON.stringify(response));
                 }
-                //$(document).trigger("onCloseCallback");
-               // window.location.reload(true);
-                setTimeout(function(){
-                	$("#closeCropper").click();	
-                },waitTimeAfterCropHappened);
-                
+                $("#closeCropper").click();	   
             },
             complete: function () {
-            	setTimeout(function(){
-            		$("#cropLoader").css("display", "none");
-            	},waitTimeAfterCropHappened);
-                
+            	$("#cropLoader").css("display", "none"); 
             }
         });
     }

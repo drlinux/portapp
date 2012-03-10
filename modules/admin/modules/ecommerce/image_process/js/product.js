@@ -45,7 +45,7 @@ function listProductThumbs(basefilename, thumbsListObject)
 		data : "action=listproductthumbs&file=" + basefilename,
 		dataType:"json",
 		cache:false,
-		success:function(response){			//alert("d");			setTimeout(function(){				//alert("d");				var thumbs = response.thumbs;				thumbsListObject.html("");								for(var i=0; i<thumbs.length; i++)				{					thumbsListObject.append("<li></li>");					var file = "/" + thumbs[i].file;					var label = thumbs[i].label;										$("<img />").attr("src",file).attr("lb",label).attr("order",i).load(function(){						var index = $(this).attr("order");						var label = $(this).attr("lb");						thumbsListObject.find("li").eq(index).append($(this)).append('<span class="res">' + label + '</span>');					});				}			}, 200);
+		success:function(response){			var thumbs = response.thumbs;			thumbsListObject.html("");						for(var i=0; i<thumbs.length; i++)			{				var date = new Date();				var tempHtml = '<li>';				tempHtml += '<img src="/' + thumbs[i].file + "?cache=" + date.getTime() + '" />';				tempHtml += '<span class="res">' + thumbs[i].label + '</span>';				tempHtml += '';				tempHtml += '</li>';								thumbsListObject.append(tempHtml);			}
 		},
 		complete:function(){
 		}
