@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/../../classes/config.inc.php';
+require_once dirname(__FILE__) . '/__master__.php';
 
 $_action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'view';
 

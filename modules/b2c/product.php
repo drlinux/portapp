@@ -1,5 +1,7 @@
 <?php
 require_once dirname(__FILE__) . '/../../classes/config.inc.php';
+require_once dirname(__FILE__) . '/__master__.php';
+
 
 $_action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'view';
 
@@ -41,9 +43,15 @@ switch($_action)
 		break;
 	case 'show':
 		$productId = $_GET["productId"];
-		if ($productId == null) header("Location: " . _MODULE_DIR_ . "b2c/");
-		$data = $model->getProductattributeByProductId($productId);
-		//print_r($data);exit;
+		if ($productId == null) 
+		{
+			header("Location: " . _MODULE_DIR_ . "b2c/");
+		}
+		
+		$data = array_merge($data, $model->getProductattributeByProductId($productId));
+		
+		$productattributes = $productattribute->getProductattributes(array("iDisplayStart"=>0, "iDisplayLength"=>3, "sType"=>"similar", "categoryId"=>$data["category"]["defaultx"]["categoryId"]), false);
+		parseProductsList($productattributes["aaData"], $data["products_list"]);
 		
 		$product = new Product();
 		$product->setProductHit($productId);
@@ -55,6 +63,6 @@ switch($_action)
 		break;
 	case 'view':
 	default:
-		$model->displayTemplate("b2c", "product");
+		$model->displayTemplate("b2c", "product", $data);
 		break;
 }

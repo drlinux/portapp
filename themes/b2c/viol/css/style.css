@@ -131,6 +131,11 @@ input[type=text], input[type=password], input[type=email]
 	margin:20px 0 0 409px;
 }
 
+.pageContent
+{
+	width:650px;
+}
+
 #loginFormOuter label
 {
 	height: 26px;

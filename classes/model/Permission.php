@@ -79,7 +79,7 @@ class Permission extends CasBase
 		return json_encode($this->arrayTree($id, $selected));
 	}
 
-	private function arrayTree($id=null, $selected=null)
+	public function arrayTree($id=null, $selected=null)
 	{
 		$sql = array();
 		array_push($sql, "select *");

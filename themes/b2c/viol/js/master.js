@@ -29,4 +29,12 @@ function MasterStart()
 		var left = (width - buttonsOuterWidth) / 2;
 		$("#mainBanner .nivo-controlNav").css("left",left);
 	});
+	
+	$("#mainBanner").nivoSlider({
+		animSpeed: 800,
+		pauseTime: 5000
+	});
+	
+	$(document).trigger("onSliderLoded");
+	$(document).trigger("onMenuLoaded");
 }

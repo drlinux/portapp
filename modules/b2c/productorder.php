@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/../../classes/config.inc.php';
+require_once dirname(__FILE__) . '/__master__.php';
 
 Permission::checkPermissionRedirect("b2c");
 
@@ -241,14 +242,16 @@ switch($_action)
 		
 	
 	case 'listProductorder':
-		$data = $model->getProductordersOwned();
+		$temp = $model->getProductordersOwned();
+		$data = array_merge($temp, $data); 
 		//print_r($data);exit;
 
 		$model->displayTemplate("b2c", $model->sTable."_list", $data);
 		break;
 		
 	case 'showProductorder':
-		$data = $model->getProductorder($_REQUEST[$model->sIndexColumn]);
+		$temp = $model->getProductorder($_REQUEST[$model->sIndexColumn]);
+		$data = array_merge($temp, $data);
 		//print_r($data);exit;
 	
 		$model->displayTemplate("b2c", $model->sTable."_show", $data);

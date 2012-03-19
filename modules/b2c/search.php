@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/../../classes/config.inc.php';
+require_once dirname(__FILE__) . '/__master__.php';
 
 $_action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'view';
 
@@ -12,7 +13,10 @@ switch($_action)
 		echo(($data));
 		break;
 	case 'search':
-		$model->displayTemplate("b2c", "search", $_GET);
+		$temp = $model->getProductattributes($_GET, false);
+		parseProductsList($temp["aaData"], $data["products_list"]);
+		
+		$model->displayTemplate("b2c", "search", $data);
 		break;
 	case 'view':
 	default:

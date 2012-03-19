@@ -97,7 +97,6 @@ function startDefault()
 	});
 	
 	fixContentsWidth();
-	
 }
 
 function fixContentsWidth()
@@ -2599,8 +2598,6 @@ function Productattribute()
 							items.push($.sprintf(tpl, val.productgroupId, val.productgroupTitle));
 						});
 						$(element).html(items.join(''));
-						// Ana menü yüklendikten sonra çalıştırmak istediğimiz bir fonksiyon olduğunda kullanacağımız bir event
-						$(document).trigger("onMenuLoaded");
 					}
 				});
 			});
@@ -3108,6 +3105,8 @@ function Banner()
 {
 	var getBanners = function ()
 	{
+		return;
+		
 		var $target = $('[cas-js=getBanners]');
 		if ($target.length) {
 			

@@ -66,7 +66,7 @@ class Productattribute extends CasBase
 		return $row;
 	}
 	
-	function getProductattributes($get=array())
+	function getProductattributes($get=array(), $json = true)
 	{
 		$aColumns = array("productId", "productCode", "productTitle");
 	
@@ -231,7 +231,10 @@ class Productattribute extends CasBase
 		}
 		else
 		{
-			return json_encode( $output );
+			if($json)
+				return json_encode( $output );
+			else
+				return $output;
 		}
 	
 	}

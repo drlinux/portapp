@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/../../classes/config.inc.php';
+require_once dirname(__FILE__) . '/__master__.php';
 
 Permission::checkPermissionRedirect("b2c");
 
@@ -16,6 +17,6 @@ switch($_action)
 		break;
 	case 'view':
 	default:
-		$model->displayTemplate("b2c", "wishlist");
+		$model->displayTemplate("b2c", "wishlist", $data);
 		break;
 }

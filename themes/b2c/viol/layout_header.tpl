@@ -11,9 +11,9 @@
 	<a class="dn" id="btnRegister" href="modules/b2c/register.php">Üye Ol</a>
 	<div id="menuOuter">
 		<a href="modules/b2c/index.php" class="{$d}{$HOME_PAGE_SELECTED}">{#LABEL_HomePage#}</a>
-		<span cas-js="getProductgroups" cas:var="{$smarty.get.productgroupId}" cas:url="modules/b2c/index.php">
-			<a href="modules/b2c/productgroup.php?action=show&productgroupId=%s">%s</a>
-		</span>
+		{foreach from=$data.main_menu.aaData item="menu"}
+			<a href="modules/b2c/productgroup.php?action=show&productgroupId={$menu.productgroupId}">{$menu.productgroupTitle}</a>
+		{/foreach}
 	</div><!-- #menuOuter -->
 </div><!-- #headerOuter -->
 		

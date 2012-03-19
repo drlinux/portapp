@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/../../classes/config.inc.php';
+require_once dirname(__FILE__) . '/__master__.php';
 
 Permission::checkPermissionRedirect("b2c");
 
@@ -33,6 +34,11 @@ switch($_action)
 		break;
 	case 'view':
 	default:
+		// Delivery Address
+		$user = new User();
+		$data["delivery_address"] = $user->getDeliveryaddresses();
+		
+		
 		$model->displayTemplate("b2c", "address", $data);
 		break;
 }

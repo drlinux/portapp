@@ -29,32 +29,36 @@
 	</div>
 	
 	<div class="subMenuOuter">
-		<h2 class="top">ÜYE GİRİŞİ</h2>
+		<h2 class="top">{$data.user_menu_title}</h2>
 		<div class="center">
 			<div id="loginFormOuter">
-				<form cas-form="getLoginoutFormAndMenu" autocomplete="off" action="modules/b2c/index.php" method="post">
-					<ul>
-						<li>
-							<label>{#LABEL_Username#}</label>
-							<input type="email" id="username" name="username" value="{$data.username}" title="Lütfen kullanıcı adınızı girin" autofocus="autofocus" required="required" />
-						</li>
-						<li>
-							<label>{#LABEL_Password#}</label>
-							<input type="password" id="password" name="password" title="Lütfen parolanızı girin" required="required" />
-						</li>
-						<li class="dn">
-							<label>uri</label>
-							<input type="text" name="uri" value="{$data.uri}" readonly="readonly" />
-						</li>
-						<li>
-							
-							<div class="linksOuter">
-								<a href="modules/b2c/reminder.php">Şifremi Unuttum</a><br />
-								<a href="modules/b2c/register.php">Üye olmak istiyorum</a>
-							</div>
-							<button type="submit" onclick="User.loginUser(this.form);">{#BUTTON_Login#}</button>
-						</li>
-					</ul>
+				<form autocomplete="off" action="modules/b2c/index.php" method="post">
+					{if $data.user_menu neq "no_permission"}
+						{$data.user_menu}
+					{else}
+						<ul>
+							<li>
+								<label>{#LABEL_Username#}</label>
+								<input type="email" id="username" name="username" value="{$data.username}" title="Lütfen kullanıcı adınızı girin" autofocus="autofocus" required="required" />
+							</li>
+							<li>
+								<label>{#LABEL_Password#}</label>
+								<input type="password" id="password" name="password" title="Lütfen parolanızı girin" required="required" />
+							</li>
+							<li class="dn">
+								<label>uri</label>
+								<input type="text" name="uri" value="{$data.uri}" readonly="readonly" />
+							</li>
+							<li>
+								
+								<div class="linksOuter">
+									<a href="modules/b2c/reminder.php">Şifremi Unuttum</a><br />
+									<a href="modules/b2c/register.php">Üye olmak istiyorum</a>
+								</div>
+								<button type="submit" onclick="User.loginUser(this.form);">{#BUTTON_Login#}</button>
+							</li>
+						</ul>
+					{/if}
 				</form>
 			</div>
 		</div>
@@ -64,8 +68,8 @@
 	<div class="subMenuOuter">
 		<h2 class="top">KATEGORİLER</h2>
 		<div class="center">
-			<ul class="linkList" cas-js="getCategoriesFromProductHavingPicture" cas:url="modules/b2c/index.php?action=jsonCategoriesFromProductHavingPicture">
-				<li><a href="modules/b2c/category.php?action=show&categoryId=%s">%s</a></li>
+			<ul class="linkList">
+				{$data.categories_menu}
 			</ul>		
 		</div>
 		<div class="bottom"></div>
@@ -74,8 +78,8 @@
 	<div class="subMenuOuter">
 		<h2 class="top">MARKALAR</h2>
 		<div class="center">
-			<ul class="linkList" cas-js="getBrandsFromProductHavingPicture" cas:url="modules/b2c/index.php?action=jsonBrandsFromProductHavingPicture">
-				<li><a href="modules/b2c/brand.php?action=show&brandId=%s">%s</a></li>
+			<ul class="linkList">
+				{$data.brands_menu}
 			</ul>	
 		</div>
 		<div class="bottom"></div>

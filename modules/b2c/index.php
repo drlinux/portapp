@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/../../classes/config.inc.php';
+require_once dirname(__FILE__) . '/__master__.php';
 
 $_action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'view';
 
@@ -96,6 +97,12 @@ switch($_action)
 		
 	case 'view':
 	default:
-		$model->displayTemplate("b2c", "index");
+		$products_list = $productattribute->getProductattributes(array("iDisplayStart"=>0,"iDisplayLength"=>3,"sType"=>"productgroup","productgroupId"=>1), false);
+		parseProductsList($products_list["aaData"], $data["products_list"]);
+		
+		/* BANNERS */
+		getBanners($data["banner_files"]);
+		
+		$model->displayTemplate("b2c", "index", $data);
 		break;
 }
