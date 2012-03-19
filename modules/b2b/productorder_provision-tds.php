@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/../../classes/config.inc.php';
+require_once dirname(__FILE__) . '/__master__.php';
 
 // TODO: Bankadan data geldiği için burada sorun çıkarıyor
 //Permission::checkPermissionRedirect("b2b");

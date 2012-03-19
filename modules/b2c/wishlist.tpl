@@ -1,5 +1,9 @@
 <div class="casContent">
 	<h1 class="subHeader">ALIŞVERİŞ LİSTEM</h1>
+	<ul class="productsList bigProductList" cas-break="{$_THEME_B2B_NUMBEROFPRODUCTSDISPLAYED}">
+		{$data.wish_list}
+	</ul>
+	<!--
 	<ul class="productsList bigProductList" cas-break="{$_THEME_B2C_NUMBEROFPRODUCTSDISPLAYED}" cas-js="getProductsInWishlist" cas:url="{$SCRIPT_NAME}">
 		<li class="productItem">
 			<label class="labelDiscount">
@@ -21,4 +25,5 @@
 			<a class="btnAddToBasket" href="javascript:void(0);" onclick="Productattribute.updateProductattributebasket2('%s', 1);">Sepete Ekle</a>
 		</li>
 	</ul>
+	-->
 </div>

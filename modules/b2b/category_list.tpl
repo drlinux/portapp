@@ -1,6 +1,8 @@
 <div class="casContent">
 	<h1 class="subHeader">KATEGORİLER</h1>
-	<ul cas-js="getCategoriesFromProductHavingPicture" cas:url="modules/b2b/index.php?action=jsonCategoriesFromProductHavingPicture">
-		<li><a href="modules/b2b/category.php?action=show&categoryId=%s">%s</a></li>
+	<ul>
+		{foreach from=$data.category_list.aaData item="category"}
+			<li><a href="modules/b2b/category.php?action=show&categoryId={$category.categoryId}">{$category.categoryTitle}</a></li>
+		{/foreach}
 	</ul>
 </div>

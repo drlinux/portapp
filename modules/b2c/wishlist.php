@@ -17,6 +17,9 @@ switch($_action)
 		break;
 	case 'view':
 	default:
+		$temp = $model->getProductsInWishlist();
+		parseProductsList($temp["aaData"], $data["wish_list"]);
+		
 		$model->displayTemplate("b2c", "wishlist", $data);
 		break;
 }

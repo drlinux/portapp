@@ -9,6 +9,13 @@
 		</a>
 	</div>
 	-->
+	
+	<ul class="productsList bigProductList" cas-break="{$_THEME_B2B_NUMBEROFPRODUCTSDISPLAYED}">
+		{$data.product_list}
+	</ul>
+	
+	<!--
+	
 	<ul class="productsList bigProductList" cas-js="getSearchResults" cas:url="modules/b2b/index.php" cas:var="{$smarty.get.sSearch}" cas:limit="{$_THEME_B2B_LIMITPRODUCTS1}" cas-break="{$_THEME_B2B_NUMBEROFPRODUCTSDISPLAYED}">
 		<li class="productItem">
 			<label class="labelDiscount">
@@ -30,4 +37,6 @@
 			<a class="btnAddToBasket" href="javascript:void(0);" onclick="Productattribute.updateProductattributebasket2('%s', 1);">Sepete Ekle</a>
 		</li>
 	</ul>
+	
+	-->
 </div>

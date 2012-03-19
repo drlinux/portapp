@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/../../classes/config.inc.php';
+require_once dirname(__FILE__) . '/__master__.php';
 
 /*
 echo($_SERVER['HTTP_USER_AGENT']);exit;
@@ -47,8 +48,10 @@ switch($_action)
 		echo(json_encode(array("success"=>$model->authenticate($_POST), "uri"=>$_POST["uri"], "msg"=>$model->msg)));
 		break;
 	case 'login':
-		if (isset($_SESSION["userId"])) header("Location: " . $project['url'] . "modules/b2b/");
-		$model->displayTemplate("b2b", "login_form", $_REQUEST);
+		if (isset($_SESSION["userId"])) 
+			header("Location: " . $project['url'] . "modules/b2b/");
+		$data = array_merge($_REQUEST, $data);
+		$model->displayTemplate("b2b", "login_form", $data);
 		break;
 	case 'logout':
 		$usertrack = new Usertrack();
@@ -107,6 +110,7 @@ switch($_action)
 	case 'view':
 	default:
 		Permission::checkPermissionRedirect("b2b");
-		$model->displayTemplate("b2b", "index");
+		listCampaigns($data["campaigns_list"]);
+		$model->displayTemplate("b2b", "index", $data);
 		break;
 }

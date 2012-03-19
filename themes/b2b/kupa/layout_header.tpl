@@ -8,15 +8,11 @@
 			<button id="buttonSearch"></button>
 		</form>
 	</div>
-	<a id="btnRegister" href="modules/b2b/register.php">Üye Ol</a>
-	<!--
 	<div id="menuOuter">
-		<a href="modules/b2b/index.php" class="{$d}{$HOME_PAGE_SELECTED}">{#LABEL_HomePage#}</a>
-		<span cas-js="getProductgroups" cas:var="{$smarty.get.productgroupId}" cas:url="modules/b2b/index.php">
-			<a href="modules/b2b/productgroup.php?action=show&productgroupId=%s">%s</a>
-		</span>
+		{foreach from=$data.main_menu.aaData item="menu"}
+			<a href="modules/b2b/page.php?pageId={$menu.pageId}">{$menu.pageTitle}</a>
+		{/foreach}
 	</div>
-	-->
-	<div id="menuOuter" cas-js="getPage"></div>
+	<a id="btnRegister" href="modules/b2b/register.php">Üye Ol</a>
 </div>
 		

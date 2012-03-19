@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/../../classes/config.inc.php';
+require_once dirname(__FILE__) . '/__master__.php';
 
 Permission::checkPermissionRedirect("b2b");
 
@@ -42,7 +43,7 @@ switch($_action)
 	case 'show':
 		$productId = $_GET["productId"];
 		if ($productId == null) header("Location: " . $project['url'] . "modules/b2b/");
-		$data = $model->getProductattributeByProductId($productId);
+		$data = array_merge($data, $model->getProductattributeByProductId($productId));
 		//print_r($data);exit;
 		
 		$product = new Product();
@@ -55,6 +56,14 @@ switch($_action)
 		break;
 	case 'view':
 	default:
-		$model->displayTemplate("b2b", "product_list");
+		$temp = $productattribute->getProductattributes(array("iDisplayStart"=>0,"iDisplayLength"=>100,"sSearch"=>""));
+		
+		// deneme yapmak için "true" değerini ekledim. 
+		if(true || Permission::checkPermission("b2b"))
+		{
+			parseProductsList($temp["aaData"], $data["product_list"]);
+		}
+		
+		$model->displayTemplate("b2b", "product_list", $data);
 		break;
 }

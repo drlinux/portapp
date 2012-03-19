@@ -1,6 +1,8 @@
 <div class="casContent">
 	<h1 class="subHeader">MARKALAR</h1>
-	<ul cas-js="getBrandsFromProductHavingPicture" cas:url="modules/b2b/index.php?action=jsonBrandsFromProductHavingPicture">
-		<li><a href="modules/b2b/brand.php?action=show&brandId=%s">%s</a></li>
+	<ul>
+		{foreach from=$data.brand_list.aaData item="brand"}
+			<li><a href="modules/b2b/brand.php?action=show&brandId={$brand.brandId}">{$brand.brandTitle}</a></li>
+		{/foreach}
 	</ul>
 </div>

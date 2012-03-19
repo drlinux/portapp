@@ -917,7 +917,7 @@ function Postaladdress()
 				},
 				complete: function() {
 					$("button").button();
-					scrollTo(0, $target.offset().top);
+					//scrollTo(0, $target.offset().top);
 				},
 				statusCode: {
 					404: function() {
@@ -977,7 +977,7 @@ function Postaladdress()
 				},
 				complete: function() {
 					$("button").button();
-					scrollTo(0, $target.offset().top);
+					//scrollTo(0, $target.offset().top);
 				},
 				statusCode: {
 					404: function() {
