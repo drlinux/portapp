@@ -59,8 +59,10 @@
 		<!-- 3rd party scripts -->
 		<script type="text/javascript" src="assets/extension/analytics.js"></script>
 		<script type="text/javascript" src="assets/extension/jtable.js"></script>
-		<script type="text/javascript" src="assets/extension/common.js"></script>
-		<script type="text/javascript" src="assets/extension/GMAPHelper.js"></script>
+		
+		<script type="text/javascript" src="assets/extension/initialize.js"></script>
+		{$JAVASCRIPT_FILES}
+		
 		<!-- cufon -->
 		<script type="text/javascript" src="assets/cufon/cufon-yui.js"></script>
 		<script type="text/javascript" src="assets/cufon/Trebuchet_MS_400-Trebuchet.font.js"></script>

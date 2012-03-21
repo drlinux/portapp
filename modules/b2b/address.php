@@ -36,6 +36,8 @@ switch($_action)
 		break;
 	case 'view':
 	default:
+		addJavascript("assets/extension/classes/Postaladdress.js");
+		
 		$model->displayTemplate("b2b", "address", $data);
 		break;
 }

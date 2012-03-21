@@ -28,6 +28,7 @@ switch($_action)
 		$data["model"]['userNameNew'] = $data["model"]['userName'];
 		$data["model"]['userBirthdate'] = implode(".", array_reverse(explode("-", $data["model"]['userBirthdate'])));
 		//print_r($data);exit;
+		addJavascript("assets/extension/classes/User.js");
 		
 		$model->displayTemplate("b2b", "user", $data);
 		break;

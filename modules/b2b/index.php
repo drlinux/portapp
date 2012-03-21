@@ -49,7 +49,12 @@ switch($_action)
 		break;
 	case 'login':
 		if (isset($_SESSION["userId"])) 
+		{
 			header("Location: " . $project['url'] . "modules/b2b/");
+		}
+			
+		addJavascript("assets/extension/classes/User.js");
+		
 		$data = array_merge($_REQUEST, $data);
 		$model->displayTemplate("b2b", "login_form", $data);
 		break;
@@ -111,6 +116,7 @@ switch($_action)
 	default:
 		Permission::checkPermissionRedirect("b2b");
 		listCampaigns($data["campaigns_list"]);
+		
 		$model->displayTemplate("b2b", "index", $data);
 		break;
 }

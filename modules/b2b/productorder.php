@@ -297,7 +297,11 @@ switch($_action)
 
 		$productattribute = new Productattribute();
 		$data["productattributebasket"] = $productattribute->getProductattributesFromBasket();
-		if (!$data["productattributebasket"]) header("Location: " . _MODULE_DIR_ . "b2b/");
+		if (!$data["productattributebasket"]) {
+			//header("Location: " . _MODULE_DIR_ . "b2b/");
+			echo "AA";
+			exit;
+		}
 		//print_r($data);exit;
 
 		$productattributebasketTotal = $data["productattributebasket"]["productattributebasketTotal"];

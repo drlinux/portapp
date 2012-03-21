@@ -12,6 +12,7 @@ switch($_action)
 		$id = isset($_GET[$model->sIndexColumn])?$_GET[$model->sIndexColumn]:null;
 		echo(json_encode($model->arrayPage(false, $id)));
 		break;
+		
 	case 'view':
 	default:
 		$data["page"] = $model->getDefaultPage();

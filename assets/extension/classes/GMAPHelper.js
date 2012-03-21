@@ -1,3 +1,10 @@
+// INIT ----------------------------------------------------------
+$(function(){
+	GMAPHelper = new GMAPHelper();
+	GMAPHelper.loadMap();
+});
+//----------------------------------------------------------------
+
 function GMAPHelper()
 {
 	var loadMap = function ()

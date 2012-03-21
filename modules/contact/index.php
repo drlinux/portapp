@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/../../classes/config.inc.php';
+require_once dirname(__FILE__) . '/__master__.php';
 
 $_action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'view';
 
@@ -18,6 +19,8 @@ switch($_action)
 		break;
 	case 'view':
 	default:
-		$model->displayTemplate("b2c", "index");
+		global $data;
+		addJavascript("assets/extension/classes/GMAPHelper.js");
+		$model->displayTemplate("b2b", "index", $data);
 		break;
 }

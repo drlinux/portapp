@@ -59,3 +59,6 @@ if (!isset($_SERVER['REQUEST_URI']) OR empty($_SERVER['REQUEST_URI']))
 
 /* Smarty */
 require_once(dirname(__FILE__).'/smarty.config.inc.php');
+
+// Functions
+require_once(dirname(__FILE__).'/functions.php');

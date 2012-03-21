@@ -37,7 +37,7 @@ switch($_action)
 		// Delivery Address
 		$user = new User();
 		$data["delivery_address"] = $user->getDeliveryaddresses();
-		
+		addJavascript("assets/extension/classes/Postaladdress.js");
 		
 		$model->displayTemplate("b2c", "address", $data);
 		break;

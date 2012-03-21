@@ -339,6 +339,8 @@ switch($_action)
 		$data["invoiceaddress"] = $postaladdress->getEntry($invoiceaddressId);
 
 		//print_r($data);exit;
+		
+		addJavascript("assets/extension/classes/Payment.js");
 
 		if ($data["payment"]["paymentgroupId"] == 1)
 		{

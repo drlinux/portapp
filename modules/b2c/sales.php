@@ -65,6 +65,10 @@ switch($_action)
 		break;
 	case 'view':
 	default:
+		addJavascript("assets/extension/classes/Transportation.js");
+		addJavascript("assets/extension/classes/User.js");
+		addJavascript("assets/extension/classes/Postaladdress.js");
+		
 		$model->displayTemplate("b2c", "sales", $data);
 		break;
 }

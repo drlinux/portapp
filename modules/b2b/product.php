@@ -51,19 +51,26 @@ switch($_action)
 		
 		$usertrack = new Usertrack();
 		$usertrack->addTrack(3, "productId=" . $productId);
+		// List similar products
+		
+		$temp = $productattribute->getProductattributes(array("iDisplayStart"=>0,"iDisplayLength"=>100,"sType"=>"similar", "categoryId"=>$data["category"]["defaultx"]["categoryId"]), false);
+		
+		if(Permission::checkPermission("b2b"))
+		{
+			parseProductsList($temp["aaData"], $data["product_list"]);
+		}
 		
 		$model->displayTemplate("b2b", "product", $data);
 		break;
 	case 'view':
 	default:
-		$temp = $productattribute->getProductattributes(array("iDisplayStart"=>0,"iDisplayLength"=>100,"sSearch"=>""));
+		$temp = $productattribute->getProductattributes(array("iDisplayStart"=>0,"iDisplayLength"=>100,"sSearch"=>""), false);
 		
-		// deneme yapmak için "true" değerini ekledim. 
-		if(true || Permission::checkPermission("b2b"))
+		if(Permission::checkPermission("b2b"))
 		{
 			parseProductsList($temp["aaData"], $data["product_list"]);
 		}
-		
+			
 		$model->displayTemplate("b2b", "product_list", $data);
 		break;
 }

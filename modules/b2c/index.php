@@ -103,6 +103,8 @@ switch($_action)
 		/* BANNERS */
 		getBanners($data["banner_files"]);
 		
+		addJavascript("assets/extension/classes/User.js");
+		
 		$model->displayTemplate("b2c", "index", $data);
 		break;
 }

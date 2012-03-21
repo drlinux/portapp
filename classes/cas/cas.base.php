@@ -67,6 +67,10 @@ class CasBase extends CasDatabase
 	{
 		global $smarty;
 		
+		// assign javascript files
+		global $JAVASCRIPT_FILES_LIST;
+		$smarty->assign("JAVASCRIPT_FILES", $JAVASCRIPT_FILES_LIST);
+		
 		/*
 		if ($module == null) {
 			$dir = _PS_THEMES_DIR_ . $smarty->getVariable("_THEME_B2C_NAME") . "/";

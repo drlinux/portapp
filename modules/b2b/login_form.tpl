@@ -1,7 +1,7 @@
 <div class="casContent">
 	<h1 class="subHeader">Sisteme Giriş</h1>
 
-	<form autocomplete="off" action="modules/b2b/index.php" method="post">
+	<form autocomplete="off" action="modules/b2b/index.php" method="post" onsubmit="return false;">
 	<ul class="ulform">
 		<li>
 			<label>{#LABEL_Username#}</label>

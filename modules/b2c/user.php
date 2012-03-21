@@ -27,8 +27,8 @@ switch($_action)
 		$data["model"]['userEmailNew'] = $data["model"]['userEmail'];
 		$data["model"]['userNameNew'] = $data["model"]['userName'];
 		//$data["model"]['userBirthdate'] = implode(".", array_reverse(explode("-", $data["model"]['userBirthdate'])));
-		//print_r($data);exit;
-		
+		//print_r($data); exit;
+		addJavascript("assets/extension/classes/User.js");
 		$model->displayTemplate("b2c", "user", $data);
 		break;
 }
