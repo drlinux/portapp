@@ -48,6 +48,13 @@
 			{/foreach}
 		</td>
 	</tr>
+	<tr>
+		<td class="vat">Menüde Görünsün mü?</td>
+		<td>
+			<input type="checkbox" {if $data.model.display eq 1} checked="checked" {/if} name="display" value="1" />
+		</td>
+	</tr>
+	
 </tbody>
 <tfoot>
 	<tr>

@@ -69,7 +69,7 @@
 		<script type="text/javascript" src="assets/extension/analytics.js"></script>
 		<script type="text/javascript" src="assets/extension/jtable.js"></script>
 		<script type="text/javascript" src="assets/extension/common.js"></script>
-		<script type="text/javascript" src="assets/extension/GMAPHelper.js"></script>
+		<!--<script type="text/javascript" src="assets/extension/classes/GMAPHelper.js"></script>-->
 
 
 <!-- STYLES -->

@@ -1,16 +1,20 @@
 <?php
 ob_start("ob_gzhandler");
-
 global $project;
+
+$content = file_get_contents(dirname(__FILE__) . "/../configs/Settings.properties");
+preg_match_all('/dbname = \"(.*)\"/', $content, $matches);
 $aHost = explode(".", $_SERVER["SERVER_NAME"]);
-$project['dbname'] = $aHost[0];
+$project['dbname'] = $matches[1][0]; //$aHost[0]; //"abiyeon_" . $aHost[0];
 
 //error_reporting (E_ALL ^ E_NOTICE);
-if (false) {//DEVELOPMENT_ENVIRONMENT == true
+if(false) 
+{//DEVELOPMENT_ENVIRONMENT == true
 	error_reporting(E_ALL);
 	ini_set('display_errors','On');
 }
-else {
+else 
+{
 	error_reporting(E_ALL);
 	ini_set('display_errors','Off');
 	ini_set('log_errors', 'On');

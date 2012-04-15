@@ -24,6 +24,10 @@ switch($_action)
 		break;
 	case 'view':
 	default:
-		$model->displayTemplate("b2c", "register", $_GET);
+		addJavascript("assets/extension/classes/User.js");
+		
+		$data = array_merge($_GET, $data);
+		
+		$model->displayTemplate("b2c", "register", $data);
 		break;
 }

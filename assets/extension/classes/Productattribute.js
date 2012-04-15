@@ -729,7 +729,7 @@ function Productattribute()
 							});
 						}
 						
-						checkProductcompare(response.productId);
+						//checkProductcompare(response.productId);
 						
 						updatePayments(response.productattributepriceMDV);
 						
@@ -871,16 +871,20 @@ function Productattribute()
 			$.post(CommonItems.getLocation() + 'product.php', "action=saveWishlist&productId="+productId, function(response) {
 				if (response.success == true) {
 					$(e).html("Alışveriş listemden çıkar");
-					CommonItems.casDialog(jQuery.i18n.prop('ALERT_Completed'));
+					//CommonItems.casDialog(jQuery.i18n.prop('ALERT_Completed'));
 				}
 				else {
 					CommonItems.casDialog(jQuery.i18n.prop('ALERT_ErrorOccured'));
 				}
 			}, "json");
+			
+			
 		}
 		else {
 			CommonItems.casDialog("Giriş yapmalısınız");
 		}
+		
+		return false;
 	};
 	
 	var removeWishlist = function (e, productId) {

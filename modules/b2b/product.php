@@ -60,6 +60,8 @@ switch($_action)
 			parseProductsList($temp["aaData"], $data["product_list"]);
 		}
 		
+		addJavascript("assets/extension/classes/User.js");
+		
 		$model->displayTemplate("b2b", "product", $data);
 		break;
 	case 'view':
@@ -70,6 +72,8 @@ switch($_action)
 		{
 			parseProductsList($temp["aaData"], $data["product_list"]);
 		}
+		
+		addJavascript("assets/extension/classes/User.js");
 			
 		$model->displayTemplate("b2b", "product_list", $data);
 		break;

@@ -15,14 +15,15 @@ switch($_action)
 		
 	case 'view':
 	default:
-		$data["page"] = $model->getDefaultPage();
+		$page = $model->getDefaultPage();
+		$data["page"] = $page;
 		//print_r($data);exit;
 		
 		$usertrack = new Usertrack();
-		$usertrack->addTrack(4, "pageId=" . $data["pageId"]);
+		$usertrack->addTrack(4, "pageId=" . $page["pageId"]);
 		
-		if ($data["pageRedirect"]!="") {
-			header("Location: " . _MODULE_DIR_ . $data["pageRedirect"] . "/index.php");
+		if ($page["pageRedirect"]!="") {
+			header("Location: " . _MODULE_DIR_ . $page["pageRedirect"] . "/index.php");
 		}
 		else {
 			$model->displayTemplate("b2c", "page", $data);

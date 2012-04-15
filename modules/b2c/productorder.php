@@ -98,7 +98,7 @@ switch($_action)
 						$data["digest"] = $Root->oosRequestDataResponse->sign;
 						$data["vftCode"] = "";
 						$data["merchantReturnURL"] = $project['url'] . "modules/b2c/productorder_provision-tds.php";
-							
+						// TODO: yönlendirme yerine curl kullanılacak
 						$model->displayTemplate("b2c", $model->sTable."_cc_provision", $data);
 					}
 					else

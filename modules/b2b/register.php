@@ -24,6 +24,7 @@ switch($_action)
 		break;
 	case 'view':
 	default:
+		addJavascript("assets/extension/classes/User.js");
 		$model->displayTemplate("b2b", "register", null);
 		break;
 }

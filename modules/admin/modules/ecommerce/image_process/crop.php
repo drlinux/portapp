@@ -2,7 +2,7 @@
 require_once dirname(__FILE__) . '/../../../../../classes/config.inc.php';
 $IMAGE_PROCESSOR = new IMAGE_PROCESSOR();
 $basePath = "../../../../../";
-$predefinedResolutions = json_decode($smarty->getVariable("PREDEFINED_PICTURE_RESOLUTIONS"), true);
+$predefinedResolutions = json_decode($smarty->getVariable("PREDEFINED_PICTURE_RESOLUTIONS"), true);
 if($_POST["action"] == "cropImage")
 {	
 	extract($_POST,EXTR_SKIP);

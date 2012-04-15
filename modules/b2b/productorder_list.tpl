@@ -9,7 +9,7 @@
 				<ul class="fl w500px ultable">
 					<li>
 						<label>Sipariş No:</label>
-						<a href="{$SCRIPT_NAME}?action=showProductorder&productorderId={$productorder.productorderId}">{$productorder.XID}</a>
+						<a href="modules/b2b/showproductorder.php?productorderId={$productorder.productorderId}">{$productorder.XID}</a>
 					</li>
 					<li>
 						<label>Sipariş Tarihi:</label>

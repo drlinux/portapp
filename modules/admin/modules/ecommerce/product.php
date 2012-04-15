@@ -201,6 +201,7 @@ switch($_action)
 		//$data["product"] = $model->getEntry($productId);
 		$data["product"] = $model->getProductByProductId($productId);
 		$resolutions = json_decode($smarty->getVariable("PREDEFINED_PICTURE_RESOLUTIONS"), true);
+		
 		foreach($resolutions as $r)
 		{
 			$predef_res[] = array("res_width"=>$r[0], "res_height"=>$r[1], "crop_left"=>0, "crop_top"=>0, "crop_width"=>133, "crop_height"=>100);	

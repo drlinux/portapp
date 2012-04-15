@@ -1,6 +1,7 @@
 $(startDefault);
 
 var global_settings = {};
+var GMAPHelper;
 
 function startDefault()
 {
@@ -13,8 +14,8 @@ function startDefault()
 	//////////////////////////////////////////////////////////////////////////////
 	CommonItems = new CommonItems();
 	
-	GMAPHelper = new GMAPHelper();
-	GMAPHelper.loadMap();
+	/*GMAPHelper = new GMAPHelper();
+	GMAPHelper.loadMap();*/
 	
 	Productattributemovement = new Productattributemovement();
 	Productattributemovement.getProductattributemovementByProductattributeId();

@@ -9,7 +9,7 @@ class Permission extends CasBase
 		$this->sTable		= strtolower(__CLASS__);
 		$this->sTableI18n	= $this->sTable."_i18n";
 
-		$this->aAllField		= array("permissionId", "permissionParent", "permissionHref", "permissionSorting");
+		$this->aAllField		= array("permissionId", "permissionParent", "permissionHref", "permissionSorting", "display");
 		$this->sIndexColumn		= "permissionId";
 		$this->sIndexColumnFull	= $this->sTable.".".$this->sIndexColumn;
 
@@ -79,7 +79,7 @@ class Permission extends CasBase
 		return json_encode($this->arrayTree($id, $selected));
 	}
 
-	public function arrayTree($id=null, $selected=null)
+	public function arrayTree($id=null, $selected=null, $display="all")
 	{
 		$sql = array();
 		array_push($sql, "select *");
@@ -87,6 +87,12 @@ class Permission extends CasBase
 		array_push($sql, "left join " . $this->sTableI18n . " on " . $this->sIndexColumnI18nFull . " = " . $this->sIndexColumnFull . " and " . $this->sIso639ColumnI18nFull . " = :iso639");
 		if ($id==null) array_push($sql, "where " . $this->sParentColumnFull . " is null");
 		else array_push($sql, "where " . $this->sParentColumnFull . " = " . $id);
+		
+		if($display != "all")
+		{
+			array_push($sql, "AND {$this->sTable}.display='{$display}'");
+		}
+		
 		array_push($sql, "order by");
 		array_push($sql, $this->sParentColumnFull . " asc,");
 		array_push($sql, $this->sSortingColumnFull . " asc");

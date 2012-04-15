@@ -242,14 +242,14 @@ switch($_action)
 		
 	
 	case 'listProductorder':
-		$data = $model->getProductordersOwned();
+		$data = array_merge($data, $model->getProductordersOwned());
 		//print_r($data);exit;
 
 		$model->displayTemplate("b2b", $model->sTable."_list", $data);
 		break;
 		
 	case 'showProductorder':
-		$data = $model->getProductorder($_REQUEST[$model->sIndexColumn]);
+		$data = array_merge($data, $model->getProductorder($_REQUEST[$model->sIndexColumn]));
 		//print_r($data);exit;
 	
 		$model->displayTemplate("b2b", $model->sTable."_show", $data);
@@ -339,6 +339,8 @@ switch($_action)
 		$postaladdress = new Postaladdress;
 		$data["deliveryaddress"] = $postaladdress->getEntry($deliveryaddressId);
 		$data["invoiceaddress"] = $postaladdress->getEntry($invoiceaddressId);
+		
+		addJavascript("assets/extension/classes/Payment.js");
 
 		//print_r($data);exit;
 

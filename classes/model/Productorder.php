@@ -104,12 +104,12 @@ class Productorder extends CasBase
 		$currency = new Currency();
 		$amountCur = $currency->formatWithCurrency($amount);
 		
-		$mailer = new CasMailer();
+		/*$mailer = new CasMailer();
 		$mailer->Subject = $smarty->getConfigVariable("MAIL_SUBJECT_PRODUCTORDER");
 		$mailer->MsgHTML(sprintf($smarty->getConfigVariable("MAIL_BODY_PRODUCTORDER"), $aUser["userFirstname"], $aUser["userLastname"], $XID, $amountCur, $aPayment["paymentgroup"]["paymentgroupTitle"]));
 		$mailer->AddAddress($aUser["userEmail"]);
-		$mailer->AddCC($smarty->getVariable("_EMAIL_FROM"));
-		if(!$mailer->Send()) {
+		$mailer->AddCC($smarty->getVariable("_EMAIL_FROM"));*/
+		if(true || !$mailer->Send()) {
 			//$this->msg = $smarty->getConfigVariable("ALERT_MailerSendError");//$mailer->ErrorInfo
 			//return false;
 		}

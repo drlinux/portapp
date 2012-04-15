@@ -28,10 +28,9 @@ class CasBase extends CasDatabase
 
 	function __construct()
 	{
-		
 		global $project;
-		parent::__construct($project['dbname']);
-
+		
+		parent::__construct($project["dbname"]);
 	}
 
 
@@ -952,7 +951,7 @@ class CasBase extends CasDatabase
 								{
 									//$width = $thumbnail[0];
 									//$height = $thumbnail[1];
-									$scale = $thumbnail[0];
+									$scale = $thumbnail;
 									
 									//if (!file_exists($uploadTo)) mkdir($uploadTo);
 									//$fileNameThumbWithExtension = sprintf("%s-%s.%s", $fileName, ($i+1), $extension);
@@ -960,11 +959,22 @@ class CasBase extends CasDatabase
 									$fileNameThumbWithExtension = sprintf("%s_%s.%s", ($key+1), $fileName, $extension);
 									$fileNameThumbWithPath = $uploadTo . $fileNameThumbWithExtension;
 									
-									$image->load($fileNameResizeWithPath);
-									$image->scale($scale);
-									$image->save($fileNameThumbWithPath);
+									$IMAGE_PROCESSOR = new IMAGE_PROCESSOR();
+									$IMAGE_PROCESSOR->load($fileNameResizeWithPath);
+									$IMAGE_PROCESSOR->resize($scale[0], $scale[1], true, true);
+									$IMAGE_PROCESSOR->save($fileNameThumbWithPath);
 									
-									usleep(1);//1sec=1000000
+									/* GENERATE BIG IMAGE ************************************************************************/
+									if($key == 3)
+									{
+										$bigImgNameWithExtension = sprintf("big_%s.%s", $fileName, $extension);
+										$bigImgNameWithPath = $uploadTo . $bigImgNameWithExtension;
+										
+										$IMAGE_PROCESSOR->load($fileNameResizeWithPath);
+										$IMAGE_PROCESSOR->resize(($scale[0] * 5), ($scale[1] * 5), true, true);
+										$IMAGE_PROCESSOR->save($bigImgNameWithPath);
+									}
+									/**********************************************************************************************/
 								}
 							}
 	

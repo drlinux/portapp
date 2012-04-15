@@ -1,21 +1,26 @@
 <?php
 
-//$productgroup = new Productgroup;
+$productgroup = new Productgroup;
 $permission = new Permission;
 $page = new Page();
 $category = new Category();
 $brand = new Brand();
 $productattribute = new Productattribute;
 
+// EXTRA PARAMETERS
+$data["slider_theme"] = "default";
 
 // MAIN MENU
 $data["main_menu"] = $page->arrayPage(false, null);
 
+
+
 // LOGIN MENU & PERSONAL INFO
 if(Permission::checkPermission("b2b"))
 {
+	$data["user_menu_title"] = "KULLANICI BİLGİLERİ";
 	$menuitems = $permission->arrayTree(30);
-
+	
 	$menuHtml = '<ul>';
 	foreach($menuitems as $mi)
 	{
@@ -23,10 +28,16 @@ if(Permission::checkPermission("b2b"))
 	}
 	$menuHtml .= '</ul>';
 }
+else
+{
+	$data["user_menu_title"] = "ÜYE GİRİŞİ";
+	$menuHtml = 'no_permission';	
+}
 
 $data["user_menu"] = $menuHtml;
 
-// CATEGORIES MENU
+
+/* CATEGORIES MENU */
 $categories = $category->getCategoriesFromProductHavingPicture();
 foreach($categories["aaData"] as $c)
 {
@@ -34,7 +45,7 @@ foreach($categories["aaData"] as $c)
 }
 $data["categories_menu"] = $categoriesHtml;
 
-// BRANDS MENU
+/* BRANDS MENU */
 $brands = $brand->getBrandsFromProductHavingPicture();
 foreach($brands["aaData"] as $b)
 {
@@ -50,17 +61,11 @@ $data["footer_menu"] = $page->arrayPage(false, null);
 $data["contracts_menu"] = $page->arrayPage(false, 6);
 
 
-/*
-
-// EXTRA PARAMETERS
-$data["slider_theme"] = "default";
-
-*/
 
 
-//************************************************************************************************
-// FUNCTIONS *************************************************************************************
-//************************************************************************************************
+/*************************************************************************************************/
+/* FUNCTIONS *************************************************************************************/
+/*************************************************************************************************/
 function parseProductsList(&$products, &$result)
 {
 	foreach($products as $p)
@@ -106,21 +111,5 @@ function getBanners(&$result)
 	}
 }
 
-function listCampaigns(&$result)
-{
-	$campaign = new Salescampaign;
-	
-	$campaigns = $campaign->getSalescampaigns();
-	
-	foreach($campaigns["aaData"] as $c)
-	{
-		$result .= '<li class="banner">
-						<h2 class="name">' . $c["salescampaignTitle"] . '</h2>
-						<p class="timeLeft">Kampanya bitiş tarihi: <span style="color:#f00;">' . $c["salescampaignEnd"] . '</span></p>
-						<a class="buy" href="modules/b2b/salescampaign.php?action=show&salescampaignId=' . $c["salescampaignId"] . '">SATIN AL</a>
-						<a class="imageLink" href="modules/b2b/salescampaign.php?action=show&salescampaignId=' . $c["salescampaignId"] . '">
-							<img src="img/salescampaign/' . $c["pictureFile"] . '" />
-						</a>
-					</li>';
-	}
-}
+
+

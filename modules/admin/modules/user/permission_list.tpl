@@ -55,7 +55,7 @@ $(document).ready(function() {
 			aoData.push( { name: "action", value: "dataTables" } );
 			$.getJSON( sSource, aoData, function (json) { 
 				fnCallback(json);
-			} );
+			});
 			/*
 			$.ajax( {
 				url: sSource,

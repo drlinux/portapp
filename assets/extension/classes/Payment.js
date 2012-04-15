@@ -59,6 +59,11 @@ function Payment()
 				else {
 					CommonItems.casDialog(response.msg);
 				}
+			},
+			error:function(a, b, c){
+				alert(JSON.stringify(a));
+				alert(b);
+				alert(c);
 			}
 		});
 		return false;

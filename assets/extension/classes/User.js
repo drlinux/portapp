@@ -177,6 +177,9 @@ function User()
 						else {
 							CommonItems.casDialog(response.msg);
 						}
+					},
+					error:function(){
+						CommonItems.casDialog("Beklenmedik Hata! Daha sonra tekrar deneyin!");
 					}
 				});
 			},

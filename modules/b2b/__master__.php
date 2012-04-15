@@ -14,8 +14,8 @@ $data["main_menu"] = $page->arrayPage(false, null);
 // LOGIN MENU & PERSONAL INFO
 if(Permission::checkPermission("b2b"))
 {
-	$menuitems = $permission->arrayTree(30);
-
+	$menuitems = $permission->arrayTree(30, null, 1);
+	
 	$menuHtml = '<ul>';
 	foreach($menuitems as $mi)
 	{

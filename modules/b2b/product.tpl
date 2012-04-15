@@ -130,6 +130,7 @@ $(function() {
 					<button type="submit" onclick="Productattribute.updateProductattributebasket(this.form);">Sepete Ekle</button>
 				</li>
 				<li></li>
+				<!--
 				<li class="buttonSocial facebook">
 					<div class="fb-like" data-href="http://URL.com" data-send="false" data-layout="button_count"  data-width="" data-show-faces="false"></div>
 				</li>
@@ -138,14 +139,14 @@ $(function() {
 				</li>
 				<li class="buttonSocial gplus">
 					<g:plusone size="medium"></g:plusone>
-				</li>
+				</li>-->
 				<li class="buttonWishlist">
 					<a href="#"></a>
 				</li>
-				<li class="buttonCompare"></li>
+				<!--<li class="buttonCompare"></li>
 				<li>
 					<a href="modules/b2b/productcompare.php">Karşılaştırma Listesi</a>
-				</li>
+				</li>-->
 			</ul>
 		</form>
 	</div>
@@ -156,7 +157,7 @@ $(function() {
 			<li><a href="#tabs-2">Ürün Videosu</a></li>
 			{/if}
 			<li><a href="#tabs-3">Taksit Seçenekleri</a></li>
-			<li><a href="#tabs-4">Yorumlar</a></li>
+			<!--<li><a href="#tabs-4">Yorumlar</a></li>-->
 		</ul>
 		<div id="tabs-1">
 			{$data.productContent}
@@ -169,10 +170,10 @@ $(function() {
 		<div id="tabs-3">
 			<div id="paymentPeriodTable"></div>
 		</div>
-		<div id="tabs-4">
+		<!--<div id="tabs-4">
 			<div id="fb-root"></div>
 			<div class="fb-comments" data-href="{$project.uri}" data-num-posts="10" data-width="630"></div>
-		</div>
+		</div>-->
 	</div>
 </div>
 <div class="casContent">

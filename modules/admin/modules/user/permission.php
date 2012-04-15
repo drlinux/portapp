@@ -21,7 +21,9 @@ switch($_action) {
 		echo $model->dataTables($aColumns, $model->sIndexColumn, $model->sTable, $_GET);
 		break;
 	case 'save':
+		$_POST["display"] = !isset($_POST["display"]) ? -1 : $_POST["display"];
 		$formvars = array_merge($_POST, $_FILES);
+
 		$permissionId = $model->saveEntry($formvars, array("i18n"=>true));
 		
 		global $smarty;

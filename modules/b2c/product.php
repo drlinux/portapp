@@ -59,10 +59,14 @@ switch($_action)
 		$usertrack = new Usertrack();
 		$usertrack->addTrack(3, "productId=" . $productId);
 		
+		addJavascript("assets/extension/classes/User.js");
+		
 		$model->displayTemplate("b2c", "product", $data);
 		break;
 	case 'view':
 	default:
+		addJavascript("assets/extension/classes/User.js");
+		
 		$model->displayTemplate("b2c", "product", $data);
 		break;
 }

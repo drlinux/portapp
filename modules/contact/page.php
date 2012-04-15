@@ -23,7 +23,7 @@ switch($_action)
 			header("Location: " . _MODULE_DIR_ . $data["pageRedirect"] . "/index.php");
 		}
 		else {
-			$model->displayTemplate("b2c", "page", $data);
+			$model->displayTemplate("b2b", "page", $data);
 		}
 		break;
 }

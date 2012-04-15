@@ -110,6 +110,9 @@ function Transportation()
 			var formData = $("[cas-js=getShoppingbasket2]").serializeArray();
 			formData.push({ name: "action", value: "setParameters" });
 			//alert("POSTing this:\n" + jQuery.param(formData));
+			
+			//alert(CommonItems.getLocation() + 'productorder.php?' + jQuery.param(formData));
+			
 			window.location.replace( CommonItems.getLocation() + 'productorder.php?' + jQuery.param(formData) );
 			return false;
 		})
