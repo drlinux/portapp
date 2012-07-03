@@ -80,7 +80,6 @@ $(document).ready(function() {
 		<th>{#LABEL_Id#}</th>
 		<th>{#LABEL_Firstname#}</th>
 		<th>{#LABEL_Lastname#}</th>
-		<th>{#LABEL_Username#}</th>
 		<th>{#LABEL_EmailAddress#}</th>
 		<th>TCKN</th>
 	</tr>

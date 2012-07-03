@@ -53,10 +53,24 @@ switch($_action)
 		$usertrack->addTrack(3, "productId=" . $productId);
 		// List similar products
 		
-		$temp = $productattribute->getProductattributes(array("iDisplayStart"=>0,"iDisplayLength"=>100,"sType"=>"similar", "categoryId"=>$data["category"]["defaultx"]["categoryId"]), false);
+		
 		
 		if(Permission::checkPermission("b2b"))
 		{
+			
+			$salescampaign = new Salescampaign;
+			$useCampaign = $smarty->getVariable("_USE_CAMPAIGN_MODULE");
+			
+			if($useCampaign == "true")
+			{
+				$temp = $salescampaign->getSimilarProductsFromCampaign($_REQUEST["productId"]);
+			}
+			
+			if(($useCampaign != "true") || ($temp["iTotalRecords"] <= 0))
+			{
+				$temp = $productattribute->getProductattributes(array("iDisplayStart"=>0,"iDisplayLength"=>3,"sType"=>"similar", "categoryId"=>$data["category"]["defaultx"]["categoryId"]), false);
+			}
+			
 			parseProductsList($temp["aaData"], $data["product_list"]);
 		}
 		

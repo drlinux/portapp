@@ -22,7 +22,7 @@ class Usertrack extends CasBase
 		$sql = array();
 		array_push($sql, "select");
 		array_push($sql, "usertracktype.usertracktypeTitle,");
-		array_push($sql, "user.userName,");
+		array_push($sql, "user.userEmail,");
 		array_push($sql, "usertrack.*");
 		array_push($sql, "from " . $this->sTable);
 		array_push($sql, "left join user on user.userId = usertrack.userId");
@@ -148,7 +148,7 @@ class Usertrack extends CasBase
 		 * Get data to display
 		 */
 		$sQuery = "
-			SELECT SQL_CALC_FOUND_ROWS usertrack.*, user.userName, usertracktype.usertracktypeTitle
+			SELECT SQL_CALC_FOUND_ROWS usertrack.*, user.userEmail, usertracktype.usertracktypeTitle
 			from usertrack
 			left join user on user.userId = usertrack.userId
 			left join usertracktype on usertracktype.usertracktypeId = usertrack.usertracktypeId

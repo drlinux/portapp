@@ -171,8 +171,13 @@ function User()
 						CommonItems.casLoaderShow();
 					},
 					success: function(response) {
+						
 						if (response.success == true) {
-							CommonItems.casDialog(response.msg);
+							CommonItems.casDialog({content:response.msg,
+									onClosed:function(){
+										window.location.href = "index.php";
+									}
+							});
 						}
 						else {
 							CommonItems.casDialog(response.msg);
@@ -313,6 +318,144 @@ function User()
 			}
 		});
 		return false;
+	};
+	
+	var updatePersonalInfo = function (form)
+	{
+		$form = $(form);
+		$form.validate({
+			submitHandler: function(f) {
+				$form.ajaxSubmit({
+					data: { action: 'updatePersonalInfo' },
+					dataType: 'json',
+					beforeSubmit: function(a,f,o) {
+						//console.log(a);
+					},
+					success: function(response) {
+						if (response.success == true) {
+							CommonItems.casDialog({
+								content: jQuery.i18n.prop('ALERT_Completed'),
+								onClosed: function () {
+									window.location.reload();
+								}
+							});
+						}
+						else {
+							// TODO: input title dan alıp alert verilebilir mi?
+							//CommonItems.casDialog(response.msg + ' - ' + response.field + ' - ' + $("[name="+response.field+"]").attr("title"));
+							CommonItems.casDialog(response.msg);
+						}
+					}
+				});
+			},
+			rules: {
+				userGender: {
+					required: true
+				},
+				userFirstname: {
+					required: true
+				},
+				userLastname: {
+					required: true
+				},
+				userBirthdate: {
+					date: true,
+					required: true
+				},
+				userPosition: {
+					required: true
+				}
+			},
+			messages: {
+				userGender: {
+					required: jQuery.i18n.prop('ALERT_PleaseMakeAChoice')
+				},
+				userFirstname: {
+					required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
+				},
+				userLastname: {
+					required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
+				},
+				userBirthdate: {
+					date: jQuery.i18n.prop('ALERT_PleaseCheckOutDateFormat'),
+					required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
+				},
+				userPosition: {
+					required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
+				}
+			}
+		});
+		return false;
+	};
+	
+	var updateAccountInfo = function (form)
+	{
+		email = document.getElementsByName("userEmailNew")[0].value;
+		email_repeat = document.getElementsByName("userEmailNew_Repeat")[0].value;
+		
+		pass = document.getElementsByName("userPass")[0].value;
+		pass_repeat = document.getElementsByName("userPass_Repeat")[0].value;
+		
+		if(email != email_repeat)
+		{
+			CommonItems.casDialog(jQuery.i18n.prop('ALERT_EmailsDontMatch'));
+			return false;
+		}
+		
+		if((pass.length > 0) && (pass.length < 6))
+		{
+			CommonItems.casDialog(jQuery.i18n.prop('ALERT_PasswordAtLeastSixCharacterLength'));
+			return false;
+		}
+		
+		if((pass.length >= 6) && (pass != pass_repeat))
+		{
+			CommonItems.casDialog(jQuery.i18n.prop('ALERT_PasswordsDontMatch'));
+			return false;
+		}
+		
+		
+		$form = $(form);
+		$form.validate({
+			submitHandler: function(f) {
+				$form.ajaxSubmit({
+					data: { action: 'updateAccountInfo' },
+					dataType: 'json',
+					beforeSubmit: function(a,f,o) {
+						//console.log(a);
+					},
+					success: function(response) {
+						if (response.success == true) {
+							CommonItems.casDialog({
+								content: jQuery.i18n.prop('ALERT_Completed'),
+								onClosed: function () {
+									window.location.reload();
+								}
+							});
+						}
+						else {
+							// TODO: input title dan alıp alert verilebilir mi?
+							//CommonItems.casDialog(response.msg + ' - ' + response.field + ' - ' + $("[name="+response.field+"]").attr("title"));
+							CommonItems.casDialog(response.msg);
+						}
+					}
+				});
+			},
+			rules: {
+				
+				userEmailNew: {
+					email: true,
+					required: true
+				}
+			},
+			messages: {
+				userEmailNew: {
+					email: jQuery.i18n.prop('ALERT_PleaseEnterAValidEmailAddress'),
+					required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
+				}
+			}
+		});
+		return true;
 	};
 	
 	var loginUser = function (form)
@@ -461,5 +604,8 @@ function User()
 	Obj.loginUser = loginUser;
 	Obj.resetUserPass = resetUserPass;
 	Obj.sendRecommendation = sendRecommendation;
+	Obj.updateAccountInfo = updateAccountInfo;
+	Obj.updatePersonalInfo = updatePersonalInfo;
+	
 	return Obj;
 }

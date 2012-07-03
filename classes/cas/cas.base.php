@@ -791,7 +791,8 @@ class CasBase extends CasDatabase
 		}
 		else {
 			$extension = CasString::getExtension(basename($multipart['name']));
-			$fileName = time();
+			//$fileName = time();  // Aynı anda birden çok dosya upload edince dosya ismi üretmede sıkıntı oluyor o yüzden php uniqid() kullanıyoruz
+			$fileName = uniqid();
 			$fileNameWithExtension = $fileName . '.' . $extension;
 
 			$fileSize = $multipart['size'];

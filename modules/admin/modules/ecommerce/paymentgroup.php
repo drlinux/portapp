@@ -32,7 +32,7 @@ switch($_action) {
 		if ($p = $payment->isExistByPaymentgroupIdAndPaymentPeriod($paymentgroupId, $paymentPeriod)) {
 			$_POST["paymentId"] = $p["paymentId"];
 		}
-		$payment->saveEntry($_POST);
+		$payment->savePayment($_POST);
 		header("Location: " . $_SERVER["PHP_SELF"]);
 		break;
 	case 'delete':

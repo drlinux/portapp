@@ -13,6 +13,7 @@ $data["slider_theme"] = "default";
 // MAIN MENU
 $data["main_menu"] = $productgroup->getEntries(array("i18n"=>true));
 
+
 // LOGIN MENU & PERSONAL INFO
 if(Permission::checkPermission("b2c"))
 {

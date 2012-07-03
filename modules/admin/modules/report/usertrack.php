@@ -9,7 +9,7 @@ $model = new Usertrack;
 
 switch($_action) {
 	case 'dataTables':
-		$aColumns = array( 'usertrackId', 'usertrackDatetime', 'usertrackIp', 'usertracktypeTitle', 'userName' );
+		$aColumns = array( 'usertrackId', 'usertrackDatetime', 'usertrackIp', 'usertracktypeTitle', 'userEmail' );
 		echo $model->dataTables($aColumns, $model->sIndexColumn, $model->sTable, $_GET);
 		break;
 	case 'edit':

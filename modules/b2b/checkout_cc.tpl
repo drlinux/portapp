@@ -1,4 +1,12 @@
 <div class="casContent">
+	{if $data.error neq 'no_error'}
+		<h2 class="subHeader">Ödeme Gerçekleştirilemedi!</h2>
+		<p>
+			{$data.error}
+		</p>
+	{/if}
+</div>
+<div class="casContent">
 	<h1 class="subHeader">Sipariş Ayrıntıları</h1>
 	
 	<p><b>Ödeme Şekli:</b> {$data.payment.paymentgroup.paymentgroupTitle}</p>
@@ -10,9 +18,8 @@
 	<p><b>Taşıma:</b> {$data.transportation.transportationTitle} ({$data.transportation.transportationPriceCur})</p>
 	<p><b>Toplam Tutar:</b> {$data.amountRealWC}</p>
 </div>
-
 <div class="casContent">
-	<h2 class="mb5">Ödeme</h2>
+	<h2 class="mb5 subHeader">Ödeme</h2>
 	<p class="mb10" style="font-style: italic;">{$data.payment.paymentgroup.paymentgroupContent}</p>
 	
 	<form method="post" action="{$SCRIPT_NAME}">
@@ -50,5 +57,4 @@
 		</li>
 	</ul>
 	</form>
-	
 </div>

@@ -1,7 +1,7 @@
 <div class="casContent">
 	<h1 class="subHeader">Siparişlerim</h1>
 
-	<table class="fl w100p" style="border-spacing: 0;">
+	<table id="productOrderList" class="fl w100p" style="border-spacing: 0;">
 	<tbody>
 		{foreach from=$data.aaData item="productorder"}
 		<tr>
@@ -13,7 +13,7 @@
 					</li>
 					<li>
 						<label>Sipariş Tarihi:</label>
-						{$productorder.productorderDatetime}
+						{$productorder.convertedDate}
 					</li>
 					<li>
 						<label>Ödeme Şekli:</label>
@@ -36,7 +36,7 @@
 						{$productorder.invoiceaddress.postaladdressContent}, {$productorder.invoiceaddress.postaladdressCity}, {$productorder.invoiceaddress.postaladdressCounty}, {$productorder.invoiceaddress.postaladdressPostalcode}, {$productorder.invoiceaddress.postaladdressCountry}
 					</li>
 				</ul>
-				<table id="productOrdersList" class="fr w400px">
+				<table class="productOrdersList" class="fr w400px">
 				<caption>Sipariş edilen ürün(ler)</caption>
 				<thead>
 					<tr>

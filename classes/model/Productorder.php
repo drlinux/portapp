@@ -130,7 +130,6 @@ class Productorder extends CasBase
 		array_push($sql, "user.userTckn,");
 		array_push($sql, "user.userFirstname,");
 		array_push($sql, "user.userLastname,");
-		array_push($sql, "user.userName,");
 		array_push($sql, "user.userEmail,");
 		array_push($sql, "user.userPhone,");
 		array_push($sql, "productorderstatus.*,");
@@ -181,7 +180,7 @@ class Productorder extends CasBase
 	function getProductordersOwned()
 	{
 		$sql = array();
-		array_push($sql, "select *");
+		array_push($sql, "select *, DATE_FORMAT(productorder.productorderDatetime, '%d %M %Y - %H:%i:%s') AS convertedDate ");
 		array_push($sql, "from " . $this->sTable);
 		array_push($sql, "left join productorderstatus on productorderstatus.productorderstatusId = productorder.productorderstatusId");
 		array_push($sql, "left join productorderstatus_i18n on productorderstatus_i18n.productorderstatusId = productorderstatus.productorderstatusId and productorderstatus_i18n.iso639Id = :iso639");

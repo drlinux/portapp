@@ -36,7 +36,7 @@
 						{$productorder.invoiceaddress.postaladdressContent}, {$productorder.invoiceaddress.postaladdressCity}, {$productorder.invoiceaddress.postaladdressCounty}, {$productorder.invoiceaddress.postaladdressPostalcode}, {$productorder.invoiceaddress.postaladdressCountry}
 					</li>
 				</ul>
-				<table id="productOrdersList" class="fr w400px">
+				<table class="productOrdersList" class="fr w400px">
 				<caption>Sipariş edilen ürün(ler)</caption>
 				<thead>
 					<tr>

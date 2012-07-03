@@ -7,8 +7,8 @@ class CasMailer extends PHPMailer
 	{
 		global $smarty;
 		
-		$this->Mailer		= "smtp";	#telling the class to use SMTP
-		$this->SMTPAuth		= true;		#enable SMTP authentication
+		$this->Mailer		= "mail";	#telling the class to use SMTP
+		$this->SMTPAuth		= false;		#enable SMTP authentication
 		$this->SMTPSecure	= "ssl";	#sets the prefix to the servier: "", "ssl", "tls"
 										#gmail gibi ssl üzerinden göndermek için php_openssl.dll aktif hale getirmek gerekiyor
 		$this->SMTPDebug	= false;	#enables SMTP debug information (for testing)

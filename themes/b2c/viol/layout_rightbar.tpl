@@ -39,7 +39,7 @@
 						<ul>
 							<li>
 								<label>{#LABEL_Username#}</label>
-								<input type="email" id="username" name="username" value="{$data.username}" title="Lütfen kullanıcı adınızı girin" autofocus="autofocus" required="required" />
+								<input type="email" id="username" name="userEmail" value="{$data.userEmail}" title="Lütfen e-mail adresinizi girin" autofocus="autofocus" required="required" />
 							</li>
 							<li>
 								<label>{#LABEL_Password#}</label>

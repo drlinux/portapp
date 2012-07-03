@@ -22,7 +22,7 @@ switch($_action)
 			$XID = 'MT_00000'.date("ymdHis");
 			$productorderId = $model->saveProductorder($XID, $smarty->getVariable("_PRODUCTORDER_INITIALSTATUS_MT"));
 			
-			//header("Location: " . $project['url'] . "modules/b2c/productorder.php?action=showProductorder&productorderId=" . $productorderId);
+			//header("Location: " . $project['url'] . "modules/b2c/showproductorder.php?productorderId=" . $productorderId);
 			echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));exit;
 		}
 		elseif ($aPayment["paymentgroup"]["paymentgroupType"] == "pd")
@@ -30,7 +30,7 @@ switch($_action)
 			$XID = 'PD_00000'.date("ymdHis");
 			$productorderId = $model->saveProductorder($XID, $smarty->getVariable("_PRODUCTORDER_INITIALSTATUS_PD"));
 			
-			//header("Location: " . $project['url'] . "modules/b2c/productorder.php?action=showProductorder&productorderId=" . $productorderId);
+			//header("Location: " . $project['url'] . "modules/b2c/showproductorder.php?productorderId=" . $productorderId);
 			echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));exit;
 		}
 		elseif ($aPayment["paymentgroup"]["paymentgroupType"] == "cc")
@@ -143,7 +143,7 @@ switch($_action)
 					{
 						$productorderId = $model->saveProductorder($XID, $smarty->getVariable("_PRODUCTORDER_INITIALSTATUS_CC"));
 				
-						header("Location: " . $project['url'] . "modules/b2c/productorder.php?action=showProductorder&productorderId=" . $productorderId);exit;
+						header("Location: " . $project['url'] . "modules/b2c/showproductorder.php?productorderId=" . $productorderId);exit;
 						//echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));
 						exit;
 				

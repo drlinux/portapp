@@ -1,14 +1,16 @@
 <?php
 class User extends CasBase
-{
-
+{	
+	private $tableCompany = "company";
+	private $tableUserCompany = "user_company";
+	
 	function __construct()
 	{
 		parent::__construct();
 
 		$this->sTable		= strtolower(__CLASS__);
 
-		$this->aAllField		= array("userId", "userStatus", "userName", "userPass", "userEmail", "userFirstname", "userLastname", "userBirthdate", "userGender", "userPhone", "userTckn"/*, "userCoordinate"*/);
+		$this->aAllField		= array("userId", "userStatus", "userPass", "userEmail", "userFirstname", "userLastname", "userBirthdate", "userGender", "userPhone", "userTckn"/*, "userCoordinate"*/);
 		$this->sIndexColumn		= "userId";
 		$this->sIndexColumnFull	= $this->sTable.".".$this->sIndexColumn;
 
@@ -26,6 +28,17 @@ class User extends CasBase
 		$row = $rows[0];
 		$row["role"] = $this->getRoles($row[$this->sIndexColumn]);
 		return ($row);
+	}
+	
+	function getB2BUser($userId)
+	{
+		$query  = "SELECT u.*,c.* FROM {$this->sTable} AS u ";
+		$query .= "LEFT JOIN {$this->tableUserCompany} AS uc ON u.userId=uc.userId ";
+		$query .= "LEFT JOIN {$this->tableCompany} AS c ON uc.companyId=c.companyId ";
+		$query .= "WHERE u.userId=:id";
+		
+		$data = $this->run($query, array("id"=>$userId));
+		return $data[0];
 	}
 
 	function getUsers()
@@ -70,19 +83,18 @@ class User extends CasBase
 		return ($arr);
 	}
 
-	function isExistByUsernameAndPassword($userName, $userPass)
+	function isExistByUserEmailAndPassword($userEmail, $userPass)
 	{
-		//$rows = $this->select("user", "userName = :userName and userPass = :userPass", array("userName"=>$userName, "userPass"=>$userPass));
-
 		$sQuery = "
 			SELECT *
 			FROM user
 			LEFT JOIN user_role ON user_role.userId = user.userId
-			WHERE userName = :userName
+			WHERE userEmail = :userEmail
 			AND userPass = :userPass
 		";
+		
 		//echo($sQuery);exit;
-		$rows = $this->run($sQuery, array("userName"=>$userName, "userPass"=>$userPass));
+		$rows = $this->run($sQuery, array("userEmail"=>$userEmail, "userPass"=>$userPass));
 		$row = $rows[0];
 		return $row;
 	}
@@ -185,6 +197,53 @@ class User extends CasBase
 		return true;
 
 	}
+	
+	function isValidPersonalInfoForm($formvars)
+	{
+		global $smarty;
+	
+		// check others
+		if(($formvars["userTcknNew"] != ""))
+		{
+			if (!CasString::isTckimlik($formvars["userTcknNew"])) {
+				$this->msg = $smarty->getConfigVariable("ALERT_WrongTCKN");
+				return false;
+			}
+		
+			if ($this->isExistByTckn($formvars["userTcknNew"], $formvars["userTckn"])) {
+				$this->msg = $smarty->getConfigVariable("ALERT_ExistTCKN");
+				return false;
+			}
+		}
+		
+		// form passed validation
+		return true;
+	}
+	
+	function isValidAccountForm($formvars)
+	{
+		global $smarty;
+	
+		// check others
+		if (!CasMailer::ValidateAddress($formvars["userEmailNew"])) {
+			$this->msg = $smarty->getConfigVariable("ALERT_PleaseEnterAValidEmailAddress");
+			return false;
+		}
+	
+		if ($this->isExistByEmail($formvars["userEmailNew"], $formvars["userEmail"])) {
+			$this->msg = $smarty->getConfigVariable("ALERT_ExistEmail");
+			return false;
+		}
+	
+		if ($this->isExistByUsername($formvars["userNameNew"], $formvars["userName"])) {
+			$this->msg = $smarty->getConfigVariable("ALERT_ExistUsername");
+			return false;
+		}
+	
+		// form passed validation
+		return true;
+	
+	}
 
 	function saveEntry($formvars)
 	{
@@ -224,6 +283,80 @@ class User extends CasBase
 		{
 			return $this->insert($table, $formvars2);
 		}
+	}
+	
+	function updateAccountInfo($formvars)
+	{
+		global $smarty;
+		
+		$user = $this->select($this->sTable, "$this->sIndexColumn=:id", array("id"=>$formvars[$this->sIndexColumn]));
+		$siteAddress = "http://" . $smarty->getVariable("_COMPANY_DOMAIN");
+		
+		
+		
+		if(($user[0]["userStatus"] != $formvars["userStatus"]) && ($formvars["userStatus"] == 1))
+		{
+			$mailer = new CasMailer();
+			$mailer->Subject = $smarty->getConfigVariable("MAIL_SUBJECT_USERREMINDER");
+			$mailer->MsgHTML("Üyeliğiniz onaylanmıştır, kullanıcı adı ve şifrenizle giriş yapabilirsiniz. <br /> <a href='{$siteAddress}' target='_blank'>Giriş Yap</a>");
+			$mailer->AddAddress($formvars["userEmail"], "Üyelik Aktivasyonu");
+			$mailer->Send();
+		}
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		if ($formvars["userEmail"] != $formvars["userEmailNew"]) {
+			$formvars2["userEmail"] = $formvars["userEmailNew"];
+		}
+		if ($formvars["userPass"] != "") {
+			$formvars2["userPass"] = sha1($formvars["userPass"]);
+		}
+		
+		if(isset($formvars["userStatus"]))
+		{
+			$formvars2["userStatus"] = $formvars["userStatus"];
+		}
+		
+		if(isset($formvars["roleId"]))
+		{
+			$this->delete("user_role", $this->sIndexColumn." = :id", array("id"=>$formvars[$this->sIndexColumn]));
+			
+			foreach ($_POST["roleId"] as $roleId) {
+				$this->insert("user_role", array($this->sIndexColumn=>$formvars[$this->sIndexColumn], "roleId"=>$roleId));
+			}
+		}
+		
+		$table = $this->sTable;
+		$where = $this->sIndexColumn . " = :id";
+		$bind = array("id"=>$formvars[$this->sIndexColumn]);
+		
+		return $this->update($table, $formvars2, $where, $bind);
+	}
+	
+	function updatePersonalInfo($formvars)
+	{
+		//$formvars2["userStatus"] = $formvars["userStatus"];
+		$formvars2["userGender"] = $formvars["userGender"];
+		$formvars2["userFirstname"] = $formvars["userFirstname"];
+		$formvars2["userLastname"] = $formvars["userLastname"];
+		$formvars2["userPhone"] = $formvars["userPhone"];
+		
+		if(isset($formvars["userPosition"]))
+		{
+			$formvars2["userPosition"] = $formvars["userPosition"];
+		}
+		
+		//$formvars2["userBirthdate"] = implode("-", array_reverse(explode("/", $formvars["userBirthdate"])));
+		$formvars2["userBirthdate"] = $formvars["userBirthdate"]["Date_Year"] . "-" . $formvars["userBirthdate"]["Date_Month"] . "-" . $formvars["userBirthdate"]["Date_Day"];
+		
+		if ($formvars["userTckn"] != $formvars["userTcknNew"]) {
+			$formvars2["userTckn"] = $formvars["userTcknNew"];
+		}
+	
+		$where = $this->sIndexColumn . " = :id";
+		$bind = array("id"=>$formvars[$this->sIndexColumn]);
+
+		return $this->update($this->sTable, $formvars2, $where, $bind);
 	}
 
 
@@ -268,7 +401,7 @@ class User extends CasBase
 	{
 		global $smarty;
 
-		if ($detail = $this->isExistByUsernameAndPassword($formvars['username'], sha1($formvars['password'])))
+		if ($detail = $this->isExistByUserEmailAndPassword($formvars['userEmail'], sha1($formvars['password'])))
 		{
 			if ( $detail["userStatus"] == 0 ) {
 				$this->msg = $smarty->getConfigVariable("ALERT_AccountIsNotActive");
@@ -363,7 +496,7 @@ class User extends CasBase
 
 		$mailer = new CasMailer();
 		$mailer->Subject = $smarty->getConfigVariable("MAIL_SUBJECT_USERREMINDER");
-		$mailer->MsgHTML(sprintf($smarty->getConfigVariable("MAIL_BODY_USERREMINDER"), $detail["userName"], $userPass));
+		$mailer->MsgHTML(sprintf($smarty->getConfigVariable("MAIL_BODY_USERREMINDER"), $detail["userEmail"], $userPass));
 		$mailer->AddAddress($userEmail);
 		if(!$mailer->Send()) {
 			$this->msg = $smarty->getConfigVariable("ALERT_MailerSendError");//$mailer->ErrorInfo
@@ -446,8 +579,7 @@ class User extends CasBase
 
 		if ($this->insert(
 			$this->sTable,
-			array(
-					"userName"=>$formvars["userEmail"], 
+			array( 
 					"userPass"=>sha1($userPass),
 					"userEmail"=>$formvars["userEmail"], 
 					"userFirstname"=>$formvars["userFirstname"], 
@@ -627,6 +759,41 @@ class User extends CasBase
 		return true;
 
 	}
+	
+	function isValidB2BRegisterForm($formvars)
+	{
+		global $smarty;
+	
+		$diff = array("userFirstname", "userLastname", "userEmail", "userAgreement", "userPosition", "companyTitle", "companyPhone", "companyTax", "companyAddress");
+	
+		// check if empty
+		foreach ($diff as $field) {
+			if(strlen($formvars[$field]) == 0) {
+				$this->msg = $smarty->getConfigVariable("ALERT_PleaseFillOutThisField");
+				$this->field = $field;
+				return false;
+			}
+		}
+	
+		if (!CasMailer::ValidateAddress($formvars["userEmail"])) {
+			$this->msg = $smarty->getConfigVariable("ALERT_PleaseEnterAValidEmailAddress");
+			return false;
+		}
+	
+		if ($this->isExistByEmail($formvars["userEmail"])) {
+			$this->msg = $smarty->getConfigVariable("ALERT_ExistEmail");
+			return false;
+		}
+	
+		if (!isset($formvars["userAgreement"])) {
+			$this->msg = $smarty->getConfigVariable("ALERT_PleaseAcceptUserAgreement");
+			return false;
+		}
+	
+		// form passed validation
+		return true;
+	
+	}
 
 	function saveRegisterForm($formvars, $roleId, $userStatus)
 	{
@@ -638,7 +805,6 @@ class User extends CasBase
 			$this->sTable,
 			array(
 				"userStatus"=>$userStatus,
-				"userName"=>$formvars["userEmail"], 
 				"userPass"=>sha1($userPass),
 				"userEmail"=>$formvars["userEmail"], 
 				"userFirstname"=>$formvars["userFirstname"], 
@@ -703,6 +869,125 @@ class User extends CasBase
 			$this->msg = $smarty->getConfigVariable("ALERT_ErrorOccured");
 			return false;
 		}
+	}
+	
+	function saveRegisterFormTypeB2B($formvars, $roleId, $userStatus)
+	{
+		global $smarty;
+	
+		$userPass = CasString::randomStringGenerator();
+	
+		if ($this->insert(
+		$this->sTable,
+		array(
+					"userStatus"=>$userStatus, 
+					"userPass"=>sha1($userPass),
+					"userEmail"=>$formvars["userEmail"], 
+					"userFirstname"=>$formvars["userFirstname"], 
+					"userLastname"=>$formvars["userLastname"],
+					"userPosition"=>$formvars["userPosition"]
+		)
+		))
+		{
+	
+			$rows = $this->run("select LAST_INSERT_ID() as last_insert_id;");
+			$userId = $rows[0]["last_insert_id"];
+	
+			$usertrack = new Usertrack();
+			$usertrack->addTrack(5, "userId=" . $userId);
+				
+			$this->insert(
+					"user_role",
+			array(
+						"userId"=>$userId,
+						"roleId"=>$roleId
+			)
+			);
+				
+			if ( isset($formvars["friendId"]) && !empty($formvars["friendId"]) ) {
+				$this->insert(
+						"user_friends",
+				array(
+							"userId"=>$userId,
+							"friendId"=>$formvars["friendId"]
+				)
+				);
+				$this->insert(
+						"user_friends",
+				array(
+							"userId"=>$formvars["friendId"],
+							"friendId"=>$userId
+				)
+				);
+	
+				$userpoint = new Userpoint();
+				$userpoint->addUserpoint($formvars["friendId"], 4); //TODO: Tavsiye puanı
+			}
+				
+			$userpoint = new Userpoint();
+			$userpoint->addUserpoint($userId, 1); //TODO: Üyelik puanı
+			
+			$userFullName = $formvars["userFirstname"] . ' ' . $formvars["userLastname"];
+			$adminMessage = "Sitenize '{$userFullName}' ismi ile yeni üye kaydı oldu.";
+			
+			$mailer = new CasMailer();
+			$mailer->Subject = $smarty->getConfigVariable("MAIL_SUBJECT_USERREGISTER");
+			$mailer->MsgHTML(sprintf($smarty->getConfigVariable("MAIL_BODY_USERREGISTER"), $formvars["userEmail"], $userPass));
+			$mailer->AddAddress($formvars["userEmail"], $formvars["userFirstname"] . ' ' . $formvars["userLastname"]);
+			
+			if(!$mailer->Send()) {
+				$this->msg = $smarty->getConfigVariable("ALERT_MailerSendError");//$mailer->ErrorInfo
+				return false;
+			}
+			else {
+				$this->sendAdminMail("Yeni Üye Kaydı", $adminMessage);
+				$this->msg = $smarty->getConfigVariable("ALERT_B2BRegistrationSucceed");
+				return $userId;
+			}
+	
+		}
+		else
+		{
+			$this->msg = $smarty->getConfigVariable("ALERT_ErrorOccured");
+			return false;
+		}
+	}
+	
+	function sendAdminMail($subject, $message)
+	{
+		global $smarty;
+		// B2b Admin User
+		$admin_user   = $smarty->getVariable("_EMAIL_BCC");
+		$company_name = $smarty->getVariable("_COMPANY_NAME");
+		
+		
+		$mailer = new CasMailer();
+		$mailer->Subject = $subject;
+		$mailer->MsgHTML($message);
+		$mailer->AddAddress($admin_user, $company_name . " Bilgilendirme");
+		
+		$mailer->Send();
+	}
+	
+	function deleteUser($userId)
+	{
+		if($user_company = $this->select("user_company", "userId=:id", array("id"=>$userId)))
+		{
+			$companyId = $user_company[0]["companyId"];
+			
+			$this->delete("company", "companyId=:id", array("id"=>$companyId));
+		}
+		
+		return $this->delete("user_company", $this->sIndexColumn . "=:id", array("id"=>$userId)) &&
+		$this->delete("user_role", $this->sIndexColumn . "=:id", array("id"=>$userId)) &&
+		$this->delete("user_friends", $this->sIndexColumn . "=:id", array("id"=>$userId)) &&
+		$this->delete("usertrack", $this->sIndexColumn . "=:id", array("id"=>$userId)) &&
+		$this->delete("userpoint", $this->sIndexColumn . "=:id", array("id"=>$userId)) &&
+		$this->delete("user_deliveryaddress", $this->sIndexColumn . "=:id", array("id"=>$userId)) &&
+		$this->delete("user_invoiceaddress", $this->sIndexColumn . "=:id", array("id"=>$userId)) &&
+		$this->delete("usergroup_user", $this->sIndexColumn . "=:id", array("id"=>$userId)) &&
+		$this->delete("postaladdress", $this->sIndexColumn . "=:id", array("id"=>$userId)) && 
+		$this->delete($this->sTable, $this->sIndexColumn . "=:id", array("id"=>$userId));
 	}
 
 }

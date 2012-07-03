@@ -29,6 +29,7 @@ class CasDatabase
 		$adapter		= $smarty->getConfigVariable("adapter");
 		$port			= $smarty->getConfigVariable("port");
 		$charset		= $smarty->getConfigVariable("charset");
+		$timezone		= "+03:00";
 		
 		if(empty($this->pdo) || !is_a($this->pdo, 'PDO'))
 		{
@@ -52,7 +53,7 @@ class CasDatabase
 				$this->pdo = new PDO($dsn, $username, $password, array(
 					//PDO::ATTR_PERSISTENT => true,
 					//PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-					PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES " . $charset
+					PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES " . $charset . ", time_zone='{$timezone}'"
 				));
 			} catch (PDOException $e) {
 				$this->error = $e->getMessage();
@@ -102,8 +103,9 @@ class CasDatabase
 
 	public function delete($table, $where, $bind="") {
 		$sql = "DELETE FROM " . $table . " WHERE " . $where . ";";
+		
 		//echo($sql);exit;
-		$this->run($sql, $bind);
+		return $this->run($sql, $bind);
 	}
 
 	private function filter($table, $info) {
@@ -143,7 +145,7 @@ class CasDatabase
 	public function insert($table, $info) {
 		$fields = $this->filter($table, $info);
 		$sql = "INSERT INTO " . $table . " (" . implode($fields, ", ") . ") VALUES (:" . implode($fields, ", :") . ");";
-		//echo($sql);exit;
+		//echo($sql) . "<br /><br />";//exit;
 		
 		$bind = array();
 		foreach($fields as $field) {
@@ -163,7 +165,7 @@ class CasDatabase
 				if(preg_match("/^(" . implode("|", array("select", "describe", "pragma")) . ") /i", $this->sql))
 					return $pdostmt->fetchAll($fetch_style);
 				elseif(preg_match("/^(" . implode("|", array("delete", "insert", "update")) . ") /i", $this->sql))
-					return $pdostmt->rowCount();
+					return $pdostmt->rowCount() || true;
 			}	
 		} catch (PDOException $e) {
 			$this->error = $e->getMessage();	
@@ -180,6 +182,12 @@ class CasDatabase
 		//echo($sql);exit;
 		//print_r($bind);exit;
 		return $this->run($sql, $bind);
+	}
+	
+	public function lastInsertId()
+	{
+		$data = $this->run("select LAST_INSERT_ID() as last_insert_id;");
+		return $data[0]["last_insert_id"];
 	}
 
 	public function setErrorCallbackFunction($errorCallbackFunction, $errorMsgFormat="html") {
@@ -206,12 +214,13 @@ class CasDatabase
 			$sql .= $fields[$f] . " = :update_" . $fields[$f]; 
 		}
 		$sql .= " WHERE " . $where . ";";
-		//echo($sql);exit;
+		
 		
 		$bind = $this->cleanup($bind);
 		foreach($fields as $field) {
 			$bind[":update_$field"] = $info[$field];
 		}
+		//print_r($bind);exit;
 		return $this->run($sql, $bind);
 	}
 }

@@ -72,7 +72,7 @@ if ( $oosResolveMerchantDataResponse->approved == 1 )
 		$productorderId = $productorder->saveProductorder($XID, $smarty->getVariable("_PRODUCTORDER_INITIALSTATUS_CC"));
 		
 		//echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));
-		header("Location: " . $project['url'] . "modules/b2c/productorder.php?action=showProductorder&productorderId=" . $productorderId);
+		header("Location: " . $project['url'] . "modules/b2c/showproductorder.php?productorderId=" . $productorderId);
 		exit;
 		
 	}

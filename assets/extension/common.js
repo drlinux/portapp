@@ -13,6 +13,7 @@ function startDefault()
 
 	//////////////////////////////////////////////////////////////////////////////
 	CommonItems = new CommonItems();
+	Company = new Company;
 	
 	/*GMAPHelper = new GMAPHelper();
 	GMAPHelper.loadMap();*/
@@ -2680,13 +2681,55 @@ function User()
 		}
 	};
 	
+	function generateAdminMenu(data)
+	{
+		var treeMenu = "<ul class='topMenu' >";
+		
+		for(var i=0, j=data.length; i<j; i++)
+		{
+			treeMenu += "<li class='topMenuItem' >";
+			treeMenu += "<a href='" + (data[i].href == undefined ? "javascript:void(0);" : data[i].href) + "' title='" + data[i].title + "'>" + data[i].text + "</a>";
+			if((data[i].children != undefined) && (data[i].children.length > 0))
+			{
+				treeMenu += generateAdminSubMenus(data[i].children);
+			}
+			treeMenu += "</li>";
+		}
+		
+		treeMenu += "</ul>";
+		return treeMenu
+		
+	}
+	
+	function generateAdminSubMenus(data)
+	{
+		var treeMenu = "<ul class='subMenu' >";
+		
+		for(var i=0, j=data.length; i<j; i++)
+		{
+			treeMenu += "<li class='subMenuItem' >";
+			treeMenu += "<a href='" + (data[i].href == undefined ? "javascript:void(0);" : data[i].href) + "' title='" + data[i].title + "'>" + data[i].text + "</a>";
+			if((data[i].children != undefined) && (data[i].children.length > 0))
+			{
+				treeMenu += generateAdminSubMenus(data[i].children);
+			}
+			treeMenu += "</li>";
+		}
+		
+		
+		treeMenu += "</ul>";
+		return treeMenu;
+	}
+	
+	
 	var getLoginoutButton = function ()
 	{
 		var $target = $('[cas-js=getLoginoutButton]');
 		if ($target.length) {
-			if ( User.checkAuthenticated() ) {
+			if(User.checkAuthenticated()) 
+			{
 				$.getJSON(CommonItems.getLocation() + 'index.php', {
-					'action': 'breadcrumbsMenu'
+					'action'	: 	'breadcrumbsMenu'
 				}, function(response) {
 					//$('#treeMenu').html(tree4breadcrumbsMenu(response));
 					$target
@@ -2697,12 +2740,12 @@ function User()
 								primary: "ui-icon-unlocked",
 								secondary: "ui-icon-triangle-1-s"
 							}
-						})
-						.menu({
+						});
+						/*.menu({
 							crumbDefaultText: jQuery.i18n.prop('ALERT_PleaseMakeAChoice'),
 							backLinkText: jQuery.i18n.prop('BUTTON_Back'),
 							topLinkText: jQuery.i18n.prop('LABEL_All'),
-							content: tree4breadcrumbsMenu(response),
+							content: generateAdminMenu(response), //tree4breadcrumbsMenu(response),
 							flyOut: false,
 							positionOpts: {
 								posX: 'left', 
@@ -2716,7 +2759,34 @@ function User()
 								linkToFront: false
 							},
 							backLink: false
-						});
+						});*/
+					$("#mainMenu").html(generateAdminMenu(response));					
+					$(".topMenuItem").each(function(){
+						var width = $(this).find("a").outerWidth(true);
+						$(this).width(width);
+					}).click(function(){
+						var subMenu = $(this).find(".subMenu");
+						var status = subMenu.css("display") === "block" ? "visible" : "hidden";
+						
+						if(status === "visible")
+						{
+							subMenu.css("display","none");
+						}
+						else
+						{
+							subMenu.css("display","block");
+						}
+					});
+
+					$(".topMenuItem .subMenu").click(function(){
+						$(this).css("display","block");
+					});
+					
+					$(document).click(function(e){
+						$(".subMenu").css("display","none");
+						//alert($(e.target).parents(".topMenuItem").length);
+						$(e.target).parents(".topMenuItem").find(".subMenu").css("display","block");
+					});
 				});
 			}
 			else {
@@ -2892,10 +2962,10 @@ function User()
 				});
 			},
 			rules: {
-				userTcknNew: {
+				/*userTcknNew: {
 					minlength: 11,
 					required: true
-				},
+				},*/
 				userEmailNew: {
 					email: true,
 					required: true
@@ -2916,15 +2986,15 @@ function User()
 					date: true,
 					required: true
 				},
-				userPhone: {
+				/*userPhone: {
 					required: true
-				}
+				}*/
 			},
 			messages: {
-				userTcknNew: {
+				/*userTcknNew: {
 					minlength: "11 dijit uzunluğunda olmalı",
 					required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
-				},
+				},*/
 				userEmailNew: {
 					email: jQuery.i18n.prop('ALERT_PleaseEnterAValidEmailAddress'),
 					required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
@@ -2945,12 +3015,144 @@ function User()
 					date: jQuery.i18n.prop('ALERT_PleaseCheckOutDateFormat'),
 					required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
 				},
-				userPhone: {
+				/*userPhone: {
+					required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
+				}*/
+			}
+		});
+		return false;
+	};
+	
+	var updatePersonalInfo = function (form)
+	{
+		var rules = {
+				userFirstname: {
+					required: true
+				},
+				userLastname: {
+					required: true
+				}};
+		
+		var messages = {
+				userFirstname: {
+					required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
+				},
+				userLastname: {
+					required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
+				}};
+		
+		if(document.getElementsByName("userPosition").length > 0)
+		{
+			rules.userPosition = {
+							required: true
+						};
+			
+			messages.userPosition = {
+				required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
+			};
+		}
+		
+		////////////////////////////////////////////////////////////
+		$form = $(form);
+		$form.validate({
+			submitHandler: function(f) {
+				$form.ajaxSubmit({
+					data: { action: 'updatePersonalInfo' },
+					dataType: 'json',
+					beforeSubmit: function(a,f,o) {
+						//console.log(a);
+					},
+					success: function(response) {
+						if (response.success == true) {
+							CommonItems.casDialog({
+								content: jQuery.i18n.prop('ALERT_Completed'),
+								onClosed: function () {
+									window.location.reload();
+								}
+							});
+						}
+						else {
+							// TODO: input title dan alıp alert verilebilir mi?
+							//CommonItems.casDialog(response.msg + ' - ' + response.field + ' - ' + $("[name="+response.field+"]").attr("title"));
+							CommonItems.casDialog(response.msg);
+						}
+					}
+				});
+			},
+			rules: rules,
+			messages: messages
+		});
+		return false;
+	};
+	
+	var updateAccountInfo = function (form)
+	{
+		email = document.getElementsByName("userEmailNew")[0].value;
+		email_repeat = document.getElementsByName("userEmailNew_Repeat")[0].value;
+		
+		pass = document.getElementsByName("userPass")[0].value;
+		pass_repeat = document.getElementsByName("userPass_Repeat")[0].value;
+		
+		if(email != email_repeat)
+		{
+			CommonItems.casDialog(jQuery.i18n.prop('ALERT_EmailsDontMatch'));
+			return false;
+		}
+		
+		if((pass.length > 0) && (pass.length < 6))
+		{
+			CommonItems.casDialog(jQuery.i18n.prop('ALERT_PasswordAtLeastSixCharacterLength'));
+			return false;
+		}
+		
+		if((pass.length >= 6) && (pass != pass_repeat))
+		{
+			CommonItems.casDialog(jQuery.i18n.prop('ALERT_PasswordsDontMatch'));
+			return false;
+		}
+		
+		
+		$form = $(form);
+		$form.validate({
+			submitHandler: function(f) {
+				$form.ajaxSubmit({
+					data: { action: 'updateAccountInfo' },
+					dataType: 'json',
+					beforeSubmit: function(a,f,o) {
+						//console.log(a);
+					},
+					success: function(response) {
+						if (response.success == true) {
+							CommonItems.casDialog({
+								content: jQuery.i18n.prop('ALERT_Completed'),
+								onClosed: function () {
+									window.location.reload();
+								}
+							});
+						}
+						else {
+							// TODO: input title dan alıp alert verilebilir mi?
+							//CommonItems.casDialog(response.msg + ' - ' + response.field + ' - ' + $("[name="+response.field+"]").attr("title"));
+							CommonItems.casDialog(response.msg);
+						}
+					}
+				});
+			},
+			rules: {
+				
+				userEmailNew: {
+					email: true,
+					required: true
+				}
+			},
+			messages: {
+				userEmailNew: {
+					email: jQuery.i18n.prop('ALERT_PleaseEnterAValidEmailAddress'),
 					required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
 				}
 			}
 		});
-		return false;
+		return true;
 	};
 	
 	var loginUser = function (form)
@@ -3089,6 +3291,38 @@ function User()
 		}
 		return false;
 	};
+	
+	this.deleteUser = function(userId){
+		if(User.checkAuthenticated)
+		{
+			$.ajax({
+				type:"post",
+				async: false,
+				data:"action=deleteUser&userId=" + userId,
+				dataType:"json",
+				success:function(response){
+					if(response.error === false)
+					{
+						window.location.href = CommonItems.getLocation() + "modules/user/user.php";
+					}
+					else
+					{
+						alert(response.msg);
+					}
+				},
+				error:function(){
+					alert("Hata Oluştu!");
+				}
+			
+			});
+		}
+		else
+		{
+			alert("Not authenticated!");
+		}
+			
+		return false;
+	};
 
 	var Obj = new Object();
 	Obj.checkAuthenticated = checkAuthenticated;
@@ -3099,6 +3333,9 @@ function User()
 	Obj.loginUser = loginUser;
 	Obj.resetUserPass = resetUserPass;
 	Obj.sendRecommendation = sendRecommendation;
+	Obj.deleteUser = this.deleteUser;
+	Obj.updatePersonalInfo = updatePersonalInfo;
+	Obj.updateAccountInfo = updateAccountInfo;
 	return Obj;
 }
 
@@ -4233,4 +4470,70 @@ function CommonItems()
 	Obj.casLoaderHide = casLoaderHide;
 	Obj.getLocation = getLocation;
 	return Obj;
+}
+
+
+function Company()
+{
+	this.saveCompany = function(form){
+		$form = $(form);
+		$form.validate({
+			submitHandler: function(f) {
+				$form.ajaxSubmit({
+					data: { action: 'saveCompany' },
+					dataType: 'json',
+					beforeSubmit: function(a,f,o) {
+						//console.log(a);
+						CommonItems.casLoaderShow();
+					},
+					success: function(response) {
+						if (response.success == true) {
+							CommonItems.casDialog(response.msg);
+						}
+						else {
+							CommonItems.casDialog(response.msg);
+						}
+					},
+					error:function(){
+						CommonItems.casDialog("Beklenmedik Hata! Daha sonra tekrar deneyin!");
+					}
+				});
+			},
+			rules: {
+				companyTitle: {
+					required: true
+				},
+				companyTax: {
+					required: true
+				},
+				companyPhone: {
+					required: true
+				},
+				companyFax: {
+					required: true
+				},
+				companyAddress: {
+					required: true
+				}
+			},
+			messages: {
+				companyTitle: {
+					required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
+				},
+				companyTax: {
+					required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
+				},
+				companyPhone: {
+					required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
+				},
+				companyFax: {
+					required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
+				},
+				companyAddress: {
+					required: jQuery.i18n.prop('ALERT_PleaseFillOutThisField')
+				}
+			}
+		});
+		
+	}
 }

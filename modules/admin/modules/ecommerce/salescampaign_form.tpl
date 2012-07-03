@@ -50,21 +50,25 @@
 			-->
 		</td>
 	</tr>
-	<tr>
-		<td>{#LABEL_Image#}</td>
-		<td>
-			<input type="hidden" name="MAX_FILE_SIZE" value="2048000" readonly="readonly" />
-			<input type="file" name="pictureFile" />
-		</td>
-	</tr>
-	{if $data.model.pictureFile neq null}
-	<tr>
-		<td></td>
-		<td>
-			<img src="img/salescampaign/{$data.model.pictureFile}" />
-		</td>
-	</tr>
-	{/if}
+	{$pictureIndex = 0}
+	{while $pictureIndex lt 2}
+		<tr>
+			<td>{#LABEL_Image#}</td>
+			<td>
+				<input type="hidden" name="MAX_FILE_SIZE" value="2048000" readonly="readonly" />
+				<input type="file" name="pictureFile_{$pictureIndex + 1}" />
+			</td>
+		</tr>
+		{if {$data.pictures[$pictureIndex].pictureFile} neq null}
+			<tr>
+				<td></td>
+				<td>
+					<img src="img/salescampaign/{$data.pictures[$pictureIndex].pictureFile}" />
+				</td>
+			</tr>
+		{/if}
+		{$pictureIndex++}
+	{/while}
 </tbody>
 <tfoot>
 	<tr>

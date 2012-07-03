@@ -150,11 +150,9 @@ switch($_action)
 		header("Location: " . $_SERVER["HTTP_REFERER"]);
 		break;
 	case 'deletePicture':
+		$model->delete($model->sTable . "_picture", "pictureId=:id", array("id"=>$_REQUEST["pictureId"]));
 		$params = array("scale"=>json_decode($smarty->getVariable("PREDEFINED_PICTURE_RESOLUTIONS"), true));
 		$model->unlinkPicture($_REQUEST["pictureId"], $params); // CHANGE
-		header("Location: " . $_SERVER["HTTP_REFERER"]);
-		break;
-		$model->unlinkPicture($_REQUEST["pictureId"], $params);
 		header("Location: " . $_SERVER["HTTP_REFERER"]);
 		break;
 	case '____deletePictures':

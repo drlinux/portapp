@@ -8,6 +8,16 @@ $_action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'view';
 
 $model = new Productorder();
 
+
+/* GET USER */
+
+$userId = $_SESSION["userId"];
+$User = new User;
+$user = $User->getEntry($userId);
+
+/************************************************************/
+
+
 switch($_action)
 {
 	
@@ -22,7 +32,7 @@ switch($_action)
 			$XID = 'MT_00000'.date("ymdHis");
 			$productorderId = $model->saveProductorder($XID, $smarty->getVariable("_PRODUCTORDER_INITIALSTATUS_MT"));
 			
-			//header("Location: " . $project['url'] . "modules/b2b/productorder.php?action=showProductorder&productorderId=" . $productorderId);
+			//header("Location: " . $project['url'] . "modules/b2b/showproductorder.php?productorderId=" . $productorderId);
 			echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));exit;
 		}
 		elseif ($aPayment["paymentgroup"]["paymentgroupType"] == "pd")
@@ -30,7 +40,7 @@ switch($_action)
 			$XID = 'PD_00000'.date("ymdHis");
 			$productorderId = $model->saveProductorder($XID, $smarty->getVariable("_PRODUCTORDER_INITIALSTATUS_PD"));
 			
-			//header("Location: " . $project['url'] . "modules/b2b/productorder.php?action=showProductorder&productorderId=" . $productorderId);
+			//header("Location: " . $project['url'] . "modules/b2b/showproductorder.php?productorderId=" . $productorderId);
 			echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));exit;
 		}
 		elseif ($aPayment["paymentgroup"]["paymentgroupType"] == "cc")
@@ -143,7 +153,7 @@ switch($_action)
 					{
 						$productorderId = $model->saveProductorder($XID, $smarty->getVariable("_PRODUCTORDER_INITIALSTATUS_CC"));
 				
-						header("Location: " . $project['url'] . "modules/b2b/productorder.php?action=showProductorder&productorderId=" . $productorderId);exit;
+						header("Location: " . $project['url'] . "modules/b2b/showproductorder.php?productorderId=" . $productorderId);exit;
 						//echo(json_encode(array("success"=>true, "productorderId"=>$productorderId)));
 						exit;
 				
@@ -177,7 +187,7 @@ switch($_action)
 				
 				
 				
-				if ( $aPayment["paymentgroup"]["paymentgroupMethod"] == "3dpay" )
+				if ( $aPayment["paymentgroup"]["paymentgroupMethod"] == "3dfull" )
 				{
 					
 					$OOS_TDS_SERVICE_URL= $aPayment["paymentgroup"]["paymentgroupGate2"];
@@ -198,14 +208,14 @@ switch($_action)
 					$garanti->orderid = $XID;
 					$garanti->setTerminalid($tid);
 					
-					$garanti->successurl = "https://www.bedenozgurlugu.com/_test/vpos/garanti/3DPayResults.php";
-					$garanti->errorurl = "https://www.bedenozgurlugu.com/_test/vpos/garanti/3DPayResults.php";
+					$garanti->successurl = "http://b2b.kupagida.com/modules/b2b/productorder_provision-gb.php";
+					$garanti->errorurl = "http://b2b.kupagida.com/modules/b2b/productorder_provision-gb.php";
 					
 					$garanti->customeripaddress = $_SERVER['REMOTE_ADDR'];
-					$garanti->customeremailaddress = "cem@casict.com";
+					$garanti->customeremailaddress = $user["userEmail"];;
 					
-					$garanti->storeKey = "Z1q2w3e4r";
-					$garanti->provisionPassword = "BO1q2w3e4r";
+					$garanti->storeKey = "kupa@2023";
+					$garanti->provisionPassword = "k8QiT1xn";
 					
 					//$result = $garanti->test();exit;
 					//$result = $garanti->init_curl();
@@ -250,7 +260,7 @@ switch($_action)
 		
 	case 'showProductorder':
 		$data = array_merge($data, $model->getProductorder($_REQUEST[$model->sIndexColumn]));
-		//print_r($data);exit;
+		print_r($_REQUEST[$model->sIndexColumn]);exit;
 	
 		$model->displayTemplate("b2b", $model->sTable."_show", $data);
 		break;
@@ -276,6 +286,30 @@ switch($_action)
 		
 	case 'view':
 	default:
+		/******************************************************************************************************************/
+		if(isset($_GET["error"]))
+		{
+			$data["error"] = $_SESSION["BankError"];
+		}
+		else
+		{
+			$data["error"] = "no_error";
+		}
+		/*
+		switch($_GET["error"])
+		{
+			default:	$data["error"] = "no_error";																break;
+			case "1":	$data["error"] = "";																		break;
+			case "2":	$data["error"] = "Kart Sahibi veya bankası sisteme kayıtlı değil";							break;
+			case "3":	$data["error"] = "Kartın bankası sisteme kayıtlı değil";									break;
+			case "4":	$data["error"] = "Doğrulama denemesi, kart sahibi sisteme daha sonra kayıt olmayı seçmiş";	break;
+			case "5":	$data["error"] = "Doğrulama yapılamıyor";													break;
+			case "7":	$data["error"] = "Sistem Hatası";															break;
+			case "8":	$data["error"] = "Bilinmeyen Kart No";														break;
+			case "0":	$data["error"] = "Doğrulama Başarısız, 3-D Secure imzası geçersiz.";						break;
+			case "9":	$data["error"] = $_SESSION["BankError"];													break;
+		}*/
+		/******************************************************************************************************************/
 		$voucherCode = $_SESSION["voucherCode"];
 		$paymentId = $_SESSION["paymentId"];
 		$transportationId = $_SESSION["transportationId"];
@@ -417,9 +451,6 @@ switch($_action)
 			$data["strErrorURL"] = $path . "3DPayResults.php";
 			$SecurityData = strtoupper(sha1($strProvisionPassword.$strTerminalID_));
 			$data["HashData"] = strtoupper(sha1($data["strTerminalID"].$data["strOrderID"].$data["strAmount"].$data["strSuccessURL"].$data["strErrorURL"].$data["strType"].$data["strInstallmentCount"].$strStoreKey.$SecurityData));
-			
-			//print_r($data);exit;
-			
 			$model->displayTemplate("b2b", "checkout_cc_bonus", $data);
 		}
 		elseif ($data["payment"]["paymentgroupId"] == 6)
@@ -452,6 +483,4 @@ switch($_action)
 		}
 
 		break;
-
-
 }

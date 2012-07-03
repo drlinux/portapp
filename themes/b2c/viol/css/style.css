@@ -264,7 +264,7 @@ h1.subHeader, h3.subHeader
 	color:#000;
 }
 
-#productOrdersList
+.productOrdersList
 {
 	float:left;
 	margin:10px;

@@ -28,7 +28,7 @@ switch($_action)
 		header("Location: " . $_SERVER["HTTP_REFERER"]);
 		break;
 	case 'ajaxSaveSalescampaign':
-		$id = $model->saveSalescampaign($_POST);
+		$id = $model->saveSalescampaignTypeAjax($_POST);
 		echo(json_encode(array($model->sIndexColumn=>$id)));
 		break;
 	case 'ajaxDeleteSalescampaign':
@@ -41,24 +41,26 @@ switch($_action)
 		
 		
 	case 'delete':
-		$model->removeEntry($_REQUEST[$model->sIndexColumn], true);
+		$model->deleteSalescampaign($_REQUEST[$model->sIndexColumn]);
 		header("Location: " . $_SERVER["PHP_SELF"]);
 		break;
 	case 'save':
 		$formvars = array_merge($_POST, $_FILES);
-		$model->saveEntry($formvars, array("picture"=>array("resize"=>array(720, 300), "isDefault"=>true)));
+		$salescampaignId = $model->saveSalescampaign($formvars, array("picture"=>array("resize"=>array(720, 300), "isDefault"=>true)));
 		$model->delete("salescampaign_productattribute", "salescampaignId = :salescampaignId", array("salescampaignId"=>$_POST[$model->sIndexColumn]));
 		foreach ($_POST["productattributeId"] as $productattributeId) {
-			$model->insert("salescampaign_productattribute", array("salescampaignId"=>$_POST[$model->sIndexColumn], "productattributeId"=>$productattributeId));
+			$model->insert("salescampaign_productattribute", array("salescampaignId"=>$salescampaignId, "productattributeId"=>$productattributeId));
 		}
 		header("Location: " . $_SERVER["PHP_SELF"]);
 		break;
 	case 'edit':
 		$data["model"] = $model->getSalescampaign($_REQUEST[$model->sIndexColumn]);
+		$data["model"]["salescampaignId"] = $_REQUEST[$model->sIndexColumn];
 		//print_r($data);exit;
 		$productattribute = new Productattribute;
 		$data["productattribute"] = $productattribute->getEntries();
-		//print_r($data);exit;
+		$data["pictures"] = $model->getSalescampaignsPictures($_REQUEST[$model->sIndexColumn]);
+		//print_r($data["model"]);exit;
 		
 		$model->displayTemplate("admin", $model->sTable.'_form', $data);
 		break;

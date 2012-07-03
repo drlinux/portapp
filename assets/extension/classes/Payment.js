@@ -52,7 +52,7 @@ function Payment()
 					CommonItems.casDialog({
 						content: jQuery.i18n.prop('ALERT_Completed'),
 						onClosed: function () {
-							window.location.replace( CommonItems.getLocation() + 'productorder.php?action=showProductorder&productorderId=' + response.productorderId );
+							window.location.replace( CommonItems.getLocation() + 'showproductorder.php?productorderId=' + response.productorderId );
 						}
 					});
 				}

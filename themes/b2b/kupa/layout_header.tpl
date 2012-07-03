@@ -14,5 +14,4 @@
 		{/foreach}
 	</div>
 	<a id="btnRegister" href="modules/b2b/register.php">Üye Ol</a>
-</div>
-		
+</div>	

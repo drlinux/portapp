@@ -18,6 +18,7 @@ switch($_action)
 		break;
 	case 'view':
 	default:
+		addJavascript("assets/extension/classes/User.js");
 		$model->displayTemplate("b2c", "reminder", null);
 		break;
 }

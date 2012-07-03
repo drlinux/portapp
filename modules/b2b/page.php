@@ -21,7 +21,7 @@ switch($_action)
 		$usertrack->addTrack(4, "pageId=" . $data["pageId"]);
 		
 		if ($data["pageRedirect"]!="") {
-			header("Location: " . _MODULE_DIR_ . $data["pageRedirect"] . "/index.php");
+			header("Location: " . _MODULE_DIR_ . $data["pageRedirect"]);
 		}
 		else {
 			$model->displayTemplate("b2b", "page", $data);

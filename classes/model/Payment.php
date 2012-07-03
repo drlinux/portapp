@@ -44,6 +44,19 @@ class Payment extends CasBase
 		return $row;
 	}
 	
+	function savePayment($formvars)
+	{
+		if($paymentId = $this->saveEntry($formvars))
+		{
+			$formvars["paymentId"] = $paymentId;
+			$paymentTitle = intval($formvars["paymentPeriod"]) > 1 ? intval($formvars["paymentPeriod"]) . " Taksit" : "Tek Çekim";
+			return $this->insert("paymentimpact", array("paymentId"=>$formvars["paymentId"], "paymentimpactWeightRate"=>$formvars["paymentimpactWeightRate"])) &&
+					$this->insert("payment_i18n", array("paymentId"=>$formvars["paymentId"], "iso639Id"=>1, "paymentTitle"=>$paymentTitle));
+		}
+		else
+			return false;
+	}
+	
 	
 	function isExistByPaymentgroupIdAndPaymentPeriod($paymentgroupId, $paymentPeriod)
 	{

@@ -18,10 +18,6 @@
 		<td>{$data.model.userTckn}</td>
 	</tr>
 	<tr>
-		<td>Kullanıcı Adı</td>
-		<td>{$data.model.userName}</td>
-	</tr>
-	<tr>
 		<td>Kullanıcı E-mail Adresi</td>
 		<td><a href="mailto:{$data.model.userEmail}">{$data.model.userEmail}</a></td>
 	</tr>
@@ -124,7 +120,7 @@
 	</li>
 	<li>
 		<label>Mesaj</label>
-		<textarea name="message" style="width: 300px; height: 100px;" required="required" >Sayın {$data.model.userName};
+		<textarea name="message" style="width: 300px; height: 100px;" required="required" >Sayın {$data.model.userFirstname};
 
 {$data.model.XID} numaralı siparişinizin durumu "{$data.model.productorderstatusTitle}" olarak değişmiştir.</textarea>
 	</li>

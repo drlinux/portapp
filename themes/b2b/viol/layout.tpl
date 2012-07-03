@@ -81,7 +81,7 @@
 		
 		<script type="text/javascript" src="{$smarty.const._THEMES_DIR_}b2b/{$_THEME_B2B_NAME}/js/master.js" ></script>
 		
-		
+		<script type="text/javascript" src="assets/extension/finish.js"></script>
 	</head>
 	<body>
 		<div id="glowBg">
@@ -90,11 +90,11 @@
 			</div><!-- #headerFullWidthOuter -->
 			<div id="wholeContentsFullWidthOuter">
 				<div id="wholeContentsOuter">
-					{include file="$tpl_leftbar.tpl"}
+					{include file="$tpl_leftbar.tpl" display=$smarty.session.userId}
 					<div id="contentsOuter">
 					{include file="$tpl_content.tpl" msg=$msg data=$data}
-					</div><!-- #contentsOuter -->
-					{include file="$tpl_rightbar.tpl"}
+					</div>
+					{include file="$tpl_rightbar.tpl" display=$smarty.session.userId}
 				</div><!-- #wholeContentsOuter -->
 			</div><!-- wholeContentsFullWidthOuter -->
 			<div id="footerFullWidthOuter">

@@ -102,8 +102,8 @@ body
 .subMenuOuter .top
 {
 	width:200px;
-	height:56px;
-	background: url(../images/subMenuTopBg.png) no-repeat center center;
+	height:40px;
+	background: url(../images/subMenuTopBg.png) no-repeat center 27px;
 	padding:0 10px;
 	font-style: italic;
 	font-size: 18px;
@@ -216,6 +216,76 @@ body
 	left:21px;
 	bottom:32px;
 }
+
+
+/* CAMPAIGNS LIST TYPE TWO ---------------------------------------------------------------------------------------------*/
+
+#campaignBannersList_typeTwo .banner
+{
+	width:197px;
+	height:211px;
+	position:relative;
+	margin-left: 10px;
+}
+
+
+
+#campaignBannersList_typeTwo img
+{
+	width:177px;
+	height:177px;
+	position:absolute;
+	left:10px;
+	top:10px;
+	z-index:1;
+}
+
+#campaignBannersList_typeTwo .frame
+{
+	width:197px;
+	height:211px;
+	display:block;
+	position:absolute;
+	left:0;
+	top:0;
+	z-index:5;
+	background: url(../images/frame_197x211.png) no-repeat left top;
+}
+
+
+#campaignBannersList_typeTwo .soldOut
+{
+	width:105px;
+	height:50px;
+	position:absolute;
+	right:21px;
+	top:5px;
+	z-index:10;
+	font:bold 14px Trebuchet MS;
+	text-align: center;
+	line-height: 50px;
+	font-style: italic;
+}
+
+
+#campaignBannersList_typeTwo .discountText
+{
+	width:177px;
+	height:24px;
+	position:absolute;
+	left:10px;
+	bottom:24px;
+	z-index:4;
+	font: 13px Trebuchet MS;
+	color:#f00;
+	background:#f9f9f9;
+	text-align:center;
+	line-height: 24px;
+}
+
+
+/*----------------------------------------------------------------------------------------------------------------------*/
+
 
 .bigProductList .productItem
 {
@@ -354,7 +424,7 @@ input[type=email], input[type=text], input[type=password], select
 {
 	width:189px !important;
 	padding:2px 3px;
-	border: solid 1px #f00 !important;
+	border: solid 1px #aaa !important;
 }
 
 select
@@ -413,7 +483,8 @@ select
 
 .subHeader
 {
-	
+	color:#f00;
+	margin-bottom:10px !important;
 }
 
 
@@ -437,4 +508,37 @@ select
 	text-align: center;
 	position:relative;
 	top: 10px;
+}
+
+.productOrdersList
+{
+	float:left;
+	margin:0 0 10px 10px;
+}
+
+.ultable
+{
+	margin:0  !important;
+	padding:0 !important;
+}
+
+#extra .remainingText
+{
+	margin:0 0 5px 0;
+}
+
+#campaignDetailImageOuter
+{
+	width: 707px;
+	height: 168px;
+	display:block;
+	background: url(../images/campaignDetailImageBg.png) no-repeat left top;
+}
+
+#campaignDetailImageOuter img
+{
+	width: 660px;
+	height: 120px;
+	float:left;
+	margin: 16px 0 0 21px;
 }

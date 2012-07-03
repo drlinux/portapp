@@ -1,18 +1,18 @@
 <?php
 
-//$productgroup = new Productgroup;
 $permission = new Permission;
 $page = new Page();
 $category = new Category();
 $brand = new Brand();
 $productattribute = new Productattribute;
 
+$data["slider_theme"] = "default";
 
 // MAIN MENU
 $data["main_menu"] = $page->arrayPage(false, null);
 
 // LOGIN MENU & PERSONAL INFO
-if(Permission::checkPermission("b2b"))
+if(Permission::checkPermission("b2b") || (basename($_SERVER["SCRIPT_FILENAME"], ".php") === "page"))
 {
 	$menuitems = $permission->arrayTree(30, null, 1);
 	
@@ -27,12 +27,8 @@ if(Permission::checkPermission("b2b"))
 $data["user_menu"] = $menuHtml;
 
 // CATEGORIES MENU
-$categories = $category->getCategoriesFromProductHavingPicture();
-foreach($categories["aaData"] as $c)
-{
-	$categoriesHtml .= '<li><a href="modules/b2b/category.php?action=show&categoryId=' . $c["categoryId"] . '">' . $c["categoryTitle"] . '</a></li>';
-}
-$data["categories_menu"] = $categoriesHtml;
+$linkTemplate = '<a href="modules/b2b/category.php?action=show&categoryId={$categoryId}">{$categoryTitle}</a>';
+$data["categories_menu"] = $category->htmlTree($linkTemplate);
 
 // BRANDS MENU
 $brands = $brand->getBrandsFromProductHavingPicture();
@@ -106,21 +102,60 @@ function getBanners(&$result)
 	}
 }
 
-function listCampaigns(&$result)
+function listCampaigns(&$result, $status = "active", $pictureOrderNum = 1)
 {
+	global $smarty;
+	
+	$LABEL_DAY = $smarty->getConfigVariable("LABEL_DAY");
+	$LABEL_HOUR = $smarty->getConfigVariable("LABEL_HOUR");
+	$LABEL_MINUTE = $smarty->getConfigVariable("LABEL_MINUTE");
+	$LABEL_SECOND = $smarty->getConfigVariable("LABEL_SECOND");
+	$LABEL_REMAINED = $smarty->getConfigVariable("LABEL_REMAINED");
+	
 	$campaign = new Salescampaign;
 	
-	$campaigns = $campaign->getSalescampaigns();
+	$campaigns = $campaign->getSalescampaigns($status, $pictureOrderNum);
+	$campaign_count = $campaigns["iTotalRecords"];
 	
-	foreach($campaigns["aaData"] as $c)
+	for($i=0; $i<$campaign_count; $i++)
 	{
-		$result .= '<li class="banner">
-						<h2 class="name">' . $c["salescampaignTitle"] . '</h2>
-						<p class="timeLeft">Kampanya bitiş tarihi: <span style="color:#f00;">' . $c["salescampaignEnd"] . '</span></p>
-						<a class="buy" href="modules/b2b/salescampaign.php?action=show&salescampaignId=' . $c["salescampaignId"] . '">SATIN AL</a>
-						<a class="imageLink" href="modules/b2b/salescampaign.php?action=show&salescampaignId=' . $c["salescampaignId"] . '">
-							<img src="img/salescampaign/' . $c["pictureFile"] . '" />
-						</a>
-					</li>';
+		if($status === "active")
+		{
+			$remainingText  = "<span class='cDay'><span class='value'></span> $LABEL_DAY, </span>";
+			$remainingText .= "<span class='cHour'><span class='value'></span> $LABEL_HOUR, </span>";
+			$remainingText .= "<span class='cMinute'><span class='value'></span> $LABEL_MINUTE, </span>";
+			$remainingText .= "<span class='cSecond'><span class='value'></span> $LABEL_SECOND </span>";
+			$remainingText .= " $LABEL_REMAINED";
+			
+			$result .= "<li class='banner'><h2 class='name'>" . $campaigns["aaData"][$i]["salescampaignTitle"] . "</h2>";
+			$result .= "<p class='timeLeft campaignTimer'>Kampanya Bitimine: <span style='color:#f00;'>" . $remainingText . "</span><span class='endTime' style='display:none;'>" . $campaigns["aaData"][$i]["salescampaignEnd"] . "</span></p>";
+			$result .= "<a class='buy' href='modules/b2b/salescampaign.php?action=show&salescampaignId=" . $campaigns["aaData"][$i]["salescampaignId"] . "'>SATIN AL</a>";
+			$result .= "<a class='imageLink' href='modules/b2b/salescampaign.php?action=show&salescampaignId=" . $campaigns["aaData"][$i]["salescampaignId"] . "'>";
+			$result .= "<img src='img/salescampaign/" . $campaigns["aaData"][$i]["pictureFile"] . "' /></a></li>";
+		}
+		else if($status === "time_passed")
+		{
+			$result .= "<li class='banner'>";
+			$result .= "<span class='soldOut'>tükendi</span>";
+			$result .= "<img src='img/salescampaign/" . $campaigns["aaData"][$i]["pictureFile"] . "' />";
+			$result .= "<span class='frame'></span>";
+			$result .= "<span class='discountText'>%40 İndirim</span>";
+			$result .= "</li>";
+		}
 	}
+	
+	if($campaign_count <= 0)
+	{
+		$result = "not_exist";
+	}
+}
+
+// Campaigns Menu List
+$campaign = new Salescampaign;
+$campaigns = $campaign->getSalescampaigns("active", 1);
+$campaign_count = $campaigns["iTotalRecords"];
+
+for($i=0; $i<$campaign_count; $i++)
+{
+	$data["campaignsMenuList"] .= "<li><a href='modules/b2b/salescampaign.php?action=show&salescampaignId=" . $campaigns["aaData"][$i]["salescampaignId"] . "'>" . $campaigns["aaData"][$i]["salescampaignTitle"] . "</a></li>";
 }

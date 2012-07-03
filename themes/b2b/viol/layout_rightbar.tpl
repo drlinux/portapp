@@ -44,9 +44,9 @@
 	<div class="subMenuOuter">
 		<h2 class="top">KATEGORİLER</h2>
 		<div class="center">
-			<ul class="linkList">
+			<div class="linkList treeList">
 				{$data.categories_menu}
-			</ul>		
+			</div>		
 		</div>
 		<div class="bottom"></div>
 	</div>

@@ -31,6 +31,7 @@ $(document).ready(function() {
 			{ "bVisible": false,  "aTargets": [ 0 ] }
 		],
 		"fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+			$('td:eq(0)', nRow).html( '<a href="{$SCRIPT_NAME}?action=edit&userticketId=' + aData[0] + '">' + aData[1] + '</a>' );
 			return nRow;
 		},
 		"oLanguage": {

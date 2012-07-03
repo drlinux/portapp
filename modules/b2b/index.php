@@ -16,6 +16,14 @@ $model = new User();
 
 switch($_action)
 {
+	case 'listCampaigns';
+		$campaign = new Salescampaign;
+		if($campaigns = $campaign->getSalescampaigns("active", 1, $_POST["limit"]))
+			echo json_encode(array("success"=>true,"msg"=>$campaigns));
+		else
+			echo json_encode(array("success"=>false, "msg"=>"Hata: Kampanyalar yüklenemedi!"));
+	break;
+	
 	case 'changeLanguage':
 		if(isset($_GET['language'])) {
 			$_SESSION["PROJECT_LANGUAGE"] = $_GET['language'];
@@ -89,8 +97,6 @@ switch($_action)
 		}
 		break;
 		
-		
-		
 	case 'jsonBrandsFromProductHavingPicture':
 		$brand = new Brand;
 		echo(json_encode($brand->getBrandsFromProductHavingPicture()));
@@ -115,7 +121,27 @@ switch($_action)
 	case 'view':
 	default:
 		Permission::checkPermissionRedirect("b2b");
-		listCampaigns($data["campaigns_list"]);
+		global $smarty;
+		
+		$use_campaign_module = $smarty->getVariable("_USE_CAMPAIGN_MODULE");
+		$data["useCampaignModule"] = $use_campaign_module;
+		
+		if($use_campaign_module == "true")
+		{
+			listCampaigns($data["active_campaigns"], "active", 1);
+			listCampaigns($data["time_passed_campaigns"], "time_passed", 2);
+		}
+		else
+		{
+			$products_list = $productattribute->getProductattributes(array("iDisplayStart"=>0,"iDisplayLength"=>9,"sType"=>"productgroup","productgroupId"=>1), false);
+			parseProductsList($products_list["aaData"], $data["products_list"]);
+			
+			/* BANNERS */
+			getBanners($data["banner_files"]);
+		}
+		
+		
+		addJavascript("assets/extension/classes/User.js");
 		
 		$model->displayTemplate("b2b", "index", $data);
 		break;

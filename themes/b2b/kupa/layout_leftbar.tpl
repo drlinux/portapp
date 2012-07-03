@@ -42,15 +42,15 @@
 	</div>
 	
 	<div class="subMenuOuter">
-		<h2 class="top">KATEGORİLER</h2>
+		<h2 class="top">Kampanyalar</h2>
 		<div class="center">
 			<ul class="linkList">
-				{$data.categories_menu}
+				{$data.campaignsMenuList}
 			</ul>		
 		</div>
 		<div class="bottom"></div>
 	</div>
-	
+	<!--
 	<div class="subMenuOuter">
 		<h2 class="top">MARKALAR</h2>
 		<div class="center">
@@ -60,6 +60,6 @@
 		</div>
 		<div class="bottom"></div>
 	</div>
-	
+	-->
 </div>
 {/if}

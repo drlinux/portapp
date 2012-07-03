@@ -10,13 +10,13 @@ $model = new User();
 
 switch($_action)
 {
-	case 'updateUser':
+	case 'updatePersonalInfo':
 		$user = new User();
 		$user->mungeFormData($_POST);
-		if ($success = $user->isValidForm($_POST)) {
+		if ($success = $user->isValidPersonalInfoForm($_POST)) {
 			$_POST["userId"] = $_SESSION["userId"];
 			$_POST["userStatus"] = 1;
-			$user->saveEntry($_POST);
+			$user->updatePersonalInfo($_POST);
 		}
 		echo(json_encode(array("success"=>$success, "msg"=>$user->msg, "field"=>$user->field)));
 		break;
@@ -25,7 +25,7 @@ switch($_action)
 		$data["model"] = $model->getEntry($_SESSION["userId"]);
 		$data["model"]['userTcknNew'] = $data["model"]['userTckn'];
 		$data["model"]['userEmailNew'] = $data["model"]['userEmail'];
-		$data["model"]['userNameNew'] = $data["model"]['userName'];
+		
 		$data["model"]['userBirthdate'] = implode(".", array_reverse(explode("-", $data["model"]['userBirthdate'])));
 		//print_r($data);exit;
 		addJavascript("assets/extension/classes/User.js");

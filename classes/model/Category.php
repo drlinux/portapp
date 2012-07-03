@@ -37,8 +37,65 @@ class Category extends CasBase
 	public function jsonTree($id=null, $selected=null) {
 		return json_encode($this->arrayTree($id, $selected));
 	}
+	
+	/**
+	 * 
+	 * Kategorileri istenen html tipinde listler. 
+	 * @param string $linkTemplate : her bir link elementinin html formatını temsil eder. Örnek: <a href="category.php?id={$categoryId}">{$categoryTitle}</a>    Kullanılabilecek template değişkenleri: categoryId, categoryParent, categoryCode, categorySorting, iso639Id, categoryTitle
+	 * @param int $id : parent categoryId değeri
+	 */
+	function htmlTree($linkTemplate, $id=null)
+	{
+		$sql = array();
+		array_push($sql, "select *");
+		array_push($sql, "from " . $this->sTable);
+		array_push($sql, "left join " . $this->sTableI18n . " on " . $this->sIndexColumnI18nFull . " = " . $this->sIndexColumnFull . " and " . $this->sIso639ColumnI18nFull . " = :iso639");
+		if ($id==null) array_push($sql, "where " . $this->sParentColumnFull . " is null");
+		else array_push($sql, "where " . $this->sParentColumnFull . " = " . $id);
+		array_push($sql, "order by");
+		array_push($sql, $this->sParentColumnFull . " asc,");
+		array_push($sql, $this->sSortingColumnFull . " asc");
+		$sql = implode(" ", $sql);
+		//echo($sql);exit;
+	
+		$rows = $this->run($sql, array("iso639"=>$_SESSION["PROJECT_LANGUAGE"]));
+		
+		$list = "<ul>";
+		
+		for($i = 0, $j=sizeof($rows); $i<$j; $i++)
+		{
+			$matches = array();
+			preg_match_all('/\{\$(\w+)\}/', $linkTemplate, $matches);
+			$tempLinkTemplate = $linkTemplate;
+				
+			for($k=0, $l=sizeof($matches[0]); $k<$l; $k++)
+			{
+				$templateKey = $matches[0][$k];
+				$arrayKey = $matches[1][$k];
+				$tempLinkTemplate = str_replace($templateKey, $rows[$i][$arrayKey], $tempLinkTemplate);
+			}
+				
+			$list .= "<li>" . $tempLinkTemplate;
+				
+			// Alt Kategorileri Ekle--------------------------------------------------------------------------
+			
+			if(($children = $this->htmlTree($linkTemplate, $rows[$i][$this->sIndexColumn])) && ($children != "<ul></ul>"))
+			{
+				//$list = "<ul>";
+				$list .= $children;
+				//$list .= "</ul>";
+			}
+			//------------------------------------------------------------------------------------------------
+				
+			$list .= "</li>";
+		}
+		
+		$list .= "</ul>";
+		
+		return $list;
+	}
 
-	private function arrayTree($id=null, $selected=null)
+	function arrayTree($id=null, $selected=null)
 	{
 		$sql = array();
 		array_push($sql, "select *");
@@ -260,6 +317,8 @@ class Category extends CasBase
 			
 		return ($arr);
 	}
+	
+	
 
 	function getCategoriesByProductId($productId, $categoryId=null)
 	{

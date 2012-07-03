@@ -1,10 +1,13 @@
 <div class="casContent">
-	<h1>Kampanya</h1>
+	<h1 class="subHeader">{$data.salescampaignTitle}</h1>
 	<div id="extra">
-		<h2>{$data.salescampaignTitle}</h2>
-		<p>{$data.salescampaignContent}</p>
-		<p>Başlangıç: {$data.salescampaignStart|date_format:$config.datetime}</p>
-		<p>Bitiş: {$data.salescampaignEnd|date_format:$config.datetime}</p>
+		<div id="campaignDetailImageOuter">
+			<img src="img/salescampaign/{$data.pictureFile}" />
+		</div>
+		<br clear="all" />
+		<p class="remainingText"><span style="color:#f00">Kampanya Bitimine: </span>{$data.remainingText}</p>
+		<div>{$data.salescampaignContent}</div>
+		<br clear="all" />
 	</div>
 	<div id="sidebar">
 		<ul style="list-style-type: none; padding: 0px;" class="productsList bigProductList">

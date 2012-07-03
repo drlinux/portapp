@@ -38,12 +38,8 @@ $data["user_menu"] = $menuHtml;
 
 
 /* CATEGORIES MENU */
-$categories = $category->getCategoriesFromProductHavingPicture();
-foreach($categories["aaData"] as $c)
-{
-	$categoriesHtml .= '<li><a href="modules/b2b/category.php?action=show&categoryId=' . $c["categoryId"] . '">' . $c["categoryTitle"] . '</a></li>';
-}
-$data["categories_menu"] = $categoriesHtml;
+$linkTemplate = '<a href="modules/b2b/category.php?action=show&categoryId={$categoryId}">{$categoryTitle}</a>';
+$data["categories_menu"] = $category->htmlTree($linkTemplate);
 
 /* BRANDS MENU */
 $brands = $brand->getBrandsFromProductHavingPicture();
